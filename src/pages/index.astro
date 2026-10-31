@@ -1,0 +1,44 @@
+---
+import { getImage } from 'astro:assets'
+import Base from '@/layouts/Base.astro'
+import SiteFooter from '@/components/SiteFooter.astro'
+import Hero from '@/sections/Hero'
+import Process from '@/sections/Process'
+import DemandeChantier from '@/sections/DemandeChantier'
+import photo from '@/assets/hero-retrait-plaque.jpg'
+
+const sizes = '(min-width: 1024px) 47vw, 100vw'
+const visuel = await getImage({ src: photo, widths: [480, 760, 1100, 1500], sizes, format: 'webp', quality: 72 })
+const image = { src: visuel.src, srcSet: visuel.srcSet.attribute, sizes, width: photo.width, height: photo.height }
+---
+<Base
+  titre="Entreprise de désamiantage certifiée | Cap Désamiantage"
+  description="Toiture en fibrociment, dalles, flocage : décrivez votre chantier et recevez le devis d'une entreprise certifiée amiante sous-section 3. Gratuit."
+  chemin="/"
+>
+  <link slot="head" rel="preload" as="image" imagesrcset={image.srcSet} imagesizes={sizes} fetchpriority="high" />
+  <main>
+    <Hero image={image} />
+    <Process />
+    <DemandeChantier client:visible />
+  </main>
+  <SiteFooter />
+</Base>
+
+<script>
+  // Parallaxe de l'image du hero, identique à la version React d'origine.
+  const visual = document.querySelector<HTMLElement>('.hero-visual')
+  const reduit = window.matchMedia('(prefers-reduced-motion: reduce)')
+  visual?.addEventListener('pointermove', (event) => {
+    if (event.pointerType === 'touch' || reduit.matches) return
+    const bounds = visual.getBoundingClientRect()
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5
+    visual.style.setProperty('--image-x', `${x * -12}px`)
+    visual.style.setProperty('--image-y', `${y * -10}px`)
+  })
+  visual?.addEventListener('pointerleave', () => {
+    visual.style.setProperty('--image-x', '0px')
+    visual.style.setProperty('--image-y', '0px')
+  })
+</script>

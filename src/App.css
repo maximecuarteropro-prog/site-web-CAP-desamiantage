@@ -10,6 +10,9 @@
 .hero-copy-panel { display: grid; grid-template-rows: auto 1fr auto; min-height: 62dvh; padding: 22px 22px 34px; }
 .hero-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; animation: soft-enter 700ms 80ms ease-out both; }
 .brand { display: inline-flex; align-items: center; min-height: 44px; gap: 12px; }
+.brand-logo { flex: 0 0 auto; width: 34px; height: 34px; }
+.brand-logo rect { fill: var(--accent-primary); }
+.brand-logo path { stroke: var(--accent-ink); }
 .brand-cap { display: inline-flex; align-items: center; gap: 5px; font-size: 30px; font-weight: 700; line-height: 1; letter-spacing: -0.075em; }
 .brand-dot { width: 7px; height: 7px; margin-top: 15px; border-radius: 50%; background: var(--accent-primary); }
 .brand-name { max-width: 74px; font-size: 13px; font-weight: 500; line-height: 1.1; letter-spacing: -0.025em; }

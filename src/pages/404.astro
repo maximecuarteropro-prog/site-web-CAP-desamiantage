@@ -1,0 +1,25 @@
+---
+import Base from '@/layouts/Base.astro'
+import SiteHeader from '@/components/SiteHeader.astro'
+import SiteFooter from '@/components/SiteFooter.astro'
+import { PAGES_GUIDE } from '@/lib/site'
+---
+<Base titre="Page introuvable | Cap Désamiantage" description="Cette page n'existe pas ou plus." chemin="/404" indexable={false}>
+  <SiteHeader />
+  <main class="page-article">
+    <div class="article-container">
+      <div class="article-head">
+        <span class="section-kicker">Erreur 404</span>
+        <h1>Cette page n'existe pas.</h1>
+        <p class="article-chapo">L'adresse a peut-être changé. Vous trouverez peut-être ce que vous cherchez ici :</p>
+      </div>
+      <div class="article-body">
+        <ul>
+          <li><a href="/">Accueil : décrire votre chantier</a></li>
+          {PAGES_GUIDE.map((page) => <li><a href={page.chemin}>{page.titreCourt}</a></li>)}
+        </ul>
+      </div>
+    </div>
+  </main>
+  <SiteFooter />
+</Base>

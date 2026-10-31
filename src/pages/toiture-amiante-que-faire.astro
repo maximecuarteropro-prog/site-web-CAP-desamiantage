@@ -1,0 +1,92 @@
+---
+import Guide from '@/layouts/Guide.astro'
+
+// Règles relues sur Légifrance et service-public.fr le 29 oct. 2026, prix relus le même jour.
+const sources = [
+  { titre: 'Décret n° 96-1133 du 24 décembre 1996 relatif à l’interdiction de l’amiante', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000734637', date: 'version en vigueur au 29 octobre 2026' },
+  { titre: 'Code de la santé publique, articles R1334-26 à R1334-29 (obligations liées aux matériaux de la liste A)', url: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000024116903', date: 'version en vigueur depuis le 1er février 2012' },
+  { titre: 'Arrêté du 12 décembre 2012 relatif aux critères d’évaluation de l’état de conservation des matériaux de la liste B', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000026843927', date: 'version en vigueur au 29 octobre 2026' },
+  { titre: 'Service-public.fr, fiche F742 « Diagnostic amiante » (vente)', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F742', date: 'vérifiée le 16 octobre 2026' },
+  { titre: 'Code de la santé publique, article R1334-29-7 (état amiante à la vente)', url: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000024117147', date: 'version en vigueur depuis le 1er février 2012' },
+  { titre: 'Code du travail, article L4412-2 (repérage avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013763', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-94 (retrait et encapsulage)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025819070', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-137 (plan de retrait, délai d’urgence)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Ministères chargés du logement et de la santé, brochure « Bricolage dans votre logement : attention à l’amiante ! »', url: 'https://www.notre-environnement.gouv.fr/IMG/pdf/dgaln_plaque8f26.pdf', date: 'mars 2016' },
+  { titre: 'Habitatpresto, « Quel prix pour remplacer une toiture en fibrociment amiante ? »', url: 'https://www.habitatpresto.com/mag/toiture/prix-remplacer-toiture-fibrociment-amiante', date: 'publié le 11 septembre 2026' },
+  { titre: 'Couvreurs-France, « Toiture en amiante : prix »', url: 'https://www.couvreurs-france.com/blog/toiture-amiante-prix', date: 'publié le 12 juin 2026' },
+  { titre: 'Travaux.com, « Prix du désamiantage »', url: 'https://www.travaux.com/demolition-evacuation/guide-des-prix/prix-du-desamiantage', date: 'mis à jour le 21 août 2026' },
+]
+
+const faq = [
+  { question: 'Est-il obligatoire de retirer une toiture en amiante ?', reponse: 'Non. Aucun texte n’oblige un propriétaire à retirer une toiture en fibrociment amianté. Les obligations de travaux du code de la santé publique visent les matériaux de la liste A, comme les flocages, et pas les toitures. Pour les immeubles soumis au dossier technique amiante, l’évaluation des toitures donne des recommandations (EP, AC1, AC2), pas une obligation explicite de retrait.' },
+  { question: 'Peut-on vendre une maison avec une toiture en amiante ?', reponse: 'Oui. Si le permis de construire date d’avant le 1er juillet 1997, le vendeur doit fournir un état mentionnant la présence ou l’absence d’amiante (code de la santé publique, art. R1334-29-7). La toiture n’a pas à être retirée avant la vente, mais l’acheteur en sera informé et pourra en tenir compte dans son offre.' },
+  { question: 'Peut-on nettoyer ou démousser une toiture en fibrociment amianté ?', reponse: 'Les ministères déconseillent fortement toute intervention directe sur un matériau amianté, et en particulier le jet sous pression : il arrache des fibres. Si la toiture doit être traitée, faites appel à une entreprise spécialisée dans l’amiante, après un repérage.' },
+  { question: 'Que faire si des plaques en fibrociment sont cassées après une tempête ?', reponse: 'Ne montez pas sur la toiture et ne ramassez pas les morceaux sans protection. Éloignez les personnes, puis contactez une entreprise certifiée. En cas d’urgence liée à un sinistre, le délai de dépôt du plan de retrait tombe de trente à 8 jours (code du travail, art. R4412-137).' },
+  { question: 'L’encapsulage est-il une solution définitive ?', reponse: 'Non. L’encapsulage fixe les fibres et prolonge la vie de la toiture, mais l’amiante reste en place : il faudra le retirer un jour, et le signaler en cas de vente. C’est une solution d’attente, à confier à une entreprise certifiée sous-section 3.' },
+]
+---
+<Guide
+  titre="Toiture en amiante : garder, encapsuler ou retirer ?"
+  description="Toiture en fibrociment amianté : rien n’oblige à la retirer si elle est saine. Les 4 options, leur prix en 2026 et ce qu’il ne faut jamais faire."
+  chemin="/toiture-amiante-que-faire"
+  rubrique="Décider"
+  h1="Toiture en amiante : garder, encapsuler, recouvrir ou retirer ?"
+  chapo="Aucun texte n’oblige un particulier à retirer une toiture en fibrociment amianté. Tant qu’elle est en bon état et qu’on n’y touche pas, on peut la garder. Mais dès que des travaux sont prévus, que les plaques se dégradent ou qu’une vente approche, il faut choisir entre quatre options. Voici comment décider."
+  publie="2026-10-29"
+  misAJour="2026-10-29"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Votre toiture contient-elle de l’amiante ?</h2>
+  <p>L’amiante est interdit en France depuis le 1er janvier 1997 (décret n° 96-1133). Une toiture en plaques de fibrociment posée avant cette date peut donc en contenir. À l’œil nu, une plaque amiantée et une plaque sans amiante se ressemblent : <strong>seul un repérage, avec analyse en laboratoire, permet de trancher</strong>. Comptez 100 à 300 € pour un repérage de toiture selon Habitatpresto.</p>
+
+  <h2>Êtes-vous obligé de la retirer ?</h2>
+  <p>Non, et c’est un point souvent mal expliqué.</p>
+  <ul>
+    <li><strong>Maison individuelle :</strong> aucun suivi périodique n’est imposé pour une toiture amiantée. Un repérage n’est exigé qu’au moment de la vente (service-public.fr, fiche F742).</li>
+    <li><strong>Copropriété, bâtiment professionnel ou agricole :</strong> lorsque le bâtiment relève du dossier technique amiante, l’état de la toiture est évalué et le diagnostiqueur formule une recommandation (arrêté du 12 décembre 2012). Les obligations de travaux du code de la santé publique, elles, concernent les matériaux de la liste A comme les flocages, pas les toitures (art. R1334-26 à R1334-29).</li>
+  </ul>
+  <div class="tableau">
+    <table>
+      <caption>Les trois recommandations possibles pour une toiture (matériau de la liste B), selon l’arrêté du 12 décembre 2012.</caption>
+      <thead><tr><th scope="col">Résultat</th><th scope="col">Ce qu’il signifie</th></tr></thead>
+      <tbody>
+        <tr><td>EP</td><td>Évaluation périodique : la toiture est en bon état, on la surveille</td></tr>
+        <tr><td>AC1</td><td>Action corrective de premier niveau : remettre en état les seuls éléments dégradés (remplacement, recouvrement, protection)</td></tr>
+        <tr><td>AC2</td><td>Action corrective de second niveau : agir sur toute la zone, avec des mesures conservatoires immédiates, puis protection ou retrait</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Les quatre options</h2>
+  <div class="tableau">
+    <table>
+      <caption>Prix relevés le 29 octobre 2026.</caption>
+      <thead><tr><th scope="col">Option</th><th scope="col">Quand la choisir</th><th scope="col">Qui intervient</th><th scope="col">Prix indicatif</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Garder et surveiller</strong></td><td>Plaques en bon état, aucun travaux prévu</td><td>Personne : on n’y touche pas</td><td>Aucun</td></tr>
+        <tr><td><strong>Encapsuler</strong></td><td>Plaques encore saines, besoin de prolonger la toiture quelques années</td><td>Entreprise certifiée sous-section 3</td><td>10 à 50 €/m² (Habitatpresto, Travaux.com)</td></tr>
+        <tr><td><strong>Recouvrir</strong> (surtoiture)</td><td>Plaques saines, charpente solide, besoin d’étanchéité ou d’isolation</td><td>Entreprise intervenant après un repérage : faites préciser au devis le régime appliqué (sous-section 3 ou 4)</td><td>60 à 180 €/m² (Couvreurs-France, Habitatpresto)</td></tr>
+        <tr><td><strong>Retirer</strong></td><td>Plaques dégradées, projet de rénovation, vente, ou volonté d’en finir</td><td>Entreprise certifiée sous-section 3</td><td>40 à 100 €/m² déchets compris, plus la couverture neuve</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>L’encapsulage et la surtoiture laissent l’amiante en place : le problème est reporté, pas réglé, et il reviendra au moment de la vente ou des prochains travaux. Le retrait coûte plus cher mais règle la question une fois pour toutes. Pour le budget complet, lisez <a href="/prix-remplacement-toiture-amiante">changer une toiture en amiante : prix</a>.</p>
+  <p>L’encapsulage n’est pas un simple traitement de surface : le code du travail le range avec le retrait, dans la sous-section 3 (art. R4412-94). Il faut donc une <a href="/certification-sous-section-3">entreprise certifiée</a>.</p>
+
+  <h2>Ce qu’il ne faut pas faire</h2>
+  <p>Les fibres d’amiante se libèrent quand le matériau est cassé, percé, poncé ou arraché. La brochure des ministères chargés du logement et de la santé déconseille fortement toute intervention directe, et en particulier :</p>
+  <ul>
+    <li>nettoyer ou démousser la toiture au jet sous pression ;</li>
+    <li>casser les plaques ou les découper avec un outil électrique rapide ;</li>
+    <li>balayer ou aspirer des débris avec un aspirateur domestique.</li>
+  </ul>
+
+  <h2>Les situations qui obligent à décider</h2>
+  <h3>Vous avez des travaux sur la toiture</h3>
+  <p>Réparation, isolation, panneaux solaires, extension : dès qu’une entreprise intervient sur un bâtiment construit avant 1997, le propriétaire doit faire réaliser un repérage amiante avant travaux (code du travail, art. L4412-2). C’est souvent le bon moment pour retirer l’amiante plutôt que de travailler autour.</p>
+  <h3>Vous vendez</h3>
+  <p>Si le permis de construire date d’avant le 1er juillet 1997, vous devez fournir un état amiante à l’acheteur (code de la santé publique, art. R1334-29-7). La toiture peut rester en place, mais l’acheteur en tiendra compte.</p>
+  <h3>Des plaques sont cassées</h3>
+  <p>Après une tempête ou une chute de branche, ne touchez pas aux débris et éloignez les personnes. En cas d’urgence liée à un sinistre, une entreprise certifiée peut déposer son plan de retrait 8 jours avant l’intervention au lieu de trente (code du travail, art. R4412-137).</p>
+</Guide>

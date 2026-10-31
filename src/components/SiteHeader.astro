@@ -1,0 +1,11 @@
+---
+// En-tête des pages intérieures : même marque et même bouton que la première page.
+import LogoMark from '@/components/LogoMark'
+import '@/styles/site.css'
+---
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="/" aria-label="Cap Désamiantage, accueil"><LogoMark /><span class="brand-cap">cap<span class="brand-dot" aria-hidden="true"></span></span> <span class="brand-name">désamiantage</span></a>
+    <a class="hero-cta site-header-cta" href="/#devis"><span class="cta-long">Obtenir un devis</span><span class="cta-court">Devis</span><span class="cta-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></span></a>
+  </div>
+</header>

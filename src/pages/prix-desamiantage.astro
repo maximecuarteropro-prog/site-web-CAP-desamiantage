@@ -1,0 +1,101 @@
+---
+import Guide from '@/layouts/Guide.astro'
+
+// Chiffres relus sur chaque source le 29 oct. 2026. Mettre à jour la date et les fourchettes
+// chaque trimestre, en relisant les sources.
+const sources = [
+  { titre: 'Habitatpresto, « Prix d’un désamiantage de toiture »', url: 'https://www.habitatpresto.com/mag/toiture/prix-desamiantage-toiture', date: 'publié le 9 octobre 2026' },
+  { titre: 'Habitatpresto, « Quel prix pour remplacer une toiture en fibrociment amiante ? »', url: 'https://www.habitatpresto.com/mag/toiture/prix-remplacer-toiture-fibrociment-amiante', date: 'publié le 11 septembre 2026' },
+  { titre: 'ABC Travaux, « Prix du désamiantage au m² »', url: 'https://abctravaux.org/prix-desamiantage-m2/', date: 'publié le 21 octobre 2026' },
+  { titre: 'Travaux.com, « Prix du désamiantage »', url: 'https://www.travaux.com/demolition-evacuation/guide-des-prix/prix-du-desamiantage', date: 'mis à jour le 21 août 2026' },
+  { titre: 'Guide-toiture.com, « Désamiantage de toiture »', url: 'https://www.guide-toiture.com/travaux-annexes-toiture/desamiantage-toiture/', date: 'mis à jour le 30 juin 2026' },
+  { titre: 'Couvreurs-France, « Toiture en amiante : prix »', url: 'https://www.couvreurs-france.com/blog/toiture-amiante-prix', date: 'publié le 12 juin 2026' },
+  { titre: 'Diagnostic Immobilier 13, « Désamiantage : coûts au m², réglementation et aides »', url: 'https://www.diagnostic-immobilier13.fr/desamiantage-couts-au-m%C2%B2-reglementation-et-aides/', date: 'publié le 3 avril 2026' },
+  { titre: 'Guide Robien, « Flocages amiante : coûts et procédures de désamiantage en 2026 »', url: 'https://www.guide-robien.com/flocages-amiante-couts-et-procedures-de-desamiantage-en-2026/', date: 'publié le 21 juin 2026' },
+  { titre: 'Construires.fr, « Diagnostic amiante : obligations »', url: 'https://www.construires.fr/diagnostic-amiante-obligation/', date: 'mis à jour le 17 mai 2026' },
+  { titre: 'Tersen, tarifs professionnels 2026 (installation de stockage de Saint-Martin-du-Tertre, Val-d’Oise)', url: 'https://www.tersen-env.com/wp-content/uploads/tersen-tarifs-professionnels-2026.01.pdf', date: 'applicables au 1er janvier 2026' },
+  { titre: 'Communauté de communes du Pays Loudunais, collecte de l’amiante', url: 'https://www.pays-loudunais.fr/wp-content/uploads/2026/02/DEPLIANT-Collecte-damiante_5-mars-2026.pdf', date: 'collecte du 5 mars 2026' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+]
+
+const faq = [
+  { question: 'Quel est le prix du désamiantage au m² ?', reponse: 'Pour une toiture en plaques de fibrociment, les guides de prix publiés en 2026 situent le cas courant entre 40 et 100 € TTC par m², évacuation et traitement des déchets compris. Comptez 25 à 80 € par m² pour des dalles de sol et leur colle, et 60 à 250 € par m² pour un flocage, qui impose un confinement complet.' },
+  { question: 'Combien coûte le désamiantage d’une toiture de 100 m² ?', reponse: 'Entre 4 000 et 12 000 € environ pour le retrait et l’élimination des plaques, selon l’accès, la hauteur et l’état de la toiture. La couverture neuve n’est pas comprise : avec elle, le budget passe le plus souvent entre 9 000 et 30 000 €.' },
+  { question: 'Pourquoi un petit chantier coûte-t-il si cher au m² ?', reponse: 'Une partie des frais ne dépend pas de la surface : plan de retrait, installation du chantier, mesures d’empoussièrement, transport des déchets. Sous 30 m², beaucoup d’entreprises appliquent un forfait minimum de 1 500 à 2 500 € (ABC Travaux, octobre 2026).' },
+  { question: 'Le prix comprend-il l’élimination des déchets ?', reponse: 'Pas toujours, et c’est la première source d’écart entre deux devis. Certaines fourchettes publiées s’entendent hors transport et traitement des déchets. Vérifiez que le devis indique la filière d’élimination, le tonnage estimé et l’émission du bordereau de suivi des déchets d’amiante (BSDA).' },
+  { question: 'Un devis très bas est-il suspect ?', reponse: 'Oui. Guide-toiture.com considère qu’un tarif inférieur à 20 € par m² pour une toiture est un signal d’alerte : à ce prix, il est difficile de couvrir le plan de retrait, les protections, les mesures et l’élimination réglementaire des déchets.' },
+]
+---
+<Guide
+  titre="Prix du désamiantage en 2026 : tarifs au m² sourcés"
+  description="Toiture en fibrociment : 40 à 100 €/m² déchets compris. Dalles : 25 à 80 €/m². Flocage : 60 à 250 €/m². Fourchettes 2026 datées et sourcées."
+  chemin="/prix-desamiantage"
+  rubrique="Prix 2026"
+  h1="Prix du désamiantage en 2026"
+  chapo="Pour une toiture en fibrociment, comptez le plus souvent 40 à 100 € par m², évacuation des déchets comprise, soit 4 000 à 12 000 € pour 100 m². Les dalles de sol coûtent 25 à 80 € par m², un flocage 60 à 250 €. Voici d’où viennent ces chiffres, et pourquoi deux devis peuvent varier du simple au triple."
+  publie="2026-10-29"
+  misAJour="2026-10-29"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Les prix par type de chantier</h2>
+  <p>Ces fourchettes viennent des guides de prix publiés en 2026 par des plateformes de devis et des professionnels. Aucune source officielle ne publie de prix de désamiantage : ce sont des ordres de grandeur, pas des tarifs. Seul le devis d’une entreprise certifiée, après visite, fait foi.</p>
+  <div class="tableau">
+    <table>
+      <caption>Fourchettes relevées le 29 octobre 2026. TTC sauf mention contraire.</caption>
+      <thead><tr><th scope="col">Chantier</th><th scope="col">Fourchette courante</th><th scope="col">Ce qui est compris</th></tr></thead>
+      <tbody>
+        <tr><td>Toiture en plaques de fibrociment</td><td>40 à 100 €/m²</td><td>Dépose, conditionnement, transport et traitement des déchets. Couverture neuve non comprise</td></tr>
+        <tr><td>Toiture de 100 m²</td><td>4 000 à 12 000 €</td><td>Même périmètre</td></tr>
+        <tr><td>Garage ou annexe de 30 à 40 m²</td><td>1 500 à 5 500 €</td><td>Forfaits minimum fréquents sous 30 m²</td></tr>
+        <tr><td>Dalles de sol vinyle-amiante et colle</td><td>25 à 80 €/m²</td><td>Retrait en intérieur, évacuation comprise selon les sources</td></tr>
+        <tr><td>Flocage</td><td>60 à 250 €/m², le plus souvent 80 à 150 €/m²</td><td>Retrait sous confinement complet</td></tr>
+        <tr><td>Calorifugeage (tuyaux)</td><td>40 à 80 € par mètre linéaire</td><td>Une seule source publiée (Diagnostic Immobilier 13)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Sources de la ligne toiture : Habitatpresto (9 octobre et 11 septembre 2026), ABC Travaux (21 octobre 2026), Guide-toiture.com (30 juin 2026), Travaux.com (21 août 2026) et Couvreurs-France (12 juin 2026). Pour 100 m², Guide-toiture.com donne 4 000 à 9 000 €, Habitatpresto 5 500 à 12 000 € et Travaux.com 4 000 à 15 000 €. Dalles : ABC Travaux, Travaux.com et Diagnostic Immobilier 13. Flocage : ABC Travaux, Diagnostic Immobilier 13 et Guide Robien.</p>
+  <p>Vous changez aussi la couverture ? Le budget complet, retrait et toiture neuve, est détaillé sur notre page <a href="/prix-remplacement-toiture-amiante">changer une toiture en amiante : prix</a>.</p>
+
+  <h2>Ce que comprend un devis de désamiantage</h2>
+  <p>Le retrait lui-même n’est qu’une ligne du devis. Un chantier conforme comprend aussi :</p>
+  <ul>
+    <li><strong>Le repérage amiante avant travaux</strong>, s’il n’a pas déjà été fait : 100 à 600 € la mission selon la surface et le nombre de prélèvements (Habitatpresto, Couvreurs-France, ABC Travaux), plus 30 à 80 € par échantillon analysé en laboratoire (Construires.fr, ABC Travaux).</li>
+    <li><strong>Le plan de retrait</strong>, que l’entreprise certifiée transmet à l’inspection du travail au moins trente jours avant le début des travaux (code du travail, art. R4412-137).</li>
+    <li><strong>L’installation du chantier</strong> : balisage, protections, zone de décontamination, équipements de protection.</li>
+    <li><strong>Les mesures d’empoussièrement</strong> de l’air pendant et après le chantier. Le devis type publié par Habitatpresto les chiffre à 550 € HT au forfait.</li>
+    <li><strong>Le retrait et le conditionnement</strong> des matériaux en emballages étanches.</li>
+    <li><strong>Le transport et l’élimination</strong> dans une installation autorisée, avec le bordereau de suivi des déchets d’amiante (BSDA).</li>
+  </ul>
+  <p>Exemple publié par Habitatpresto le 9 octobre 2026 : 6 960 € TTC pour le retrait de la couverture en ardoises amiantées d’un garage de 40 m², repérage compris, couverture neuve non comprise.</p>
+
+  <h2>Pourquoi les devis varient du simple au triple</h2>
+  <p>Sur une même toiture, les écarts entre devis sont normaux. Couvreurs-France les estime jusqu’à 40 %. Ils tiennent surtout à six facteurs :</p>
+  <ol>
+    <li><strong>Le périmètre.</strong> Un devis peut inclure ou non le repérage, l’évacuation des déchets, les mesures d’air ou la couverture neuve. C’est la première chose à comparer.</li>
+    <li><strong>La surface.</strong> Les frais fixes pèsent lourd sur un petit chantier : forfait minimum de 1 500 à 2 500 € sous 30 m² (ABC Travaux).</li>
+    <li><strong>Le type d’amiante.</strong> Un matériau friable, comme un flocage, coûte deux à trois fois plus cher au m² qu’un matériau non friable comme le fibrociment (ABC Travaux).</li>
+    <li><strong>L’accès et la hauteur.</strong> Échafaudage, nacelle, pente, toiture fragile : tout ce qui complique l’accès augmente le temps passé.</li>
+    <li><strong>L’état des plaques.</strong> Des plaques cassées ou très dégradées demandent plus de précautions : 25 à 45 €/m² pour des plaques saines, 45 à 60 €/m² pour des plaques dégradées selon Couvreurs-France.</li>
+    <li><strong>La région.</strong> Comptez 10 à 20 % de plus en Île-de-France et sur l’arc méditerranéen, où la mise en décharge coûte plus cher (Couvreurs-France).</li>
+  </ol>
+
+  <h2>Le coût des déchets</h2>
+  <p>Une toiture en plaques ondulées de fibrociment pèse environ 20 kg par m² : 100 m² font donc près de 2 tonnes de déchets (base d’estimation de la communauté de communes du Pays Loudunais, mars 2026).</p>
+  <ul>
+    <li><strong>À l’entrée de l’installation de stockage</strong> : 130 € HT la tonne pour de l’amiante-ciment en bon état, 250 € HT la tonne s’il est abîmé, hors transport (grille 2026 de l’exploitant Tersen, Val-d’Oise).</li>
+    <li><strong>Refacturé dans un devis, transport compris</strong> : 300 à 700 € la tonne selon Guide-toiture.com et Travaux.com.</li>
+    <li><strong>Emballage</strong> : un big bag homologué de 1 m³ coûte 40 € HT au guichet de l’installation Tersen.</li>
+  </ul>
+  <p>Ces prix varient d’une région à l’autre. Certaines collectivités organisent des collectes pour les particuliers, parfois gratuites : renseignez-vous auprès de votre déchetterie.</p>
+
+  <h2>Comment comparer deux devis</h2>
+  <ul>
+    <li>L’entreprise est-elle <a href="/certification-sous-section-3">certifiée amiante sous-section 3</a>, avec un certificat en cours de validité ?</li>
+    <li>Le devis distingue-t-il le repérage, le plan de retrait, les mesures d’empoussièrement, le retrait, le transport et l’élimination ?</li>
+    <li>Indique-t-il le tonnage estimé, l’installation de destination et l’émission du BSDA ?</li>
+    <li>La couverture neuve est-elle comprise, et avec quel matériau ?</li>
+    <li>Le prix au m² est-il crédible ? Sous 20 € par m² pour une toiture, Guide-toiture.com parle de signal d’alerte.</li>
+  </ul>
+  <p>Pour la marche à suivre complète, du repérage à la fin du chantier, lisez notre guide du <a href="/desamiantage-toiture-amiante">désamiantage de toiture</a>.</p>
+</Guide>

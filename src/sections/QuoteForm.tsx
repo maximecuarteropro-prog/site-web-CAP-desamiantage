@@ -1,7 +1,24 @@
 import { useState, type FormEvent } from 'react'
 import { ArrowUpRight, Check, LoaderCircle } from 'lucide-react'
 import { projectTypeIds, projectTypeLabels, type ProjectTypeId } from '@contracts/projects'
-import { trpc } from '@/providers/trpc'
+
+// Envoi vers /api/demande (fonction Vercel), qui transmet la demande au Lead Router.
+function useSubmitQuote(onSuccess: (result: { id: string | null }) => void) {
+  const [status, setStatus] = useState<'idle' | 'pending' | 'error'>('idle')
+  const mutate = async (payload: Record<string, unknown>) => {
+    setStatus('pending')
+    try {
+      const response = await fetch('/api/demande', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      if (!response.ok) throw new Error(String(response.status))
+      const result = (await response.json()) as { id?: string | null }
+      setStatus('idle')
+      onSuccess({ id: result.id ?? null })
+    } catch {
+      setStatus('error')
+    }
+  }
+  return { mutate, reset: () => setStatus('idle'), isPending: status === 'pending', isError: status === 'error' }
+}
 
 type QuoteFormData = { projectType: ProjectTypeId; surface: string; context: 'travaux' | 'vente' | 'achat' | 'sinistre' | 'autre' | ''; postalCode: string; diagnosis: 'oui' | 'non' | 'je-ne-sais-pas' | ''; fullName: string; phone: string; email: string; consent: boolean; website: string }
 const initialData: QuoteFormData = { projectType: 'autre-je-ne-sais-pas', surface: '', context: '', postalCode: '', diagnosis: '', fullName: '', phone: '', email: '', consent: false, website: '' }
@@ -9,8 +26,8 @@ type QuoteFormProps = { selectedProject: ProjectTypeId; onProjectChange: (projec
 
 export default function QuoteForm({ selectedProject, onProjectChange }: QuoteFormProps) {
   const [formData, setFormData] = useState<QuoteFormData>(initialData)
-  const [requestId, setRequestId] = useState<number | null>(null)
-  const submitQuote = trpc.quote.submit.useMutation({ onSuccess: ({ id }: { id: number }) => setRequestId(id) })
+  const [requestId, setRequestId] = useState<string | null>(null)
+  const submitQuote = useSubmitQuote(({ id }) => setRequestId(id ? id.slice(0, 8).toUpperCase() : ''))
   const updateField = <K extends keyof QuoteFormData>(field: K, value: QuoteFormData[K]) => {
     setFormData((current) => ({ ...current, [field]: value }))
     if (submitQuote.isError) submitQuote.reset()
@@ -18,7 +35,7 @@ export default function QuoteForm({ selectedProject, onProjectChange }: QuoteFor
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (!formData.context || !formData.diagnosis || !formData.consent) return
-    submitQuote.mutate({ ...formData, context: formData.context, diagnosis: formData.diagnosis, consent: formData.consent, projectType: selectedProject })
+    submitQuote.mutate({ ...formData, projectType: selectedProject, page: window.location.pathname + window.location.search })
   }
   const startAnotherRequest = () => { setRequestId(null); setFormData(initialData); submitQuote.reset() }
   return (
@@ -32,7 +49,7 @@ export default function QuoteForm({ selectedProject, onProjectChange }: QuoteFor
         <div className="quote-form-panel">
           {requestId !== null ? (
             <div className="quote-success" role="status">
-              <span className="success-check"><Check aria-hidden="true" /></span><span className="success-kicker">Demande n° {requestId}</span>
+              <span className="success-check"><Check aria-hidden="true" /></span><span className="success-kicker">{requestId ? `Demande n° ${requestId}` : 'Demande enregistrée'}</span>
               <h3>Merci, c’est bien enregistré.</h3><p>Un conseiller vous rappellera sous 24 h pour préciser votre besoin.</p>
               <button type="button" onClick={startAnotherRequest}>Faire une autre demande<ArrowUpRight aria-hidden="true" /></button>
             </div>

@@ -1,0 +1,96 @@
+---
+import Guide from '@/layouts/Guide.astro'
+
+// Chiffres relus sur chaque source le 29 oct. 2026. Mettre à jour chaque trimestre.
+const sources = [
+  { titre: 'Habitatpresto, « Quel prix pour remplacer une toiture en fibrociment amiante ? »', url: 'https://www.habitatpresto.com/mag/toiture/prix-remplacer-toiture-fibrociment-amiante', date: 'publié le 11 septembre 2026' },
+  { titre: 'Habitatpresto, « Prix d’un désamiantage de toiture »', url: 'https://www.habitatpresto.com/mag/toiture/prix-desamiantage-toiture', date: 'publié le 9 octobre 2026' },
+  { titre: 'Habitatpresto, « Bac acier : prix »', url: 'https://www.habitatpresto.com/mag/toiture/bac-acier', date: 'publié le 30 juin 2026' },
+  { titre: 'Guide-toiture.com, « Désamiantage de toiture »', url: 'https://www.guide-toiture.com/travaux-annexes-toiture/desamiantage-toiture/', date: 'mis à jour le 30 juin 2026' },
+  { titre: 'Couvreurs-France, « Toiture en amiante : prix »', url: 'https://www.couvreurs-france.com/blog/toiture-amiante-prix', date: 'publié le 12 juin 2026' },
+  { titre: 'Couvreurs-France, « Toiture en bac acier : prix »', url: 'https://www.couvreurs-france.com/blog/toiture-bac-acier-prix', date: 'publié le 11 juin 2026' },
+  { titre: 'Couvreurs-France, « Réfection de toiture : prix au m² »', url: 'https://www.couvreurs-france.com/blog/refection-toiture-prix-m2', date: 'publié le 1er juin 2026' },
+  { titre: 'Prix-travaux-m2.com, « Prix d’une toiture en fibrociment »', url: 'https://www.prix-travaux-m2.com/prix-toiture-fibrociment.php', date: 'publié le 28 mars 2026' },
+  { titre: 'Travaux.com, « Prix du désamiantage »', url: 'https://www.travaux.com/demolition-evacuation/guide-des-prix/prix-du-desamiantage', date: 'mis à jour le 21 août 2026' },
+  { titre: 'ABC Travaux, « Prix du désamiantage au m² »', url: 'https://abctravaux.org/prix-desamiantage-m2/', date: 'publié le 21 octobre 2026' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+]
+
+const faq = [
+  { question: 'Combien coûte le remplacement d’une toiture en fibrociment amianté de 100 m² ?', reponse: 'Les estimations publiées en 2026 vont de 9 000 à 18 000 € TTC avec une couverture simple (Guide-toiture.com) et dépassent 18 000 € avec des tuiles (Couvreurs-France). Habitatpresto donne 150 à 350 € TTC par m² pour un remplacement complet, retrait et couverture neuve compris.' },
+  { question: 'Quel matériau choisir pour remplacer une toiture en amiante ?', reponse: 'Le bac acier est le moins cher et le plus léger (25 à 55 € par m² posé sans isolation). Les plaques de fibrociment sans amiante gardent l’aspect d’origine (55 à 80 € HT par m² posé). Les tuiles coûtent 80 à 180 € par m² et pèsent bien plus lourd : la charpente doit être vérifiée avant.' },
+  { question: 'Combien de temps faut-il compter avant le début des travaux ?', reponse: 'Au moins trente jours entre la transmission du plan de retrait et le début du chantier : l’entreprise certifiée le dépose sur la plateforme DEMAT@MIANTE, à destination de l’inspection du travail et des organismes de sécurité sociale (code du travail, art. R4412-137). Le délai tombe à 8 jours en cas d’urgence liée à un sinistre.' },
+  { question: 'Peut-on recouvrir la toiture au lieu de la retirer ?', reponse: 'Oui, si les plaques sont en bon état et la charpente solide. Une surtoiture coûte 60 à 180 € par m² et un encapsulage 10 à 50 € par m². L’amiante reste en place : il faudra le retirer un jour, et le signaler en cas de vente.' },
+]
+---
+<Guide
+  titre="Changer une toiture en amiante : prix total en 2026"
+  description="Remplacer une toiture en fibrociment amianté : 150 à 350 € TTC/m², retrait compris, soit 9 000 € à plus de 30 000 € pour 100 m². Budget poste par poste."
+  chemin="/prix-remplacement-toiture-amiante"
+  rubrique="Prix 2026"
+  h1="Changer une toiture en amiante : le prix total en 2026"
+  chapo="Remplacer une toiture en fibrociment amianté coûte en général 150 à 350 € TTC par m², retrait des plaques et couverture neuve compris. Pour 100 m², les budgets publiés vont de 9 000 € avec une couverture simple à plus de 30 000 € avec des tuiles et une charpente à reprendre."
+  publie="2026-10-29"
+  misAJour="2026-10-29"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Le budget en trois postes</h2>
+  <p>Un remplacement de toiture amiantée se décompose en trois devis, souvent réunis chez la même entreprise : le retrait de l’amiante, la couverture neuve, et les travaux annexes (charpente, isolation, zinguerie).</p>
+  <div class="tableau">
+    <table>
+      <caption>Prix posés, relevés le 29 octobre 2026. TTC sauf mention contraire.</caption>
+      <thead><tr><th scope="col">Poste</th><th scope="col">Fourchette</th><th scope="col">Source</th></tr></thead>
+      <tbody>
+        <tr><td>Retrait des plaques amiantées, déchets compris</td><td>40 à 100 €/m²</td><td>Habitatpresto, ABC Travaux, Guide-toiture.com</td></tr>
+        <tr><td>Bac acier sans isolation</td><td>25 à 55 €/m²</td><td>Couvreurs-France, Habitatpresto</td></tr>
+        <tr><td>Bac acier isolé ou panneau sandwich</td><td>55 à 125 €/m²</td><td>Couvreurs-France, Habitatpresto</td></tr>
+        <tr><td>Plaques de fibrociment sans amiante</td><td>55 à 80 € HT/m²</td><td>Prix-travaux-m2.com</td></tr>
+        <tr><td>Tuiles (béton ou terre cuite)</td><td>80 à 180 €/m²</td><td>Couvreurs-France</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Les prix de couverture neuve ne comprennent ni la dépose de l’ancienne toiture, ni la reprise de charpente. Couvreurs-France publie d’ailleurs deux fourchettes différentes pour le bac acier (30 à 45 €/m² sur une page, 70 à 130 €/m² sur une autre), selon que l’isolation et les finitions sont comprises : demandez toujours un devis détaillé.</p>
+
+  <h2>Exemples de budgets publiés</h2>
+  <div class="tableau">
+    <table>
+      <caption>Exemples tirés des guides de prix cités, retrait de l’amiante et couverture neuve compris.</caption>
+      <thead><tr><th scope="col">Chantier</th><th scope="col">Budget</th><th scope="col">Source</th></tr></thead>
+      <tbody>
+        <tr><td>Garage de 40 m², couverture neuve en bac acier</td><td>9 000 à 12 000 € TTC</td><td>Habitatpresto, 11 sept. 2026</td></tr>
+        <tr><td>Toiture de 100 m², couverture simple</td><td>9 000 à 18 000 € TTC</td><td>Guide-toiture.com, 30 juin 2026</td></tr>
+        <tr><td>Maison de 90 m², couverture neuve en tuiles</td><td>20 000 à 30 000 € TTC</td><td>Habitatpresto, 11 sept. 2026</td></tr>
+        <tr><td>Toiture de 120 m²</td><td>25 080 € TTC, soit environ 209 €/m²</td><td>Habitatpresto, 11 sept. 2026</td></tr>
+        <tr><td>Maison de 100 m², couverture en tuiles</td><td>Plus de 18 000 €</td><td>Couvreurs-France, 12 juin 2026</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Ce qui fait monter la facture</h2>
+  <ul>
+    <li><strong>La charpente.</strong> Des chevrons ou des pannes abîmés, ou une couverture neuve plus lourde que l’ancienne, imposent une reprise de charpente. C’est le poste le plus variable.</li>
+    <li><strong>L’isolation.</strong> Changer de couverture est le bon moment pour isoler, mais le prix au m² double presque entre un bac acier nu et un panneau isolé.</li>
+    <li><strong>La hauteur, la pente et l’accès</strong> : échafaudage, nacelle, rues étroites.</li>
+    <li><strong>L’état des plaques</strong> : des plaques cassées demandent plus de précautions au retrait.</li>
+    <li><strong>Les petites surfaces</strong> : sous 30 m², un forfait minimum de 1 500 à 2 500 € s’applique souvent au seul retrait (ABC Travaux).</li>
+  </ul>
+  <p>Le détail du prix du retrait seul, matériau par matériau, est sur notre page <a href="/prix-desamiantage">prix du désamiantage</a>.</p>
+
+  <h2>Retirer ou recouvrir ?</h2>
+  <p>Si les plaques sont en bon état et la charpente solide, deux solutions moins chères existent :</p>
+  <ul>
+    <li><strong>L’encapsulage</strong> : un revêtement appliqué sur les plaques pour fixer les fibres. 10 à 50 € par m² selon Habitatpresto et Travaux.com.</li>
+    <li><strong>La surtoiture</strong> : une nouvelle couverture, souvent en bac acier, posée par-dessus l’ancienne. 60 à 120 € par m² selon Couvreurs-France, 80 à 180 € selon Habitatpresto.</li>
+  </ul>
+  <p>Dans les deux cas, l’amiante reste en place : le problème est reporté, pas réglé. Notre guide <a href="/toiture-amiante-que-faire">toiture en amiante : que faire ?</a> compare les quatre options.</p>
+
+  <h2>Les étapes, dans l’ordre</h2>
+  <ol>
+    <li><strong>Le repérage amiante avant travaux</strong> confirme la présence d’amiante et en précise la nature : 100 à 300 € la mission selon Habitatpresto.</li>
+    <li><strong>Le devis</strong> d’une entreprise <a href="/certification-sous-section-3">certifiée sous-section 3</a>, après visite du chantier.</li>
+    <li><strong>Le plan de retrait</strong>, transmis par l’entreprise à l’inspection du travail au moins trente jours avant le début du chantier.</li>
+    <li><strong>Le retrait</strong> des plaques et leur évacuation vers une installation autorisée, avec le bordereau de suivi des déchets.</li>
+    <li><strong>La pose de la couverture neuve</strong>, par la même entreprise ou par un couvreur.</li>
+  </ol>
+</Guide>

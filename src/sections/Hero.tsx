@@ -1,26 +1,17 @@
-import { useRef, type PointerEvent } from 'react'
 import { ArrowUpRight, ShieldCheck } from 'lucide-react'
+import LogoMark from '@/components/LogoMark'
 
-export default function Hero() {
-  const visualRef = useRef<HTMLDivElement>(null)
-  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
-    if (event.pointerType === 'touch' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const bounds = event.currentTarget.getBoundingClientRect()
-    const x = (event.clientX - bounds.left) / bounds.width - 0.5
-    const y = (event.clientY - bounds.top) / bounds.height - 0.5
-    visualRef.current?.style.setProperty('--image-x', `${x * -12}px`)
-    visualRef.current?.style.setProperty('--image-y', `${y * -10}px`)
-  }
-  const resetImagePosition = () => {
-    visualRef.current?.style.setProperty('--image-x', '0px')
-    visualRef.current?.style.setProperty('--image-y', '0px')
-  }
+// Rendu en HTML statique (pas d'hydratation) : l'effet de parallaxe de l'image est
+// branché par un petit script dans src/pages/index.astro.
+export type HeroImage = { src: string; srcSet: string; sizes: string; width: number; height: number }
+
+export default function Hero({ image }: { image: HeroImage }) {
   return (
     <div className="hero-shell" id="hero">
       <section className="hero-layout" aria-labelledby="hero-title">
         <div className="hero-copy-panel">
           <header className="hero-header">
-            <a className="brand" href="#hero" aria-label="Cap Désamiantage, retour en haut"><span className="brand-cap">cap<span className="brand-dot" aria-hidden="true" /></span><span className="brand-name">désamiantage</span></a>
+            <a className="brand" href="#hero" aria-label="Cap Désamiantage, retour en haut"><LogoMark /><span className="brand-cap">cap<span className="brand-dot" aria-hidden="true" /></span><span className="brand-name">désamiantage</span></a>
             <a className="mobile-method" href="#comment-ca-marche">Notre méthode<ArrowUpRight aria-hidden="true" /></a>
           </header>
           <div className="hero-copy">
@@ -38,8 +29,8 @@ export default function Hero() {
           <p className="hero-footnote">La rigueur technique. <span>La tranquillité en plus.</span></p>
         </div>
         <div className="hero-visual-wrap">
-          <div className="hero-visual" ref={visualRef} onPointerMove={handlePointerMove} onPointerLeave={resetImagePosition}>
-            <div className="visual-parallax" aria-hidden="true"><img className="visual-image" src="https://www.alliance-enviro.com/wp-content/uploads/2026/04/asbestos_construction_worker.jpg" alt="" width="1000" height="667" fetchPriority="high" /></div>
+          <div className="hero-visual">
+            <div className="visual-parallax" aria-hidden="true"><img className="visual-image" src={image.src} srcSet={image.srcSet} sizes={image.sizes} alt="" width={image.width} height={image.height} fetchPriority="high" decoding="async" /></div>
             <div className="visual-shade" aria-hidden="true" />
             <div className="visual-topbar"><span className="visual-label">Expertise amiante</span><a className="visual-method" href="#comment-ca-marche">Notre méthode<ArrowUpRight aria-hidden="true" /></a></div>
             <div className="assurance-card"><ShieldCheck className="assurance-icon" aria-hidden="true" /><div><h2>Votre chantier, cadré de A à Z.</h2><p>Un interlocuteur unique et des étapes expliquées, pour avancer sans zone d’ombre.</p></div></div>

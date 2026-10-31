@@ -1,0 +1,78 @@
+---
+import Guide from '@/layouts/Guide.astro'
+
+// Règles relues sur Légifrance le 29 oct. 2026, prix relus le même jour.
+const sources = [
+  { titre: 'Décret n° 96-1133 du 24 décembre 1996 relatif à l’interdiction de l’amiante', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000734637', date: 'version en vigueur au 29 octobre 2026' },
+  { titre: 'Code du travail, article L4412-2 (recherche d’amiante avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013763', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-97 (champ du repérage avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000038322515', date: 'version en vigueur depuis le 31 mars 2019' },
+  { titre: 'Arrêté du 16 juillet 2019 relatif au repérage de l’amiante avant certaines opérations dans les immeubles bâtis', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000038777498', date: 'version en vigueur au 29 octobre 2026' },
+  { titre: 'Code du travail, article L4754-1 (amende administrative)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013789', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'DREETS Auvergne-Rhône-Alpes et CARSAT, foire aux questions sur le repérage avant travaux', url: 'https://auvergne-rhone-alpes.dreets.gouv.fr/sites/dreets-auv-ra/files/files-spip/pdf/faq_conference_rat_-_05.11.2020.pdf', date: 'mise à jour le 5 novembre 2020' },
+  { titre: 'Ministère de la Transition écologique, « Lutte contre l’amiante »', url: 'https://www.ecologie.gouv.fr/lutte-contre-lamiante', date: 'mis à jour le 15 octobre 2024' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2013' },
+  { titre: 'Code du travail, article R4412-133 (contenu du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882717', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Arrêté du 21 décembre 2021 relatif au bordereau de suivi des déchets d’amiante, article 3', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000044571414', date: 'en vigueur depuis le 1er janvier 2022' },
+  { titre: 'Arrêté du 15 février 2016 relatif aux installations de stockage de déchets non dangereux', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000032275960', date: 'version en vigueur au 29 octobre 2026' },
+  { titre: 'INRS, « Amiante : réglementation »', url: 'https://www.inrs.fr/risques/amiante/reglementation.html', date: 'mis à jour le 6 octobre 2022' },
+  { titre: 'Communauté de communes du Pays Loudunais, collecte de l’amiante', url: 'https://www.pays-loudunais.fr/wp-content/uploads/2026/02/DEPLIANT-Collecte-damiante_5-mars-2026.pdf', date: 'collecte du 5 mars 2026' },
+  { titre: 'Habitatpresto, « Prix d’un désamiantage de toiture »', url: 'https://www.habitatpresto.com/mag/toiture/prix-desamiantage-toiture', date: 'publié le 9 octobre 2026' },
+  { titre: 'ABC Travaux, « Prix du désamiantage au m² »', url: 'https://abctravaux.org/prix-desamiantage-m2/', date: 'publié le 21 octobre 2026' },
+]
+
+const faq = [
+  { question: 'Qui peut retirer une toiture en amiante ?', reponse: 'Une entreprise certifiée amiante sous-section 3, et elle seule, dès lors que c’est une entreprise qui fait le travail. Le propriétaire qui commande le retrait doit vérifier cette certification (code du travail, art. R4412-129).' },
+  { question: 'Le repérage amiante avant travaux est-il obligatoire pour un particulier ?', reponse: 'Oui, dès qu’une entreprise intervient sur le chantier : le particulier devient alors donneur d’ordre et doit faire réaliser le repérage avant les travaux, sous peine d’une amende administrative pouvant aller jusqu’à 9 000 €. La DREETS Auvergne-Rhône-Alpes précise qu’un particulier qui travaille seul, sans aucune entreprise, n’y est pas soumis, mais le ministère de la Transition écologique retient une lecture plus large.' },
+  { question: 'Combien de temps faut-il avant le début du chantier ?', reponse: 'Au moins trente jours entre le dépôt du plan de retrait par l’entreprise et le début des travaux (code du travail, art. R4412-137), ramenés à 8 jours en cas d’urgence liée à un sinistre. Il faut y ajouter le temps du repérage et du devis.' },
+  { question: 'Qui s’occupe des déchets d’amiante ?', reponse: 'Quand un particulier commande les travaux, c’est l’entreprise qui émet le bordereau de suivi des déchets d’amiante et les achemine vers une installation autorisée (arrêté du 21 décembre 2021, art. 3). Demandez une copie du bordereau en fin de chantier : c’est votre preuve que les déchets ont été éliminés correctement.' },
+]
+---
+<Guide
+  titre="Désamiantage de toiture : étapes, règles, entreprises"
+  description="Retirer une toiture en fibrociment amianté : repérage, entreprise certifiée sous-section 3, plan de retrait 30 jours avant, déchets tracés. Les 5 étapes."
+  chemin="/desamiantage-toiture-amiante"
+  rubrique="Toiture"
+  h1="Désamiantage de toiture : étapes, règles et entreprises"
+  chapo="Retirer une toiture en fibrociment amianté se fait en cinq étapes : un repérage, le devis d’une entreprise certifiée sous-section 3, un plan de retrait déposé au moins trente jours avant le chantier, le retrait sous protection, puis l’élimination tracée des déchets. Comptez le plus souvent 40 à 100 € par m², déchets compris."
+  publie="2026-10-29"
+  misAJour="2026-10-29"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Votre toiture contient-elle de l’amiante ?</h2>
+  <p>L’amiante est interdit en France depuis le 1er janvier 1997. Une toiture en plaques ondulées ou en ardoises de fibrociment posée avant cette date peut en contenir. Les plaques avec et sans amiante se ressemblent : seule une analyse permet de le confirmer. Si vous hésitez encore entre garder, recouvrir ou retirer, commencez par notre guide <a href="/toiture-amiante-que-faire">toiture en amiante : que faire ?</a></p>
+
+  <h2>Les cinq étapes d’un désamiantage de toiture</h2>
+
+  <h3>1. Le repérage amiante avant travaux</h3>
+  <p>Avant toute opération qui peut exposer des travailleurs à l’amiante, le donneur d’ordre, le maître d’ouvrage ou le propriétaire fait rechercher l’amiante (code du travail, art. L4412-2). L’obligation vise les bâtiments construits avant le 1er janvier 1997 (art. R4412-97) et ses modalités sont fixées par l’arrêté du 16 juillet 2019, selon lequel un repérage conforme à la norme NF X 46-020 est réputé conforme.</p>
+  <ul>
+    <li><strong>Pour un particulier :</strong> dès qu’une entreprise intervient, vous devenez donneur d’ordre et le repérage est obligatoire. Le particulier qui travaille entièrement seul n’y est pas soumis selon la DREETS Auvergne-Rhône-Alpes ; le ministère de la Transition écologique retient une lecture plus large. Dans le doute, faites-le.</li>
+    <li><strong>Sanction :</strong> amende administrative pouvant aller jusqu’à 9 000 € (art. L4754-1).</li>
+    <li><strong>Prix :</strong> 100 à 300 € la mission selon Habitatpresto.</li>
+  </ul>
+
+  <h3>2. Le devis d’une entreprise certifiée sous-section 3</h3>
+  <p>Le retrait d’une toiture amiantée relève de la sous-section 3 du code du travail. Le donneur d’ordre doit faire appel à une entreprise certifiée par un organisme accrédité (art. R4412-129). Vérifier une certification prend quelques minutes : la méthode est sur notre page <a href="/certification-sous-section-3">certification sous-section 3</a>. Le devis se fait après visite du chantier.</p>
+
+  <h3>3. Le plan de retrait</h3>
+  <p>L’entreprise rédige un plan de retrait qui décrit le chantier : localisation et quantités, dates et durée, méthode, mesures d’empoussièrement, protections, gestion des déchets, rapport de repérage (art. R4412-133). Elle le dépose sur la plateforme DEMAT@MIANTE, à destination de l’inspection du travail et des organismes de sécurité sociale, <strong>au moins trente jours avant le début des travaux</strong> (art. R4412-137). En cas d’urgence liée à un sinistre, ce délai est de 8 jours.</p>
+
+  <h3>4. Le retrait</h3>
+  <p>Le chantier est balisé, les plaques sont déposées sans être cassées, emballées dans des conditionnements étanches et étiquetés. Des mesures d’empoussièrement contrôlent l’air pendant le chantier. La couverture neuve peut être posée dans la foulée, par la même entreprise ou par un couvreur.</p>
+
+  <h3>5. L’élimination des déchets</h3>
+  <p>Quand un particulier commande les travaux, c’est l’entreprise qui émet le bordereau de suivi des déchets d’amiante, sur la plateforme nationale Trackdéchets (arrêté du 21 décembre 2021, art. 3). Les déchets partent vers une installation de stockage autorisée : un casier dédié d’installation de déchets non dangereux pour l’amiante lié aux matériaux de construction, ou une installation de déchets dangereux (arrêté du 15 février 2016 ; INRS). Une toiture en plaques ondulées pèse environ 20 kg par m², soit près de 2 tonnes pour 100 m² (Pays Loudunais, mars 2026).</p>
+
+  <h2>Combien coûte un désamiantage de toiture ?</h2>
+  <p>Le plus souvent 40 à 100 € par m², déchets compris, soit 4 000 à 12 000 € pour 100 m². Sous 30 m², un forfait minimum de 1 500 à 2 500 € s’applique souvent (ABC Travaux, octobre 2026). Le détail, poste par poste, est sur notre page <a href="/prix-desamiantage">prix du désamiantage</a>, et le budget avec la couverture neuve sur <a href="/prix-remplacement-toiture-amiante">changer une toiture en amiante : prix</a>.</p>
+
+  <h2>Cas particuliers</h2>
+  <h3>Garage, abri, petite annexe</h3>
+  <p>Le prix au m² est plus élevé, parce que les frais fixes (plan de retrait, installation, transport) pèsent sur une petite surface. Regrouper plusieurs toitures dans un même chantier peut faire baisser la note.</p>
+  <h3>Hangar agricole ou bâtiment professionnel</h3>
+  <p>Les surfaces vont de quelques centaines à plusieurs milliers de m². L’accès en hauteur, la fragilité des plaques et le volume de déchets pèsent lourd dans le devis : faites chiffrer le retrait et la couverture neuve ensemble.</p>
+  <h3>Après une tempête</h3>
+  <p>Ne touchez pas aux plaques cassées et éloignez les personnes. En cas d’urgence liée à un sinistre, le plan de retrait peut être déposé 8 jours avant l’intervention au lieu de trente.</p>
+</Guide>
