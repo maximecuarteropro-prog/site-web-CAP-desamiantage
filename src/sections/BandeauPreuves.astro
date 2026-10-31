@@ -1,0 +1,15 @@
+---
+// Bandeau de preuves sous le hero. Le nombre de chantiers est déclaré par les entreprises
+// partenaires ; Maxime a choisi le 1er nov. 2026 de l'afficher sans attribution détaillée,
+// et sans « partout en France » (aucune couverture géographique promise).
+const preuves = [
+  { valeur: '+1 000', libelle: 'chantiers réalisés' },
+  { valeur: '−24 h', libelle: 'de temps de réponse' },
+  { valeur: '1', libelle: 'seul interlocuteur pour votre chantier' },
+]
+---
+<section class="preuves" aria-label="Cap Désamiantage en chiffres">
+  <ul class="preuves-liste">
+    {preuves.map(({ valeur, libelle }) => <li class="preuve"><strong class="preuve-valeur">{valeur}</strong> <span class="preuve-libelle">{libelle}</span></li>)}
+  </ul>
+</section>

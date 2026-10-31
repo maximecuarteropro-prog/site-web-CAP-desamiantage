@@ -3,6 +3,7 @@ import { getImage } from 'astro:assets'
 import Base from '@/layouts/Base.astro'
 import SiteFooter from '@/components/SiteFooter.astro'
 import Hero from '@/sections/Hero'
+import BandeauPreuves from '@/sections/BandeauPreuves.astro'
 import Process from '@/sections/Process'
 import DemandeChantier from '@/sections/DemandeChantier'
 import photo from '@/assets/hero-retrait-plaque.jpg'
@@ -19,6 +20,7 @@ const image = { src: visuel.src, srcSet: visuel.srcSet.attribute, sizes, width: 
   <link slot="head" rel="preload" as="image" imagesrcset={image.srcSet} imagesizes={sizes} fetchpriority="high" />
   <main>
     <Hero image={image} />
+    <BandeauPreuves />
     <Process />
     <DemandeChantier client:visible />
   </main>

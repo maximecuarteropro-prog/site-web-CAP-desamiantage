@@ -73,12 +73,19 @@ retirée exprès : ne la réintroduis pas.
     - Interdits de marque (PRODUCT.md) : pas de prix ferme, pas de couverture géographique promise
       (« partout en France », « près de chez vous »), pas de chiffre ni d'avis inventé, pas d'angle peur.
     - Chaque chiffre porte sa source et sa date, ou renvoie à la page qui les donne.
+    - Seule exception, décidée par Maxime le 1er nov. 2026 : le bandeau de preuves
+      (`src/sections/BandeauPreuves.astro`) affiche « +1 000 chantiers réalisés », chiffre déclaré
+      par les entreprises partenaires, sans attribution. Ne le retire pas, ne le modifie pas, et
+      n'ajoute pas d'autre chiffre de ce type sans lui demander.
     - La certification se formule comme une propriété des entreprises du réseau : elles sont toutes
       certifiées sous-section 3.
 12. **Hors périmètre de l'accueil, ne pas modifier sans le demander :**
     - `astro.config.mjs`, `public/robots.txt`, `src/lib/site.ts` ;
     - `src/layouts/Guide.astro` et les cinq pages guides ;
-    - `mentions-legales.astro`, `confidentialite.astro`, `src/pages/api/demande.ts`.
+    - `mentions-legales.astro`, `confidentialite.astro`, `src/pages/api/demande.ts` ;
+    - refaits le 1er nov. 2026 à la demande de Maxime : `src/sections/Process.tsx` (ligne de temps
+      façon Indemnis, texte des étapes inchangé), `src/sections/BandeauPreuves.astro` (sous le hero)
+      et le nom en grand du pied de page (`SiteFooter.astro`, `.site-footer-wordmark`).
 
 ## 2. La page d'accueil
 
@@ -129,8 +136,8 @@ Aucune autre page du site ne vise ces requêtes : l'accueil est la seule à pouv
    retirant une plaque de fibrociment ». Retire le `aria-hidden` qui l'entoure si elle porte du sens.
    Supprime l'animation d'entrée qui la masque (`visual-enter`, `image-enter`) ainsi que celle du titre
    (`title-enter`). Voir la règle 1.6.
-8. **Promesses de délai cohérentes.** Le hero dit « dans la journée », le formulaire « sous 24 h ».
-   Choisis une seule formule.
+8. **Promesses de délai cohérentes.** Le bandeau dit « −24 h de temps de réponse », l'étape 2 et le
+   formulaire « sous 24 h ». Aligne le hero, qui dit encore « dans la journée », sur 24 h.
 
 ## 3. Avant de rendre la main
 

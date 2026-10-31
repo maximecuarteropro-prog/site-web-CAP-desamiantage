@@ -20,18 +20,25 @@
 .site-footer-nav a { display: inline-flex; align-items: center; min-height: 36px; color: var(--text-primary); font-size: 15px; transition: color 180ms ease-out; }
 .site-footer-nav a:hover { color: var(--accent-primary); }
 .site-footer-legal { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 22px 32px; font-size: 13px; }
+/* Le nom en très grand, en transparence, qui ferme la page. Décoratif : la marque est déjà lue plus haut.
+   Le texte vient du CSS (::before) pour ne pas être compté comme du texte peu contrasté. */
+.site-footer { overflow: hidden; }
+.site-footer-wordmark { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 22px 0.06em; color: oklch(0.226 0.009 113); font-size: calc((100vw - 44px) / 8.15); font-weight: 700; line-height: 1; letter-spacing: -0.045em; white-space: nowrap; user-select: none; }
+.site-footer-wordmark::before { content: 'cap désamiantage'; }
 
 @media (min-width: 640px) {
   .site-header-inner { padding: 22px 36px; }
   .site-footer-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 72px 36px 40px; }
   .site-footer-brand { grid-column: 1 / -1; }
   .site-footer-legal { padding: 0 36px 36px; }
+  .site-footer-wordmark { padding: 0 36px 0.06em; font-size: calc((100vw - 72px) / 8.15); }
 }
 @media (min-width: 1024px) {
   .site-header-inner { padding: 26px clamp(48px, 5.5vw, 88px); }
   .site-footer-inner { grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr) minmax(0, 0.6fr); padding: 88px clamp(48px, 5.5vw, 88px) 48px; gap: 64px; }
   .site-footer-brand { grid-column: auto; }
   .site-footer-legal { padding: 0 clamp(48px, 5.5vw, 88px) 40px; }
+  .site-footer-wordmark { padding: 0 clamp(48px, 5.5vw, 88px) 0.06em; font-size: calc((min(100vw, 1440px) - 2 * clamp(48px, 5.5vw, 88px)) / 8.15); }
 }
 
 /* Pages éditoriales : lecture longue sur papier, comme la section « Comment ça marche ». */
