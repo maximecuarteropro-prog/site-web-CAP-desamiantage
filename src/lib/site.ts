@@ -5,7 +5,7 @@ export const SITE = {
   editeur: 'France Acquisition',
   contact: 'quartzsolutions@gmail.com',
   description:
-    'Cap Désamiantage met en relation les propriétaires, agriculteurs, entreprises et copropriétés avec des entreprises de désamiantage certifiées amiante sous-section 3.',
+    'Cap Désamiantage met en relation les propriétaires, agriculteurs, entreprises et copropriétés avec nos pros du désamiantage, tous certifiés amiante sous-section 3.',
 }
 
 // Pages éditoriales, dans l'ordre du pied de page. `titreCourt` sert aux liens et au fil d'Ariane.

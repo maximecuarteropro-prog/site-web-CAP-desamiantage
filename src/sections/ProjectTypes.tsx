@@ -18,20 +18,19 @@ export default function ProjectTypes({ onSelect }: ProjectTypesProps) {
       <div className="projects-container">
         <div className="projects-heading-grid">
           <div><span className="projects-kicker">Types de chantiers</span><h2 id="projects-title">Quel est votre projet&nbsp;?</h2></div>
-          <p>Sélectionnez votre situation. Nous préremplirons votre demande pour vous faire gagner du temps.</p>
         </div>
         <div className="project-grid">
           {projectCards.map((project, index) => {
             const Icon = project.icon
             return (
-              <a className="project-card" href="#devis" key={project.id} onClick={() => onSelect(project.id)} aria-label={`${project.title} — demander un devis`}>
+              <a className="project-card" href="#devis" key={project.id} onClick={() => onSelect(project.id)}>
                 <div className="project-card-top"><Icon aria-hidden="true" /><span>0{index + 1}</span></div>
                 <div className="project-card-copy"><h3>{project.title}</h3><p>{project.description}</p></div>
                 <span className="project-card-action" aria-hidden="true">Décrire ce projet<ArrowUpRight /></span>
               </a>
             )
           })}
-          <a className="project-card project-card-help" href="#devis" onClick={() => onSelect(projectTypeIds[6])} aria-label="Autre ou je ne sais pas — être orienté">
+          <a className="project-card project-card-help" href="#devis" onClick={() => onSelect(projectTypeIds[6])}>
             <CircleHelp aria-hidden="true" />
             <div><h3>Autre / je ne sais pas</h3><p>Vous ne savez pas ce que vous avez&nbsp;? Décrivez-nous votre situation, on vous oriente.</p></div>
             <span className="project-help-arrow" aria-hidden="true"><ArrowUpRight /></span>

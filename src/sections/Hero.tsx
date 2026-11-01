@@ -1,5 +1,4 @@
 import { ArrowUpRight, ShieldCheck } from 'lucide-react'
-import LogoMark from '@/components/LogoMark'
 
 // Rendu en HTML statique (pas d'hydratation) : l'effet de parallaxe de l'image est
 // branché par un petit script dans src/pages/index.astro.
@@ -10,10 +9,6 @@ export default function Hero({ image }: { image: HeroImage }) {
     <div className="hero-shell" id="hero">
       <section className="hero-layout" aria-labelledby="hero-title">
         <div className="hero-copy-panel">
-          <header className="hero-header">
-            <a className="brand" href="#hero" aria-label="Cap Désamiantage, retour en haut"><LogoMark /><span className="brand-cap">cap<span className="brand-dot" aria-hidden="true" /></span><span className="brand-name">désamiantage</span></a>
-            <a className="mobile-method" href="#comment-ca-marche">Notre méthode<ArrowUpRight aria-hidden="true" /></a>
-          </header>
           <div className="hero-copy">
             <div className="hero-badge"><ShieldCheck className="badge-check" aria-hidden="true" /><span>Certifiés en désamiantage</span></div>
             <h1 className="hero-title" id="hero-title">
@@ -26,7 +21,6 @@ export default function Hero({ image }: { image: HeroImage }) {
               <p className="hero-cta-note">Nous vous répondons dans la journée.</p>
             </div>
           </div>
-          <p className="hero-footnote">La rigueur technique. <span>La tranquillité en plus.</span></p>
         </div>
         <div className="hero-visual-wrap">
           <div className="hero-visual">

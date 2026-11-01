@@ -1,11 +1,36 @@
 /* En-tête, pied de page et pages éditoriales. Reprend les jetons, la typographie et les
    surfaces de la première page (encre, papier, jaune) sans nouvelle couleur. */
 
-.site-header { color: var(--text-primary); background: var(--surface-page); }
-.site-header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; max-width: 1440px; margin: 0 auto; padding: 18px 22px; }
-.site-header .hero-cta { min-height: 52px; padding-left: 18px; gap: 14px; font-size: 14px; }
-.site-header .cta-icon { width: 40px; height: 40px; }
+/* Bandeau de menu, collé en haut de l'écran. Hauteur commune : --entete (index.css). */
+.site-header { position: sticky; top: 0; z-index: 50; color: var(--text-primary); background: oklch(0.17 0.009 115 / 0.94); border-bottom: 1px solid oklch(0.27 0.009 115); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.site-header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; max-width: 1440px; height: var(--entete); margin: 0 auto; padding: 0 16px 0 22px; }
+.site-header .brand { flex: 0 0 auto; }
+.site-header .brand-logo { width: 30px; height: 30px; }
+.site-header .brand-cap { font-size: 26px; }
+.site-header .brand-dot { width: 6px; height: 6px; margin-top: 13px; }
+.site-header-actions { display: flex; align-items: center; gap: 8px; }
+.site-header-cta { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; gap: 8px; border-radius: 999px; color: var(--accent-ink); background: var(--accent-primary); font-size: 14px; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; transition: background-color 180ms ease-out; }
+.site-header-cta:hover { background: oklch(0.95 0.17 105); }
+.site-header-cta svg { flex: 0 0 auto; }
+.site-menu-bouton { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; gap: 10px; border: 1px solid oklch(0.32 0.009 115); border-radius: 999px; color: var(--text-primary); background: transparent; font-size: 14px; font-weight: 500; }
+.site-menu-trait, .site-menu-trait::before { position: relative; display: block; width: 14px; height: 1.5px; background: currentColor; transition: transform 180ms ease-out; }
+.site-menu-trait { top: -3px; }
+.site-menu-trait::before { top: 5px; content: ''; }
+[data-menu="ouvert"] .site-menu-trait { top: 0; transform: rotate(45deg); }
+[data-menu="ouvert"] .site-menu-trait::before { top: 0; transform: rotate(-90deg); }
+/* Sur mobile, les liens forment un panneau sous le bandeau. */
+.site-nav { position: absolute; top: 100%; right: 0; left: 0; display: none; padding: 8px 22px 24px; border-bottom: 1px solid oklch(0.27 0.009 115); background: var(--surface-page); }
+[data-menu="ouvert"] .site-nav { display: block; }
+.site-nav ul { display: grid; margin: 0; padding: 0; list-style: none; }
+.site-nav li + li { border-top: 1px solid oklch(0.25 0.009 115); }
+.site-nav a { display: flex; align-items: center; min-height: 56px; color: var(--text-primary); font-size: 19px; font-weight: 500; letter-spacing: -0.02em; transition: color 180ms ease-out; }
+.site-nav a:hover { color: var(--accent-primary); }
+/* Petit écran : bouton de devis court, bouton de menu réduit à son icône (le mot reste lu). */
 .site-header .cta-long { display: none; }
+@media (max-width: 479px) {
+  .site-menu-bouton { justify-content: center; width: 44px; padding: 0; }
+  .site-menu-texte { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
 @media (min-width: 480px) {
   .site-header .cta-long { display: inline; }
   .site-header .cta-court { display: none; }
@@ -20,25 +45,33 @@
 .site-footer-nav a { display: inline-flex; align-items: center; min-height: 36px; color: var(--text-primary); font-size: 15px; transition: color 180ms ease-out; }
 .site-footer-nav a:hover { color: var(--accent-primary); }
 .site-footer-legal { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 22px 32px; font-size: 13px; }
-/* Le nom en très grand, en transparence, qui ferme la page. Décoratif : la marque est déjà lue plus haut.
-   Le texte vient du CSS (::before) pour ne pas être compté comme du texte peu contrasté. */
+/* Le nom en très grand, en dégradé qui s'efface jusqu'à 0 % au ras du bas de page (demande de Maxime).
+   Décoratif : la marque est déjà lue plus haut. Le texte vient du CSS (::before) pour ne pas être compté
+   comme du texte peu contrasté ; la marge négative colle la ligne de base au bord et coupe le jambage du p. */
 .site-footer { overflow: hidden; }
-.site-footer-wordmark { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 22px 0.06em; color: oklch(0.226 0.009 113); font-size: calc((100vw - 44px) / 8.15); font-weight: 700; line-height: 1; letter-spacing: -0.045em; white-space: nowrap; user-select: none; }
-.site-footer-wordmark::before { content: 'cap désamiantage'; }
+.site-footer-wordmark { width: 100%; max-width: 1440px; margin: 0 auto -0.19em; padding: 0 22px; font-size: calc((100vw - 44px) / 8.15); font-weight: 700; line-height: 1; letter-spacing: -0.045em; white-space: nowrap; user-select: none; }
+.site-footer-wordmark::before { display: block; color: transparent; background: linear-gradient(180deg, oklch(0.97 0.006 100 / 0.2) 8%, oklch(0.97 0.006 100 / 0) 80%); -webkit-background-clip: text; background-clip: text; content: 'cap désamiantage'; }
 
 @media (min-width: 640px) {
-  .site-header-inner { padding: 22px 36px; }
+  .site-header-inner { padding: 0 36px; }
   .site-footer-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 72px 36px 40px; }
   .site-footer-brand { grid-column: 1 / -1; }
   .site-footer-legal { padding: 0 36px 36px; }
-  .site-footer-wordmark { padding: 0 36px 0.06em; font-size: calc((100vw - 72px) / 8.15); }
+  .site-footer-wordmark { padding: 0 36px; font-size: calc((100vw - 72px) / 8.15); }
 }
 @media (min-width: 1024px) {
-  .site-header-inner { padding: 26px clamp(48px, 5.5vw, 88px); }
+  .site-header-inner { padding: 0 clamp(48px, 5.5vw, 88px); gap: 32px; }
+  .site-menu-bouton { display: none; }
+  .site-nav { position: static; display: block; margin-left: auto; padding: 0; border: 0; background: none; }
+  .site-nav ul { display: flex; gap: 30px; }
+  .site-nav li + li { border: 0; }
+  .site-nav a { min-height: 44px; color: var(--text-secondary); font-size: 15px; font-weight: 450; letter-spacing: -0.01em; }
+  .site-nav a:hover { color: var(--text-primary); }
+  .site-header-cta { min-height: 46px; padding: 0 20px; }
   .site-footer-inner { grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr) minmax(0, 0.6fr); padding: 88px clamp(48px, 5.5vw, 88px) 48px; gap: 64px; }
   .site-footer-brand { grid-column: auto; }
   .site-footer-legal { padding: 0 clamp(48px, 5.5vw, 88px) 40px; }
-  .site-footer-wordmark { padding: 0 clamp(48px, 5.5vw, 88px) 0.06em; font-size: calc((min(100vw, 1440px) - 2 * clamp(48px, 5.5vw, 88px)) / 8.15); }
+  .site-footer-wordmark { padding: 0 clamp(48px, 5.5vw, 88px); font-size: calc((min(100vw, 1440px) - 2 * clamp(48px, 5.5vw, 88px)) / 8.15); }
 }
 
 /* Pages éditoriales : lecture longue sur papier, comme la section « Comment ça marche ». */
@@ -95,5 +128,5 @@
   .article-cta-inner { grid-template-columns: minmax(0, 1fr) auto; align-items: end; padding: 96px clamp(48px, 5.5vw, 88px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .site-footer-nav a { transition: none !important; }
+  .site-footer-nav a, .site-nav a, .site-header-cta, .site-menu-trait, .site-menu-trait::before { transition: none !important; }
 }

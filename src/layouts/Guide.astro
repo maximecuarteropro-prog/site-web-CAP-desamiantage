@@ -28,8 +28,11 @@ const { titre, description, chemin, rubrique, h1, chapo, publie, misAJour, sourc
 const dateLisible = (iso: string) =>
   new Date(`${iso}T12:00:00Z`).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
 
-// Même image que l'aperçu de partage (Base.astro) : Google la demande pour un Article.
-const image = await getImage({ src: partage, width: 1200, height: 630, fit: 'cover', format: 'jpg' })
+// Aperçu de partage propre au guide (src/assets/apercus/<chemin>.png, généré aux couleurs de Cap), repris
+// comme image de l'Article : Google la demande. À défaut, la photo du hero.
+const apercus = import.meta.glob<{ default: ImageMetadata }>('/src/assets/apercus/*.png', { eager: true })
+const apercu = apercus[`/src/assets/apercus${chemin}.png`]?.default ?? partage
+const image = await getImage({ src: apercu, width: 1200, height: 630, fit: 'cover', format: 'jpg' })
 
 const donnees: Record<string, unknown>[] = [
   {
@@ -49,7 +52,7 @@ const donnees: Record<string, unknown>[] = [
     dateModified: misAJour,
     image: new URL(image.src, SITE.url).href,
     mainEntityOfPage: absolu(chemin),
-    author: { '@id': ORGANISATION['@id'] },
+    author: { '@type': 'Person', name: 'Maxime', worksFor: { '@id': ORGANISATION['@id'] } },
     publisher: { '@id': ORGANISATION['@id'] },
     citation: sources.map((s) => s.url),
   },
@@ -61,7 +64,7 @@ if (faq.length) {
   })
 }
 ---
-<Base titre={titre} description={description} chemin={chemin} type="article" donnees={donnees}>
+<Base titre={titre} description={description} chemin={chemin} type="article" donnees={donnees} apercu={apercu}>
   <SiteHeader />
   <main class="page-article">
     <article class="article-container">
@@ -75,7 +78,7 @@ if (faq.length) {
         <span class="section-kicker">{rubrique}</span>
         <h1>{h1}</h1>
         <p class="article-chapo">{chapo}</p>
-        <p class="article-maj">Mis à jour le <time datetime={misAJour}>{dateLisible(misAJour)}</time> · chaque chiffre est daté et renvoie à sa source.</p>
+        <p class="article-maj">Par Maxime, de Cap Désamiantage · mis à jour le <time datetime={misAJour}>{dateLisible(misAJour)}</time> · chaque chiffre est daté et renvoie à sa source.</p>
       </header>
       <div class="article-body">
         <slot />
@@ -107,8 +110,8 @@ if (faq.length) {
     <div class="article-cta-inner">
       <div>
         <span class="projects-kicker">Votre chantier</span>
-        <h2 id="titre-cta">Un devis d'une entreprise certifiée sous-section 3.</h2>
-        <p>Décrivez votre chantier en deux minutes. C'est gratuit et sans engagement.</p>
+        <h2 id="titre-cta">Obtenez votre devis.</h2>
+        <p>Gratuit et retour en 24 h.</p>
       </div>
       <a class="hero-cta" href="/#devis"><span>Décrire mon chantier</span><span class="cta-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></span></a>
     </div>

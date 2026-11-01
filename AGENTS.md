@@ -49,8 +49,8 @@ retirée exprès : ne la réintroduis pas.
      section.
    - Pas de bibliothèque d'animation (framer-motion, GSAP) : les animations se font en CSS.
    - Un petit effet se fait dans un `<script>` Astro, comme la parallaxe de `index.astro`.
-8. **Police.** Archivo, hébergée dans `public/fonts/`. Pas de Google Fonts (transfert d'adresse IP),
-   pas de nouvelle famille de police.
+8. **Police.** Archivo, dans `src/assets/fonts/` (passée par Vite : nom versionné, cache illimité ; la licence
+   reste dans `public/fonts/`). Pas de Google Fonts (transfert d'adresse IP), pas de nouvelle famille de police.
 9. **Liens internes.**
    - Toujours un vrai `<a href="/chemin">` : pas de navigation par `onClick`, pas de `<button>`
      pour changer de page.
@@ -74,18 +74,27 @@ retirée exprès : ne la réintroduis pas.
       (« partout en France », « près de chez vous »), pas de chiffre ni d'avis inventé, pas d'angle peur.
     - Chaque chiffre porte sa source et sa date, ou renvoie à la page qui les donne.
     - Seule exception, décidée par Maxime le 1er nov. 2026 : le bandeau de preuves
-      (`src/sections/BandeauPreuves.astro`) affiche « +1 000 chantiers réalisés », chiffre déclaré
-      par les entreprises partenaires, sans attribution. Ne le retire pas, ne le modifie pas, et
+      (`src/sections/BandeauPreuves.astro`) affiche « +1 000 chantiers réalisés par nos pros », chiffre
+      déclaré par nos pros. Ne le retire pas, ne le modifie pas, et
       n'ajoute pas d'autre chiffre de ce type sans lui demander.
-    - La certification se formule comme une propriété des entreprises du réseau : elles sont toutes
-      certifiées sous-section 3.
+    - **Vocabulaire (décision de Maxime, 1er nov. 2026) :** le site parle de « nos pros » et de « nous », comme un
+      seul réseau. Jamais « entreprises partenaires » ni « entreprise » pour celui qui fait les travaux. Tous nos pros
+      sont certifiés sous-section 3. Les travaux sont faits par « nos pros », jamais par « nous ».
+      Exceptions : les titres des sources, les listes officielles (« liste des entreprises certifiées »), les clients
+      (« entreprise ou collectivité ») et les pages légales, qui disent que nos pros sont des entreprises certifiées
+      indépendantes (obligation d'information).
 12. **Hors périmètre de l'accueil, ne pas modifier sans le demander :**
     - `astro.config.mjs`, `public/robots.txt`, `src/lib/site.ts` ;
     - `src/layouts/Guide.astro` et les cinq pages guides ;
     - `mentions-legales.astro`, `confidentialite.astro`, `src/pages/api/demande.ts` ;
     - refaits le 1er nov. 2026 à la demande de Maxime : `src/sections/Process.tsx` (ligne de temps
       façon Indemnis, texte des étapes inchangé), `src/sections/BandeauPreuves.astro` (sous le hero)
-      et le nom en grand du pied de page (`SiteFooter.astro`, `.site-footer-wordmark`).
+      et le nom en grand du pied de page (`SiteFooter.astro`, `.site-footer-wordmark`) ;
+    - refaits le 1er nov. 2026 (suite) : le bandeau de menu collant (`SiteHeader.astro`, sur toutes les pages,
+      accueil compris), le formulaire (`QuoteForm.tsx` et `contracts/demande.ts` : les questions du formulaire
+      Meta, avec leurs libellés exacts, que le Lead Router qualifie), la route `src/pages/api/demande.ts`
+      (branchée au Lead Router, variable Vercel `LEAD_ROUTER_ENDPOINT` ; les champs `suivi_…` y restent internes,
+      jamais envoyés au pro).
 
 ## 2. La page d'accueil
 
@@ -96,11 +105,9 @@ Aucune autre page du site ne vise ces requêtes : l'accueil est la seule à pouv
 
 1. **Title.** Garder « Entreprise de désamiantage certifiée | Cap Désamiantage » (55 caractères),
    ou une variante qui commence par les mêmes mots.
-2. **H1.** Il doit contenir « désamiantage », et si possible « entreprise » et « certifiée ».
-   Aujourd'hui, « Votre désamiantage, sans le stress » ne dit pas ce qu'on propose. Le ton de marque
-   peut rester, par exemple « Une entreprise de désamiantage certifiée, sans le stress ».
+2. **H1.** Décision de Maxime (1er nov. 2026) : il reste « Votre désamiantage, sans le stress ». N'y touche pas.
 3. **Les deux premières phrases** disent ce qu'on fait et pour qui :
-   - une mise en relation avec une entreprise certifiée sous-section 3 ;
+   - nos pros, tous certifiés sous-section 3 ;
    - pour les particuliers, les agriculteurs, les copropriétés et les entreprises ;
    - gratuite, devis après visite.
    Aujourd'hui, ni « particulier » ni « sous-section 3 » n'apparaissent sur l'accueil.
@@ -134,8 +141,8 @@ Aucune autre page du site ne vise ces requêtes : l'accueil est la seule à pouv
    Le même tableau `faq` sert à afficher la FAQ, pour que le texte soit identique.
 7. **Image du hero.** Donne-lui un `alt` descriptif, par exemple « Opérateur en combinaison
    retirant une plaque de fibrociment ». Retire le `aria-hidden` qui l'entoure si elle porte du sens.
-   Supprime l'animation d'entrée qui la masque (`visual-enter`, `image-enter`) ainsi que celle du titre
-   (`title-enter`). Voir la règle 1.6.
+   Les animations d'entrée qui masquaient le titre, la photo et le bouton ont été retirées le 1er nov. 2026
+   (LCP mesuré à 2,0 s) : ne les remets pas. Voir la règle 1.6.
 8. **Promesses de délai cohérentes.** Le bandeau dit « −24 h de temps de réponse », l'étape 2 et le
    formulaire « sous 24 h ». Aligne le hero, qui dit encore « dans la journée », sur 24 h.
 

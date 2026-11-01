@@ -13,12 +13,15 @@ interface Props {
   type?: 'website' | 'article'
   donnees?: Record<string, unknown>[]
   indexable?: boolean
+  apercu?: ImageMetadata // image de partage propre à la page (sinon la photo du hero)
 }
 
-const { titre, description, chemin, type = 'website', donnees = [], indexable = true } = Astro.props
+const { titre, description, chemin, type = 'website', donnees = [], indexable = true, apercu = partage } = Astro.props
 const canonique = absolu(chemin)
-const imagePartage = await getImage({ src: partage, width: 1200, height: 630, fit: 'cover', format: 'jpg' })
+const imagePartage = await getImage({ src: apercu, width: 1200, height: 630, fit: 'cover', format: 'jpg' })
 const graphe = { '@context': 'https://schema.org', '@graph': [ORGANISATION, SITE_WEB, ...donnees] }
+import archivoLatin from '@/assets/fonts/archivo-latin-wght-normal.woff2?url'
+import Analytics from '@vercel/analytics/astro'
 ---
 <!doctype html>
 <html lang="fr">
@@ -42,11 +45,15 @@ const graphe = { '@context': 'https://schema.org', '@graph': [ORGANISATION, SITE
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="preload" href="/fonts/archivo-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={archivoLatin} as="font" type="font/woff2" crossorigin />
     <slot name="head" />
     <script type="application/ld+json" set:html={JSON.stringify(graphe)} />
+    <!-- Page d'arrivée sur le site, jointe à la demande de devis pour savoir quel guide amène des demandes. -->
+    <script is:inline>try { sessionStorage.getItem('cap-page-entree') || sessionStorage.setItem('cap-page-entree', location.pathname) } catch (e) {}</script>
   </head>
   <body>
     <slot />
+    <!-- Mesure d'audience Vercel, sans cookie : pas de bandeau de consentement nécessaire. -->
+    <Analytics />
   </body>
 </html>

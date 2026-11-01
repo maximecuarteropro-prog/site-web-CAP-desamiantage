@@ -1,11 +1,42 @@
 ---
-// En-tête des pages intérieures : même marque et même bouton que la première page.
+// Bandeau de menu de toutes les pages : marque, liens et bouton de devis. Il reste collé en haut de
+// l'écran pendant le défilement ; sur mobile, c'est aussi le bouton de devis toujours visible.
+// Sous 1024 px, les liens passent dans un panneau ouvert par le bouton « Menu ».
 import LogoMark from '@/components/LogoMark'
 import '@/styles/site.css'
+
+const liens = [
+  { href: '/#comment-ca-marche', texte: 'Comment ça marche' },
+  { href: '/#types-de-chantiers', texte: 'Vos chantiers' },
+  { href: '/prix-desamiantage', texte: 'Prix' },
+  { href: '/certification-sous-section-3', texte: 'Certification' },
+]
 ---
-<header class="site-header">
+<header class="site-header" data-menu="ferme">
   <div class="site-header-inner">
     <a class="brand" href="/" aria-label="Cap Désamiantage, accueil"><LogoMark /><span class="brand-cap">cap<span class="brand-dot" aria-hidden="true"></span></span> <span class="brand-name">désamiantage</span></a>
-    <a class="hero-cta site-header-cta" href="/#devis"><span class="cta-long">Obtenir un devis</span><span class="cta-court">Devis</span><span class="cta-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></span></a>
+    <nav class="site-nav" id="menu-principal" aria-label="Menu principal">
+      <ul>
+        {liens.map((lien) => <li><a href={lien.href}>{lien.texte}</a></li>)}
+      </ul>
+    </nav>
+    <div class="site-header-actions">
+      <a class="site-header-cta" href="/#devis"><span class="cta-long">Obtenir un devis</span><span class="cta-court">Devis</span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></a>
+      <button class="site-menu-bouton" type="button" aria-expanded="false" aria-controls="menu-principal"><span class="site-menu-trait" aria-hidden="true"></span><span class="site-menu-texte">Menu</span></button>
+    </div>
   </div>
 </header>
+
+<script>
+  // Ouvre et ferme le panneau du menu sur mobile ; il se referme au choix d'un lien ou avec Échap.
+  const entete = document.querySelector<HTMLElement>('.site-header')
+  const bouton = entete?.querySelector<HTMLButtonElement>('.site-menu-bouton')
+  const basculer = (ouvert: boolean) => {
+    if (!entete || !bouton) return
+    entete.dataset.menu = ouvert ? 'ouvert' : 'ferme'
+    bouton.setAttribute('aria-expanded', String(ouvert))
+  }
+  bouton?.addEventListener('click', () => basculer(entete?.dataset.menu !== 'ouvert'))
+  entete?.querySelectorAll('.site-nav a').forEach((lien) => lien.addEventListener('click', () => basculer(false)))
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') basculer(false) })
+</script>

@@ -9,7 +9,8 @@ import vercel from '@astrojs/vercel';
 export default defineConfig({
   site: 'https://cap-desamiantage.fr',
   trailingSlash: 'never',
-  build: { format: 'file' },
+  // CSS dans la page : pas de requête bloquante avant le premier affichage (une seule feuille, ~40 Ko).
+  build: { format: 'file', inlineStylesheets: 'always' },
   compressHTML: true,
   adapter: vercel(),
   integrations: [

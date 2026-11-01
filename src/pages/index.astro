@@ -1,6 +1,7 @@
 ---
 import { getImage } from 'astro:assets'
 import Base from '@/layouts/Base.astro'
+import SiteHeader from '@/components/SiteHeader.astro'
 import SiteFooter from '@/components/SiteFooter.astro'
 import Hero from '@/sections/Hero'
 import BandeauPreuves from '@/sections/BandeauPreuves.astro'
@@ -14,10 +15,11 @@ const image = { src: visuel.src, srcSet: visuel.srcSet.attribute, sizes, width: 
 ---
 <Base
   titre="Entreprise de désamiantage certifiée | Cap Désamiantage"
-  description="Toiture en fibrociment, dalles, flocage : décrivez votre chantier et recevez le devis d'une entreprise certifiée amiante sous-section 3. Gratuit."
+  description="Toiture en fibrociment, dalles, flocage : décrivez votre chantier et recevez le devis de l’un de nos pros certifiés amiante sous-section 3. Gratuit."
   chemin="/"
 >
   <link slot="head" rel="preload" as="image" imagesrcset={image.srcSet} imagesizes={sizes} fetchpriority="high" />
+  <SiteHeader />
   <main>
     <Hero image={image} />
     <BandeauPreuves />
