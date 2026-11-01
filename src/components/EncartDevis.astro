@@ -1,0 +1,25 @@
+---
+// Encart de devis au milieu d'un guide (demande de Maxime, 1er nov. 2026) : la photo d'un pro qui mesure
+// une toiture, fondue dans l'encre par un dégradé, et le même appel que le bas de page. Un par guide, placé
+// à la main après la section qui donne envie d'agir ; `accroche` fait le lien avec cette section.
+// Photo générée (kie.ai, Nano Banana Pro) : elle illustre le métier, elle ne présente pas un pro réel.
+import { Picture } from 'astro:assets'
+import photo from '@/assets/encart-devis.jpg'
+
+interface Props {
+  accroche: string
+}
+
+const { accroche } = Astro.props
+---
+<aside class="encart-devis" aria-label="Demande de devis">
+  <div class="encart-visuel">
+    <Picture src={photo} formats={['avif', 'webp']} widths={[480, 760, 1100]} sizes="(min-width: 768px) 480px, 100vw" quality={70} alt="Un pro en combinaison de protection mesure une toiture en fibrociment avant de faire son devis" loading="lazy" decoding="async" />
+  </div>
+  <div class="encart-texte">
+    <p class="encart-kicker">Votre chantier</p>
+    <p class="encart-titre">Obtenez votre devis.</p>
+    <p class="encart-accroche">{accroche} Gratuit et retour en 24&nbsp;h.</p>
+    <a class="hero-cta" href="/#devis"><span>Décrire mon chantier</span><span class="cta-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></span></a>
+  </div>
+</aside>

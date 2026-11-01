@@ -94,7 +94,11 @@ retirée exprès : ne la réintroduis pas.
       accueil compris), le formulaire (`QuoteForm.tsx` et `contracts/demande.ts` : les questions du formulaire
       Meta, avec leurs libellés exacts, que le Lead Router qualifie), la route `src/pages/api/demande.ts`
       (branchée au Lead Router, variable Vercel `LEAD_ROUTER_ENDPOINT` ; les champs `suivi_…` y restent internes,
-      jamais envoyés au pro).
+      jamais envoyés au pro) ;
+    - ajouté le 1er nov. 2026 à la demande de Maxime : l'encart de devis au milieu des guides
+      (`src/components/EncartDevis.astro`, un par guide, placé à la main avec une `accroche` liée à la section
+      d'avant ; photo `src/assets/encart-devis.jpg` générée par kie.ai).
+13. **Pas de numéro de téléphone** sur le site tant qu'il n'y a pas de standard (Maxime, 1er nov. 2026).
 
 ## 2. La page d'accueil
 
@@ -124,12 +128,8 @@ Aucune autre page du site ne vise ces requêtes : l'accueil est la seule à pouv
    - **Pour qui :** particuliers, agriculteurs, copropriétés, entreprises.
    - **Pourquoi une entreprise certifiée sous-section 3 :** trois phrases et un lien vers la page
      certification.
-   - **Combien ça coûte :** trois lignes de fourchettes reprises de `/prix-desamiantage`, avec la
-     source et la date, et un lien vers la page.
-     - toiture en fibrociment : 40 à 100 €/m², déchets compris ;
-     - dalles : 25 à 80 €/m² ;
-     - flocage : 60 à 250 €/m² ;
-     - sources : relevés du 29 oct. 2026.
+   - **Pas de prix sur l'accueil** (décision de Maxime, 1er nov. 2026) : les fourchettes restent sur
+     `/prix-desamiantage`, vers laquelle l'accueil renvoie par un lien.
    - **Questions fréquentes** (4 ou 5), avec un `FAQPage` en JSON-LD.
      - Exemples : « Qui peut retirer de l'amiante ? », « Combien coûte un désamiantage ? »,
        « Le service est-il payant ? », « Combien de temps avant le chantier ? ».
