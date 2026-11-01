@@ -143,8 +143,11 @@ Aucune autre page du site ne vise ces requêtes : l'accueil est la seule à pouv
    retirant une plaque de fibrociment ». Retire le `aria-hidden` qui l'entoure si elle porte du sens.
    Les animations d'entrée qui masquaient le titre, la photo et le bouton ont été retirées le 1er nov. 2026
    (LCP mesuré à 2,0 s) : ne les remets pas. Voir la règle 1.6.
-8. **Promesses de délai cohérentes.** Le bandeau dit « −24 h de temps de réponse », l'étape 2 et le
-   formulaire « sous 24 h ». Aligne le hero, qui dit encore « dans la journée », sur 24 h.
+8. **Une seule promesse de rappel** (décision de Maxime, 1er nov. 2026) : c'est **l'un de nos pros** qui
+   rappelle, sous 24 h. Jamais « un conseiller » ni « Cap Désamiantage vous rappelle » : il n'y a pas de standard.
+   Le hero, les étapes 2 et 3, le formulaire, la case de consentement et `/confidentialite` disent la même chose.
+   La case de consentement couvre la transmission de la demande à un seul pro de son secteur (attribution du
+   Lead Router) ; si ce parcours change, change aussi la case, `suivi_consentement` et `/confidentialite`.
 
 ## 3. Avant de rendre la main
 

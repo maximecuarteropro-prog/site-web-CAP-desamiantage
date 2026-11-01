@@ -18,7 +18,7 @@ export default function Hero({ image }: { image: HeroImage }) {
             <p className="hero-description">Cap Désamiantage coordonne chaque étape de votre chantier avec des explications claires, du premier diagnostic à la restitution.</p>
             <div className="hero-action-group">
               <a className="hero-cta" href="#devis"><span>Obtenir un devis</span><span className="cta-icon" aria-hidden="true"><ArrowUpRight /></span></a>
-              <p className="hero-cta-note">Nous vous répondons dans la journée.</p>
+              <p className="hero-cta-note">L’un de nos pros vous rappelle sous 24 h.</p>
             </div>
           </div>
         </div>

@@ -60,7 +60,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Préfixe « suivi_ » : visible dans le Lead Router (fiche du lead), jamais envoyé au pro.
     suivi_page_entree: texte(d.pageEntree, 300),
     suivi_page: texte(d.page, 300),
-    suivi_consentement: 'Rappel par Cap Désamiantage ; transmission à un pro avec accord',
+    suivi_consentement: 'Case cochée sur le site : transmission à un seul de nos pros (entreprise certifiée indépendante du secteur) pour rappel et devis',
   }
 
   try {

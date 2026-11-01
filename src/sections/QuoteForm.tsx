@@ -52,14 +52,14 @@ export default function QuoteForm({ selectedProject }: { selectedProject: Projec
       <div className="quote-container">
         <div className="quote-intro">
           <span className="quote-kicker">Votre demande</span><h2 id="quote-title">Parlons de votre chantier.</h2>
-          <p>4 questions, 1 minute. Un conseiller vous rappelle sous 24 h.</p>
+          <p>4 questions, 1 minute. L’un de nos pros vous rappelle sous 24 h.</p>
           <div className="quote-reassurance"><Check aria-hidden="true" />Gratuit et sans engagement</div>
         </div>
         <div className="quote-form-panel">
           {requestId !== null ? (
             <div className="quote-success" role="status">
               <span className="success-check"><Check aria-hidden="true" /></span><span className="success-kicker">{requestId ? `Demande n° ${requestId}` : 'Demande enregistrée'}</span>
-              <h3>Merci, c’est bien enregistré.</h3><p>Un conseiller vous rappelle sous 24 h (jours ouvrés). Si vous l’avez, gardez sous la main votre diagnostic amiante et l’année de construction du bâtiment.</p>
+              <h3>Merci, c’est bien enregistré.</h3><p>L’un de nos pros vous rappelle sous 24 h (jours ouvrés). Si vous l’avez, gardez sous la main votre diagnostic amiante et l’année de construction du bâtiment.</p>
               <button type="button" onClick={startAnotherRequest}>Faire une autre demande<ArrowUpRight aria-hidden="true" /></button>
             </div>
           ) : (
@@ -82,7 +82,7 @@ export default function QuoteForm({ selectedProject }: { selectedProject: Projec
                 <div className="form-field form-field-full"><label htmlFor="email">E-mail <span>(facultatif)</span></label><input id="email" type="email" value={formData.email} onChange={(event) => updateField('email', event.target.value)} autoComplete="email" maxLength={320} /></div>
               </div>
               <div className="honeypot" aria-hidden="true"><label htmlFor="website">Ne pas remplir</label><input id="website" tabIndex={-1} autoComplete="off" value={formData.website} onChange={(event) => updateField('website', event.target.value)} /></div>
-              <label className="consent-field"><input type="checkbox" checked={formData.consent} onChange={(event) => updateField('consent', event.target.checked)} required /><span>J’accepte d’être rappelé(e) par Cap Désamiantage au sujet de ma demande. Mes coordonnées ne seront transmises à l’un de nos pros qu’avec mon accord.</span></label>
+              <label className="consent-field"><input type="checkbox" checked={formData.consent} onChange={(event) => updateField('consent', event.target.checked)} required /><span>J’accepte que ma demande et mes coordonnées soient transmises à un seul de nos pros, une entreprise certifiée indépendante de mon secteur, pour qu’il me rappelle et me propose un devis.</span></label>
               {submitQuote.status === 'incomplete' && <p className="form-error" role="alert">Il manque une réponse ou une coordonnée. Vérifiez le formulaire et réessayez.</p>}
               {submitQuote.status === 'error' && <p className="form-error" role="alert">Un problème technique a empêché l’envoi, vos réponses sont conservées. Réessayez dans quelques minutes.</p>}
               <button className="quote-submit" type="submit" disabled={submitQuote.status === 'pending'}><span>{submitQuote.status === 'pending' ? 'Envoi en cours…' : 'Envoyer ma demande'}</span>{submitQuote.status === 'pending' ? <LoaderCircle className="submit-spinner" aria-hidden="true" /> : <ArrowUpRight aria-hidden="true" />}</button>

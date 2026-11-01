@@ -3,7 +3,8 @@ import type { ReactNode } from 'react'
 
 /**
  * Le parcours en quatre étapes, sur une ligne de temps verticale, comme sur le site d'Indemnis
- * (demande de Maxime, 1er nov. 2026). Le texte des étapes est inchangé.
+ * (demande de Maxime, 1er nov. 2026). C'est l'un de nos pros qui rappelle, puis vient chiffrer (étapes 2 et 3,
+ * décision de Maxime du 1er nov. 2026) : jamais « un conseiller », il n'y a pas de standard.
  *
  * Chaque étape porte une vignette : une petite fiche de chantier sur fond d'encre quadrillé, aux couleurs
  * de Cap, qui montre un seul élément concret (les réponses du formulaire, l'appel, le devis, les
@@ -30,16 +31,16 @@ const processSteps = [
     ),
   },
   {
-    number: '02', title: 'On vous rappelle sous 24 h', duration: 'Échange personnalisé', description: 'Un conseiller précise votre besoin, répond à vos questions et vous donne une première fourchette de prix.',
+    number: '02', title: 'L’un de nos pros vous rappelle sous 24 h', duration: 'Échange personnalisé', description: 'Il précise votre besoin, répond à vos questions et vous donne une première fourchette de prix.',
     vignette: (
       <>
         <Entete icone={<PhoneCall />} gauche="Appel entrant" droite="Sous 24 h" />
-        <div className="vignette-appel"><span className="vignette-avatar">C</span><span className="vignette-appel-nom">Votre conseiller Cap<small>Première fourchette de prix</small></span><span className="vignette-onde"><i /><i /><i /><i /><i /></span></div>
+        <div className="vignette-appel"><span className="vignette-avatar">P</span><span className="vignette-appel-nom">Votre pro certifié<small>Première fourchette de prix</small></span><span className="vignette-onde"><i /><i /><i /><i /><i /></span></div>
       </>
     ),
   },
   {
-    number: '03', title: 'Visite et devis gratuit', duration: 'Sans engagement', description: 'L’un de nos pros se déplace, évalue le chantier et vous remet un devis détaillé.',
+    number: '03', title: 'Visite et devis gratuit', duration: 'Sans engagement', description: 'Le même pro se déplace, évalue le chantier et vous remet un devis détaillé.',
     vignette: (
       <>
         <Entete icone={<SearchCheck />} gauche="Devis détaillé" droite="Gratuit" />
