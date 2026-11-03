@@ -7,7 +7,7 @@ import vercel from '@astrojs/vercel';
 // Pages statiques pré-rendues (HTML complet, lisible par Google, Bing et les robots d'IA).
 // Seule la route /api/demande s'exécute sur le serveur (fonction Vercel).
 export default defineConfig({
-  site: 'https://cap-desamiantage.fr',
+  site: 'https://capdesamiantage.fr',
   trailingSlash: 'never',
   // CSS dans la page : pas de requête bloquante avant le premier affichage (une seule feuille, ~40 Ko).
   build: { format: 'file', inlineStylesheets: 'always' },

@@ -1,7 +1,7 @@
 // Données communes du site : identité, éditeur, pages éditoriales.
 export const SITE = {
   nom: 'Cap Désamiantage',
-  url: 'https://cap-desamiantage.fr',
+  url: 'https://capdesamiantage.fr',
   editeur: 'France Acquisition',
   contact: 'quartzsolutions@gmail.com',
   description:
