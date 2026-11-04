@@ -51,7 +51,8 @@ export const POST: APIRoute = async ({ request }) => {
   // Campagne d'origine, seulement si l'adresse de la page en portait une.
   const campagne: Record<string, string> = {}
   for (const nom of parametresCampagne) {
-    const valeur = texte(d[nom], 300)
+    // Un identifiant de clic coupé devient inutilisable : plus de marge que pour les utm.
+    const valeur = texte(d[nom], nom.startsWith('utm_') ? 300 : 500)
     if (valeur) campagne[`suivi_${nom}`] = valeur
   }
 
