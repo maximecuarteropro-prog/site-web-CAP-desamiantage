@@ -9,4 +9,8 @@ export const PAGES_ZONE = [
   { chemin: '/desamiantage-paca', titreCourt: 'Désamiantage en PACA' },
   { chemin: '/desamiantage-marseille', titreCourt: 'Désamiantage à Marseille' },
   { chemin: '/desamiantage-toulon', titreCourt: 'Désamiantage à Toulon' },
+  { chemin: '/desamiantage-bretagne', titreCourt: 'Désamiantage en Bretagne' },
+  { chemin: '/desamiantage-nantes', titreCourt: 'Désamiantage à Nantes' },
+  { chemin: '/desamiantage-lyon', titreCourt: 'Désamiantage à Lyon' },
+  { chemin: '/desamiantage-bordeaux', titreCourt: 'Désamiantage à Bordeaux' },
 ] as const

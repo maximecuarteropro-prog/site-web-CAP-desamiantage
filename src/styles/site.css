@@ -36,7 +36,8 @@
   .site-header .cta-court { display: none; }
 }
 
-.site-footer { color: var(--text-secondary); background: var(--surface-page); border-top: 1px solid oklch(0.27 0.009 115); }
+/* Fond un peu plus clair que la section du dessus, pour détacher le pied de page (demande de Maxime, 4 nov. 2026). */
+.site-footer { color: var(--text-secondary); background: var(--surface-control); border-top: 1px solid oklch(0.3 0.009 115); }
 .site-footer-inner { display: grid; width: 100%; max-width: 1440px; margin: 0 auto; padding: 56px 22px 32px; gap: 36px; }
 .site-footer .brand { color: var(--text-primary); }
 .site-footer-brand p { max-width: 420px; margin: 16px 0 0; font-size: 14px; line-height: 1.6; }
@@ -159,7 +160,14 @@
 
 /* Pages par zone, gabarit ZoneDevis : premier écran sur l'encre (titre, formulaire, preuves), texte sur le papier. */
 .zone-hero { color: var(--text-primary); background: var(--surface-page); }
-.zone-hero-grille { display: grid; grid-template-areas: 'tete' 'form' 'rassurance'; width: 100%; max-width: 1440px; margin: 0 auto; padding: 26px 22px 36px; gap: 22px; }
+.zone-hero-grille { display: grid; grid-template-areas: 'tete' 'form' 'badge' 'rassurance'; width: 100%; max-width: 1440px; margin: 0 auto; padding: 26px 22px 36px; gap: 22px; }
+/* Réassurance reprise de l'accueil. Sur mobile, le badge passe sous le formulaire, pour le garder haut dans l'écran. */
+.zone-badge { grid-area: badge; justify-self: start; }
+.zone-rassurance .zone-photo { aspect-ratio: 4 / 3; }
+.zone-rassurance .zone-photo figcaption { top: 8px; bottom: auto; }
+.zone-photo .assurance-card { right: 10px; bottom: 10px; left: 10px; width: auto; padding: 13px 14px; }
+.assurance-card .assurance-titre { margin: 0; color: var(--text-primary); font-size: 15px; font-weight: 550; line-height: 1.3; letter-spacing: -0.025em; }
+.zone-contenu .zone-assurances { max-width: none; margin: 0; padding: 32px 0; border-top: 0; }
 .zone-tete { grid-area: tete; }
 .zone-tete h1 { margin: 0; font-size: clamp(2.15rem, 9.2vw, 3.25rem); font-stretch: 96%; font-weight: 450; line-height: 1.04; letter-spacing: -0.052em; text-wrap: balance; }
 .zone-chapo { max-width: 560px; margin: 14px 0 0; color: var(--text-secondary); font-size: 16px; line-height: 1.55; letter-spacing: -0.012em; }
@@ -226,7 +234,9 @@
   .article-body .zone-cartes li:last-child:nth-child(odd) { grid-column: 1 / -1; }
 }
 @media (min-width: 1024px) {
-  .zone-hero-grille { grid-template-areas: 'tete form' 'rassurance form'; grid-template-rows: auto 1fr; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); align-items: start; padding: 40px clamp(48px, 5.5vw, 88px) 48px; gap: 26px clamp(40px, 5vw, 80px); }
+  .zone-rassurance .zone-photo { aspect-ratio: 2 / 1; }
+  .zone-photo .assurance-card { right: auto; bottom: 14px; left: 14px; width: min(320px, calc(100% - 28px)); }
+  .zone-hero-grille { grid-template-areas: 'badge form' 'tete form' 'rassurance form'; grid-template-rows: auto auto 1fr; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); align-items: start; padding: 40px clamp(48px, 5.5vw, 88px) 48px; gap: 26px clamp(40px, 5vw, 80px); }
   .zone-tete h1 { font-size: clamp(3.1rem, 4.4vw, 4.2rem); }
   .zone-chapo { margin-top: 18px; font-size: 18px; }
   .zone-rassurance .zone-preuves { display: flex; }

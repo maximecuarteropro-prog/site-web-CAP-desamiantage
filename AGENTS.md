@@ -106,11 +106,13 @@ retirée exprès : ne la réintroduis pas.
       preuves, puis le texte, écrit à la main pour chaque page. La section avec photo passe par `src/components/BlocPro.astro`.
       - `src/components/FormulaireEtapes.astro` : une question à la fois, sans React (script Astro, règle 1.7). Mêmes questions, libellés
         et envoi que `QuoteForm.tsx`. La case de consentement est écrite aux deux endroits : changer les deux ensemble.
+      - Réassurance reprise de l'accueil : badge, carte sur la photo, bandeau de preuves, gratuité et délai indicatif.
       - Menu réduit (`SiteHeader reduit`) et lien de devis du pied de page vers le formulaire de la page (`SiteFooter devis="#devis"`).
       - Les sources sont dans un `<details>`, seule exception à la règle 1.1 : leur texte reste dans le HTML. La FAQ reste affichée.
     - Une page partout où il y a de la demande (décision de Maxime, 4 nov. 2026) : les leads d'une zone sans pro sous contrat sont
       vendus au lead à des partenaires. La promesse du formulaire ne change pas : un pro certifié sous-section 3 rappelle sous 24 h.
-    - Aucun partenaire nommé sur le site pour l'instant (Maxime, 4 nov. 2026), ni sur les pages, ni dans les données structurées.
+    - Aucun pro nommé, signé ou non, ni sur le site, ni dans les données structurées, ni dans les créas par zone, sauf décision
+      contraire de Maxime (4 nov. 2026). Le site ne promet pas de donner le nom : le pro se présente lui-même quand il rappelle.
     - Chaque page est écrite à la main avec des faits locaux sourcés et datés : Insee (tableaux LOG T3 et LOG T8), permis de
       démolir de Sitadel, annuaire ADEME des déchèteries, règlements des collectivités. Jamais de gabarit où seul le nom
       de la ville change : Google le classe en pages satellites.

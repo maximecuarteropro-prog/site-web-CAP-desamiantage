@@ -7,6 +7,7 @@ import SiteHeader from '@/components/SiteHeader.astro'
 import SiteFooter from '@/components/SiteFooter.astro'
 import FormulaireEtapes from '@/components/FormulaireEtapes.astro'
 import BandeauPreuves from '@/sections/BandeauPreuves.astro'
+import { CalendarClock, CircleCheck, ShieldCheck } from 'lucide-react'
 import { ORGANISATION, SITE, absolu } from '@/lib/site'
 import partage from '@/assets/hero-retrait-plaque.jpg'
 import photo from '@/assets/encart-devis.jpg'
@@ -71,6 +72,7 @@ const donnees: Record<string, unknown>[] = [
   <main class="page-article">
     <section class="zone-hero" aria-labelledby="zone-titre">
       <div class="zone-hero-grille">
+        <div class="hero-badge zone-badge"><ShieldCheck className="badge-check" aria-hidden="true" /><span>Certifiés en désamiantage</span></div>
         <div class="zone-tete">
           <h1 id="zone-titre">{h1}</h1>
           <p class="zone-chapo">{chapo}</p>
@@ -85,12 +87,17 @@ const donnees: Record<string, unknown>[] = [
           <figure class="zone-photo">
             <img src={visuel.src} srcset={visuel.srcSet.attribute} sizes={taillesPhoto} width={photo.width} height={photo.height} fetchpriority="high" decoding="async" alt="Un pro en combinaison de protection mesure une toiture en fibrociment avant de faire son devis" />
             <figcaption>Photo d’illustration</figcaption>
+            <div class="assurance-card"><ShieldCheck className="assurance-icon" aria-hidden="true" /><div><p class="assurance-titre">Votre chantier, cadré de A à Z.</p><p>Un interlocuteur unique et des étapes expliquées, pour avancer sans zone d’ombre.</p></div></div>
           </figure>
         </div>
       </div>
     </section>
     <BandeauPreuves />
     <article class="zone-contenu">
+      <div class="process-assurances zone-assurances" role="group" aria-label="Informations importantes">
+        <div class="process-assurance"><CircleCheck aria-hidden="true" /><p><strong>100&nbsp;% gratuit</strong> et sans engagement pour vous</p></div>
+        <div class="process-assurance process-timing"><CalendarClock aria-hidden="true" /><p><strong>Délai indicatif&nbsp;:</strong> prévoyez environ 1&nbsp;mois entre le devis signé et le début du chantier <span>(délai réglementaire)</span></p></div>
+      </div>
       <slot />
       <section class="zone-bloc">
         <h2 id="questions">Questions fréquentes</h2>

@@ -1,0 +1,80 @@
+---
+import ZoneDevis from '@/layouts/ZoneDevis.astro'
+import AppelDevis from '@/components/AppelDevis.astro'
+import BlocPro from '@/components/BlocPro.astro'
+
+// Page orientée devis : la personne cherche un pro. Chiffres : Insee RP 2023 (LOG T3, LOG T8) et Sitadel (permis de
+// démolir autorisés en 2025, hors annulés, classement sur tous les départements), relevés le 4 nov. 2026.
+const sources = [
+  { titre: 'Insee, dossier complet de la commune de Nantes, recensement 2023, tableaux LOG T3 et LOG T8', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-44109', date: 'consulté le 4 novembre 2026' },
+  { titre: 'Insee, dossier complet du département de la Loire-Atlantique, recensement 2023', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=DEP-44', date: 'consulté le 4 novembre 2026' },
+  { titre: 'Insee, dossier complet France entière, recensement 2023', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=FE-1', date: 'consulté le 4 novembre 2026' },
+  { titre: 'SDES, base Sitadel, liste des permis de démolir', url: 'https://www.data.gouv.fr/datasets/689c42fa521ccf80ce954f83', date: 'permis autorisés en 2025, hors permis annulés, comptage du 4 novembre 2026' },
+  { titre: 'Nantes Métropole, « Que faire de ses déchets dangereux ? »', url: 'https://metropole.nantes.fr/mes-services-mon-quotidien/que-faire-de-ses-dechets-dangereux', date: 'mise à jour le 15 octobre 2026' },
+  { titre: 'ADEME, « Que faire de mes déchets : fibrociment »', url: 'https://quefairedemesdechets.ademe.fr/dechet/fibro-ciment/', date: 'mise à jour le 1er octobre 2026' },
+  { titre: 'Code de la santé publique, article R1334-29-7 (état amiante à la vente)', url: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000024117147', date: 'version en vigueur depuis le 1er février 2012' },
+  { titre: 'Code du travail, article L4412-2 (recherche d’amiante avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013763', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Arrêté du 21 décembre 2021 relatif au bordereau de suivi des déchets d’amiante, article 3', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000044571414', date: 'en vigueur depuis le 1er janvier 2022' },
+]
+
+const faq = [
+  { question: 'Que faire avant de démolir un bâtiment à Nantes ?', reponse: 'Commencez par le repérage amiante avant démolition, obligatoire pour un bâtiment construit avant 1997. Si de l’amiante est trouvé, décrivez votre projet dans le formulaire de cette page : l’un de nos pros certifiés vous rappelle sous 24 h, se déplace et chiffre le retrait.' },
+  { question: 'Combien de sacs d’amiante puis-je déposer à Nantes ?', reponse: 'Nantes Métropole limite le dépôt des particuliers à 2 sacs par foyer et par an, sur laissez-passer demandé au moins 15 jours avant, au site de traitement de Rezé. Pour une toiture entière ou des travaux, elle renvoie vers un pro certifié.' },
+  { question: 'Combien coûte un désamiantage à Nantes ?', reponse: 'Nous ne publions pas de prix propre à Nantes. Nos relevés nationaux donnent le plus souvent 40 à 100 €/m² pour une toiture en fibrociment, évacuation comprise. La surface, l’accès et l’état des matériaux font varier le coût : seul un devis après visite le fixe.' },
+  { question: 'Y a-t-il une aide au désamiantage à Nantes ?', reponse: 'Au 4 novembre 2026, nous n’avons pas trouvé d’aide locale en vigueur dédiée au retrait de l’amiante à Nantes ou en Loire-Atlantique. Renseignez-vous auprès de la Métropole avant de signer un devis.' },
+]
+---
+<ZoneDevis
+  titre="Désamiantage à Nantes : devis gratuit d’un pro certifié"
+  description="Démolition, rénovation ou garage en fibrociment à Nantes : l’un de nos pros certifiés vous rappelle sous 24 h, se déplace et chiffre le retrait des matériaux."
+  chemin="/desamiantage-nantes"
+  h1="Désamiantage à Nantes : votre devis gratuit"
+  chapo="Démolition, rénovation ou garage en fibrociment : l’un de nos pros certifiés sous-section 3 vous rappelle sous 24 h, puis se déplace pour un devis détaillé."
+  exempleCodePostal="44000"
+  publie="2026-11-04"
+  misAJour="2026-11-04"
+  sources={sources}
+  faq={faq}
+>
+  <section class="zone-bloc">
+    <h2>Vos chantiers à Nantes</h2>
+    <div class="article-body">
+      <ul class="zone-cartes">
+        <li><h3>Vous démolissez</h3><p>Nantes a compté 151 permis de démolir autorisés en 2025, plus que Paris (140) ou Lille (102), et la Loire-Atlantique se classe troisième des départements français avec 730 permis (Sitadel). Pour un bâtiment construit avant 1997, le repérage amiante vient avant l’intervention d’un pro (code du travail, art. L4412-2). S’il trouve de l’amiante, un pro certifié le retire avant la démolition.</p></li>
+        <li><h3>Vous rénovez</h3><p>À Nantes, 80,6 % des logements sont des appartements (Insee, 2023). Lancez le repérage avant de choisir vos artisans : si une dalle, une colle ou un conduit contient de l’amiante, son retrait passe en premier, et les autres corps de métier travaillent ensuite normalement.</p></li>
+        <li><h3>Vous avez un garage ou un abri en fibrociment</h3><p>Si les plaques sont saines, rien n’oblige à les retirer : notre page <a href="/toiture-amiante-que-faire">toiture en amiante : que faire ?</a> vous aide à décider. Si vous les retirez, voici <a href="/desamiantage-toiture-amiante">les étapes d’un désamiantage de toiture</a>.</p></li>
+        <li><h3>Vous vendez</h3><p>Pour un permis de construire d’avant le 1er juillet 1997, le vendeur fournit un état amiante à l’acheteur (code de la santé publique, art. R1334-29-7). Le retrait n’est pas obligatoire pour autant : un devis vous donne simplement un chiffre à mettre sur la table.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Deux sacs par an, puis le pro</h2>
+    <div class="article-body">
+      <p>Nantes Métropole reprend l’amiante des particuliers dans un cadre strict : un laissez-passer à demander au moins 15 jours avant, 2 sacs au plus par foyer et par an, et un dépôt au site de traitement de Rezé. Cela ne couvre pas une toiture entière. Pour des travaux, la Métropole renvoie vers un pro certifié, dont le devis comprend alors le transport et l’élimination. Les règles générales sont dans notre guide <a href="/dechetterie-amiante">déchetterie et amiante</a>.</p>
+      <AppelDevis accroche="Démolition, rénovation ou toiture : l’un de nos pros certifiés vient voir votre chantier." />
+    </div>
+  </section>
+
+  <BlocPro titre="Ce que votre pro prend en charge">
+    <p>Il visite, chiffre, dépose le plan de retrait sur DEMAT@MIANTE au moins trente jours avant le chantier, ou 8 jours en cas d’urgence liée à un sinistre (art. R4412-137), puis retire les matériaux sous protection et les évacue avec un bordereau de suivi : quand un particulier commande les travaux, c’est lui qui l’émet (arrêté du 21 décembre 2021, art. 3).</p>
+    <p>Ce travail est réservé aux pros certifiés (art. R4412-129). Tous nos pros le sont, et le vôtre se présente dès son appel. Voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>.</p>
+  </BlocPro>
+
+  <section class="zone-bloc">
+    <h2>Prix et délai</h2>
+    <div class="article-body">
+      <p>Nous ne publions pas de prix propre à Nantes. Nos relevés nationaux du 29 octobre 2026 donnent le plus souvent 40 à 100 €/m² pour une toiture en fibrociment, évacuation comprise et couverture neuve non comprise, et 25 à 80 €/m² pour des dalles de sol. Tout est sur notre page du <a href="/prix-desamiantage">prix du désamiantage au m²</a>. Seul un devis après visite donne le prix de votre chantier.</p>
+      <p>Pour une démolition ou une rénovation, comptez le repérage et le devis, puis au moins trente jours pour le plan de retrait avant de pouvoir enchaîner.</p>
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Le bâti nantais en chiffres</h2>
+    <div class="article-body">
+      <p>À Nantes, 62,7 % des résidences principales ont été achevées avant 1991, contre 57,7 % en Loire-Atlantique et 68,5 % en France, dont 26,2 % entre 1971 et 1990 (Insee, 2023). L’amiante est interdit depuis le 1er janvier 1997, et l’Insee ne coupe pas à cette date. Ces chiffres ne disent pas qu’un logement contient de l’amiante : seul un repérage le dit.</p>
+    </div>
+  </section>
+</ZoneDevis>

@@ -1,0 +1,94 @@
+---
+import ZoneDevis from '@/layouts/ZoneDevis.astro'
+import AppelDevis from '@/components/AppelDevis.astro'
+import BlocPro from '@/components/BlocPro.astro'
+
+// Page orientée devis : la personne cherche un pro. Chiffres : Insee RP 2023, Sitadel (permis de démolir autorisés en
+// 2025, hors annulés) et annuaire ADEME (données 2023), relevés le 4 nov. 2026. Le règlement de collecte date de 2016 :
+// c'est le texte en ligne ce jour-là, à relire avec le reste de la page.
+const sources = [
+  { titre: 'Insee, dossier complet de la commune de Bordeaux, recensement 2023, tableaux LOG T3 et LOG T8', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-33063', date: 'consulté le 4 novembre 2026' },
+  { titre: 'Insee, dossier complet du département de la Gironde, recensement 2023', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=DEP-33', date: 'consulté le 4 novembre 2026' },
+  { titre: 'Insee, dossier complet France entière, recensement 2023', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=FE-1', date: 'consulté le 4 novembre 2026' },
+  { titre: 'SDES, base Sitadel, liste des permis de démolir', url: 'https://www.data.gouv.fr/datasets/689c42fa521ccf80ce954f83', date: 'permis autorisés en 2025, hors permis annulés, comptage du 4 novembre 2026' },
+  { titre: 'ADEME, SINOE, annuaire des déchèteries (données ouvertes)', url: 'https://www.data.gouv.fr/datasets/sinoe-r-annuaire-des-decheteries-dma', date: 'données 2023, comptage du 4 novembre 2026' },
+  { titre: 'Bordeaux Métropole, « Où jeter mes déchets ? », fiche fibrociment', url: 'https://www.bordeaux-metropole.fr/a-votre-service/services-aux-particuliers/gerer-reduire-mes-dechets/je-trie-mes-dechets/jeter-mes?query=Fibrociment', date: 'non datée, consultée le 4 novembre 2026' },
+  { titre: 'Bordeaux Métropole, règlement de collecte des déchets ménagers et assimilés', url: 'https://www.bordeaux-metropole.fr/sites/MET-BXMETRO-DRUPAL/files/2023-03/Dechets_Reglement_Collecte_2016-06-2016.pdf', date: 'version de 2016, en ligne le 4 novembre 2026' },
+  { titre: 'Bordeaux Métropole, déchetteries', url: 'https://www.bordeaux-metropole.fr/a-votre-service/services-aux-particuliers/dechets/dechetteries', date: 'mise à jour le 4 novembre 2026' },
+  { titre: 'Service-public.fr, fiche F288 « Amiante dans les bâtiments »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F288', date: 'vérifiée le 13 octobre 2026' },
+  { titre: 'Code de la santé publique, article R1334-29-7 (état amiante à la vente)', url: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000024117147', date: 'version en vigueur depuis le 1er février 2012' },
+  { titre: 'Code du travail, article L4412-2 (recherche d’amiante avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013763', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+]
+
+const faq = [
+  { question: 'Que se passe-t-il après ma demande à Bordeaux ?', reponse: 'L’un de nos pros certifiés sous-section 3 vous rappelle sous 24 h pour préciser le chantier, puis se déplace et remet un devis détaillé. La demande et le devis sont gratuits et sans engagement.' },
+  { question: 'Les déchetteries de Bordeaux Métropole prennent-elles le fibrociment ?', reponse: 'Son règlement de collecte indique que l’amiante ne peut pas être traité dans ses centres de recyclage, et son annuaire renvoie le fibrociment vers un professionnel. Ses déchetteries mobiles refusent aussi l’amiante. En cas de doute, appelez la Métropole avant de vous déplacer.' },
+  { question: 'Combien coûte un désamiantage à Bordeaux ?', reponse: 'Nous ne publions pas de tarif pour Bordeaux. Les prix dépendent surtout du matériau : au niveau national, nos relevés vont de 25 à 80 €/m² pour des dalles de sol, et le plus souvent de 40 à 100 €/m² pour une toiture en fibrociment. Seul un devis après visite donne le prix de votre chantier.' },
+  { question: 'Quand le chantier peut-il commencer à Bordeaux ?', reponse: 'Le pro dépose son plan de retrait au moins trente jours avant le début des travaux, ou 8 jours en cas d’urgence liée à un sinistre (code du travail, art. R4412-137). Ajoutez le temps du repérage, du devis et, en copropriété, du vote en assemblée générale.' },
+]
+---
+<ZoneDevis
+  titre="Désamiantage à Bordeaux : devis gratuit d’un pro certifié"
+  description="À Bordeaux, le fibrociment se confie à un professionnel : l’un de nos pros certifiés vous rappelle sous 24 h, chiffre le retrait et s’occupe des déchets."
+  chemin="/desamiantage-bordeaux"
+  h1="Désamiantage à Bordeaux : votre devis gratuit"
+  chapo="Maison à rénover, immeuble ou bâtiment à démolir : l’un de nos pros certifiés sous-section 3 vous rappelle sous 24 h, puis se déplace pour un devis détaillé."
+  exempleCodePostal="33000"
+  publie="2026-11-04"
+  misAJour="2026-11-04"
+  sources={sources}
+  faq={faq}
+>
+  <section class="zone-bloc">
+    <h2>Votre projet à Bordeaux</h2>
+    <div class="article-body">
+      <ul class="zone-cartes">
+        <li><h3>Une maison ou une échoppe à rénover</h3><p>À Bordeaux, 34,4 % des résidences principales datent d’avant 1946 (Insee, 2023). Même dans une maison ancienne, des travaux plus récents ont pu apporter de l’amiante : dalles, colles, conduits, plaques d’abri. Le repérage est obligatoire dès qu’un pro intervient dans un bâtiment construit avant 1997 (code du travail, art. L4412-2).</p></li>
+        <li><h3>Un appartement ou un immeuble</h3><p>La ville compte 79,0 % d’appartements (Insee, 2023). Le syndic tient le dossier technique amiante des parties communes (service-public.fr, fiche F288), et les travaux sur ces parties passent par un vote en assemblée générale : le devis détaillé du pro sert de base à ce vote.</p></li>
+        <li><h3>Une vente</h3><p>Le vendeur d’un bien dont le permis de construire date d’avant le 1er juillet 1997 remet un état amiante à l’acheteur (code de la santé publique, art. R1334-29-7). Il n’impose pas le retrait, mais un devis répond à la première question de l’acheteur.</p></li>
+        <li><h3>Une démolition</h3><p>Bordeaux a compté 45 permis de démolir autorisés en 2025, et la Gironde 638, ce qui la place au quatrième rang des départements français (Sitadel). Le repérage vient d’abord, le retrait ensuite s’il y a de l’amiante, et la démolition en dernier.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Le fibrociment passe par un professionnel</h2>
+    <div class="article-body">
+      <p>L’annuaire des déchets de Bordeaux Métropole indique que le fibrociment « doit être déposé chez un professionnel », et son règlement de collecte, qui date de 2016, précise que la collecte et le traitement de l’amiante « ne peuvent pas être assurés sur les centres de recyclage ». Ses déchetteries mobiles le refusent aussi. Dans toute la Gironde, 4 déchèteries sur 82 déclaraient l’amiante pour 2023 dans l’annuaire de l’ADEME, toutes autour du bassin d’Arcachon. Le plus simple est donc que le pro qui retire les matériaux les évacue aussi. Les règles générales sont dans notre guide <a href="/dechetterie-amiante">déchetterie et amiante</a>.</p>
+      <AppelDevis accroche="Toiture, sol ou conduit : l’un de nos pros certifiés vient voir votre chantier." />
+    </div>
+  </section>
+
+  <BlocPro titre="Un pro que vous pouvez vérifier">
+    <p>Le retrait et l’encapsulage sont réservés aux pros certifiés (art. R4412-129). Tous nos pros le sont, et le vôtre se présente dès son appel. Voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>.</p>
+  </BlocPro>
+
+  <section class="zone-bloc">
+    <h2>Comment se passe le chantier</h2>
+    <div class="article-body">
+      <ol class="zone-cartes zone-etapes">
+        <li><strong>Le rappel, sous 24 h</strong> Vous précisez le matériau, la surface et vos échéances.</li>
+        <li><strong>La visite</strong> Le pro voit les lieux, puis remet un devis détaillé, sans engagement.</li>
+        <li><strong>Le plan de retrait</strong> S’il est retenu, il le dépose sur DEMAT@MIANTE au moins trente jours avant le chantier (art. R4412-137). Vous n’avez aucune démarche à faire.</li>
+        <li><strong>Le chantier</strong> Il confine la zone si besoin, retire les matériaux sous protection, puis les évacue avec un bordereau de suivi.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Quel budget prévoir</h2>
+    <div class="article-body">
+      <p>Nous ne publions pas de prix propre à Bordeaux. Pour des dalles de sol, nos relevés nationaux du 29 octobre 2026 donnent 25 à 80 €/m², et le plus souvent 40 à 100 €/m² pour une toiture en fibrociment. Chaque matériau est repris sur notre page du <a href="/prix-desamiantage">prix du désamiantage au m²</a>. Seul un devis après visite donne le prix de votre chantier.</p>
+      <p>Au 4 novembre 2026, nous n’avons pas trouvé d’aide locale dédiée au retrait de l’amiante à Bordeaux ou en Gironde.</p>
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Le bâti bordelais en chiffres</h2>
+    <div class="article-body">
+      <p>La ville est plus ancienne que son département : 70,9 % des résidences principales y ont été achevées avant 1991, contre 59,0 % en Gironde et 68,5 % en France (Insee, 2023). Les maisons représentent 20,3 % des logements de Bordeaux et 59,6 % de ceux de la Gironde. Ces chiffres ne disent pas qu’un bâtiment contient de l’amiante : seul un repérage le dit.</p>
+    </div>
+  </section>
+</ZoneDevis>

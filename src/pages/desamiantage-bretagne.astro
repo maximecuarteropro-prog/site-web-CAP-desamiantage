@@ -1,0 +1,102 @@
+---
+import ZoneDevis from '@/layouts/ZoneDevis.astro'
+import AppelDevis from '@/components/AppelDevis.astro'
+import BlocPro from '@/components/BlocPro.astro'
+
+// Page orientée devis : la personne cherche un pro. Chiffres : Insee RP 2023, Sitadel (permis de démolir autorisés en
+// 2025, hors annulés, classement sur tous les départements) et annuaire ADEME (données 2023), relevés le 4 nov. 2026.
+// L'aide de la Région affiche deux dates de clôture : le dire sur la page, et relire la fiche avant toute mise à jour.
+const sources = [
+  { titre: 'Insee, dossier complet de la région Bretagne, recensement 2023, tableaux LOG T3 et LOG T8', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=REG-53', date: 'consulté le 4 novembre 2026' },
+  { titre: 'Insee, dossiers complets des départements 22, 29, 35 et 56, recensement 2023', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=DEP-35', date: 'consultés le 4 novembre 2026' },
+  { titre: 'Insee, dossier complet France entière, recensement 2023', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=FE-1', date: 'consulté le 4 novembre 2026' },
+  { titre: 'SDES, base Sitadel, liste des permis de démolir', url: 'https://www.data.gouv.fr/datasets/689c42fa521ccf80ce954f83', date: 'permis autorisés en 2025, hors permis annulés, comptage du 4 novembre 2026' },
+  { titre: 'ADEME, SINOE, annuaire des déchèteries (données ouvertes)', url: 'https://www.data.gouv.fr/datasets/sinoe-r-annuaire-des-decheteries-dma', date: 'données 2023, comptage du 4 novembre 2026' },
+  { titre: 'Rennes Métropole, carte et horaires des déchèteries', url: 'https://dechets.metropole.rennes.fr/carte-et-horaires-des-decheteries/', date: 'mise à jour le 2 novembre 2026' },
+  { titre: 'Région Bretagne, « Expérimentations de désamiantage de toitures en cas de solarisation - PNR »', url: 'https://www.bretagne.bzh/aides/fiches/soutien-aux-experimentations-de-desamiantage-de-toitures-en-cas-de-solarisation-pnr/', date: 'clôture indiquée au 31 mai 2026, consultée le 4 novembre 2026' },
+  { titre: 'Les-aides.fr, « Aide aux expérimentations de désamiantage de toitures en cas de solarisation »', url: 'https://les-aides.fr/aide/dJgf3w/region-bretagne/aide-aux-experimentations-de-desamiantage-de-toitures-en-cas-de-solarisation.html', date: 'mise à jour le 20 novembre 2025, date limite indiquée au 31 décembre 2026' },
+  { titre: 'ADEME, « Que faire de mes déchets : fibrociment »', url: 'https://quefairedemesdechets.ademe.fr/dechet/fibro-ciment/', date: 'mise à jour le 1er octobre 2026' },
+  { titre: 'Code du travail, article L4412-2 (recherche d’amiante avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013763', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+]
+
+const faq = [
+  { question: 'Comment trouver un pro du désamiantage en Bretagne ?', reponse: 'Indiquez votre chantier et son code postal dans le formulaire de cette page. L’un de nos pros, certifié sous-section 3, vous rappelle sous 24 h et se déplace pour chiffrer le retrait. La demande et le devis sont gratuits et sans engagement.' },
+  { question: 'Un agriculteur peut-il être aidé pour désamianter un hangar ?', reponse: 'Oui, s’il est propriétaire du bâtiment, que celui-ci se trouve dans l’un des trois parcs naturels régionaux bretons et que la toiture accueille une installation solaire. L’aide de la Région va jusqu’à 50 % de l’assiette éligible, dans la limite de 40 €/m² et de 70 000 €. Vérifiez auprès du parc qu’elle est ouverte.' },
+  { question: 'Combien coûte le retrait d’un hangar en fibrociment ?', reponse: 'Nos relevés nationaux du 29 octobre 2026 donnent le plus souvent 40 à 100 €/m² pour une toiture en fibrociment, évacuation comprise et couverture neuve non comprise. La surface, l’accès et l’état des plaques font varier le prix : seul un devis après visite le fixe.' },
+  { question: 'Puis-je déposer mes plaques en déchèterie en Bretagne ?', reponse: 'Cela dépend de votre intercommunalité. Rennes Métropole accepte l’amiante dans 4 déchèteries, sous conditions, mais l’annuaire de l’ADEME pour 2023 n’en recensait aucune dans le Morbihan. Renseignez-vous avant de vous déplacer. L’ADEME déconseille fortement le retrait par soi-même.' },
+]
+---
+<ZoneDevis
+  titre="Désamiantage en Bretagne : devis d’un pro certifié"
+  description="Hangar, toiture ou maison en Bretagne : l’un de nos pros certifiés vous rappelle sous 24 h et chiffre le retrait. Aide régionale possible si projet solaire."
+  chemin="/desamiantage-bretagne"
+  h1="Désamiantage en Bretagne : votre devis gratuit"
+  chapo="Hangar agricole, toiture de maison ou bâtiment à démolir : l’un de nos pros certifiés sous-section 3 vous rappelle sous 24 h, puis se déplace pour un devis."
+  exempleCodePostal="29000"
+  publie="2026-11-04"
+  misAJour="2026-11-04"
+  sources={sources}
+  faq={faq}
+>
+  <section class="zone-bloc">
+    <h2>Votre chantier en Bretagne</h2>
+    <div class="article-body">
+      <ul class="zone-cartes">
+        <li><h3>Un hangar ou un bâtiment agricole</h3><p>Le fibrociment se retrouve souvent sur les hangars, les stabulations et les dépendances. Si la toiture est saine, rien n’oblige à la retirer : notre page <a href="/toiture-amiante-que-faire">toiture en amiante : que faire ?</a> vous aide à décider. Si vous la remplacez pour poser du solaire, une aide régionale peut s’appliquer.</p></li>
+        <li><h3>Une maison et ses annexes</h3><p>La région compte 70,4 % de maisons, contre 54,7 % en France, et 81,9 % dans les Côtes-d’Armor (Insee, 2023). Garages, abris et conduits sont à regarder avant des travaux : le repérage est obligatoire dès qu’un pro intervient dans un bâtiment construit avant 1997 (code du travail, art. L4412-2).</p></li>
+        <li><h3>Un bâtiment à démolir</h3><p>La Bretagne a compté 2 099 permis de démolir autorisés en 2025 sur 19 074 en France, et ses quatre départements figurent dans les dix premiers : Côtes-d’Armor (5e), Ille-et-Vilaine (6e), Morbihan (7e) et Finistère (10e) (Sitadel). Si le repérage trouve de l’amiante, un pro certifié le retire avant la démolition.</p></li>
+        <li><h3>Une copropriété</h3><p>En Ille-et-Vilaine, 41,0 % des logements sont des appartements (Insee, 2023). Le pro remet au syndic un devis détaillé, à présenter en assemblée générale, et vous prévoyez ce vote dans votre calendrier.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Une aide régionale pour les toitures solarisées</h2>
+    <div class="article-body">
+      <p>La Région Bretagne finance, à titre d’expérimentation, le désamiantage des toitures qui préparent une installation solaire. L’aide ne concerne que les bâtiments situés dans l’un des trois parcs naturels régionaux : Armorique, Golfe du Morbihan et Vallée de la Rance – Côte d’Émeraude.</p>
+      <ul class="zone-cartes">
+        <li><strong>Pour qui</strong> Les propriétaires du bâtiment : communes, TPE, PME et ETI, agriculteurs, collectifs citoyens et établissements publics fonciers. Les particuliers sont exclus.</li>
+        <li><strong>Combien</strong> 50 % de l’assiette éligible au plus, dans la limite de 40 €/m² de toiture désamiantée (50 €/m² avec isolation) et de 70 000 € par bénéficiaire. Le minimum d’aide est de 5 000 €.</li>
+        <li><strong>À quelles conditions</strong> Toute la toiture traitée, une surface solaire d’au moins 35 % de la surface désamiantée, et un démarrage des travaux dans l’année qui suit la décision de la Région.</li>
+      </ul>
+      <p>Vérifiez que le dispositif est ouvert avant de signer : la fiche de la Région indique une clôture au 31 mai 2026, et les-aides.fr une date limite au 31 décembre 2026, sous réserve des crédits disponibles. Le parc concerné remet le dossier de demande, et seules les dépenses postérieures à l’accusé de réception du dossier complet comptent. Nous n’avons pas trouvé d’autre aide en Bretagne.</p>
+      <AppelDevis accroche="Hangar, toiture ou démolition : l’un de nos pros certifiés vient voir votre chantier." />
+    </div>
+  </section>
+
+  <BlocPro titre="Ce que votre pro prend en charge">
+    <p>Il visite, chiffre, dépose le plan de retrait sur DEMAT@MIANTE au moins trente jours avant le chantier (art. R4412-137), retire les matériaux sous protection et les évacue avec un bordereau de suivi. Voici <a href="/desamiantage-toiture-amiante">les étapes d’un désamiantage de toiture</a>.</p>
+    <p>Le dépôt en déchèterie n’est pas une solution partout : l’annuaire de l’ADEME pour 2023 n’en recensait aucune acceptant l’amiante dans le Morbihan et une seule dans les Côtes-d’Armor, et Rennes Métropole en compte 4 aujourd’hui. Les règles générales sont dans notre guide <a href="/dechetterie-amiante">déchetterie et amiante</a>.</p>
+    <p>Le retrait étant réservé aux pros certifiés (art. R4412-129), voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>. Tous nos pros le sont, et le vôtre se présente dès son appel.</p>
+  </BlocPro>
+
+  <section class="zone-bloc">
+    <h2>Prix et délai</h2>
+    <div class="article-body">
+      <p>Pour une toiture en fibrociment, nos relevés nationaux du 29 octobre 2026 donnent le plus souvent 40 à 100 €/m², évacuation comprise et couverture neuve non comprise. Tous les matériaux sont sur notre page du <a href="/prix-desamiantage">prix du désamiantage au m²</a>. Seul un devis après visite donne le prix de votre chantier.</p>
+      <p>Comptez le repérage, le devis, puis au moins trente jours pour le plan de retrait, ou 8 jours en cas d’urgence liée à un sinistre. Sur un bâtiment agricole, prévoyez le chantier selon votre activité : le pro en tient compte lors de sa visite.</p>
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Le bâti breton par département</h2>
+    <div class="article-body">
+      <div class="tableau">
+        <table>
+          <caption>Insee, recensement 2023 ; permis de démolir : Sitadel, autorisés en 2025 hors permis annulés. Relevé du 4 novembre 2026.</caption>
+          <thead><tr><th scope="col">Département</th><th scope="col">Résidences principales d’avant 1991</th><th scope="col">Part de maisons</th><th scope="col">Permis de démolir</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Côtes-d’Armor (22)</th><td>66,1 %</td><td>81,9 %</td><td>627</td></tr>
+            <tr><th scope="row">Finistère (29)</th><td>68,8 %</td><td>72,9 %</td><td>419</td></tr>
+            <tr><th scope="row">Ille-et-Vilaine (35)</th><td>57,0 %</td><td>58,3 %</td><td>538</td></tr>
+            <tr><th scope="row">Morbihan (56)</th><td>60,2 %</td><td>73,4 %</td><td>515</td></tr>
+            <tr><th scope="row">Bretagne</th><td>62,7 %</td><td>70,4 %</td><td>2 099</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>L’amiante est interdit depuis le 1er janvier 1997, et l’Insee ne coupe pas à cette date : sa tranche suivante va de 1991 à 2005. Ces chiffres ne disent pas qu’un bâtiment contient de l’amiante : seul un repérage le dit.</p>
+    </div>
+  </section>
+</ZoneDevis>
