@@ -9,7 +9,8 @@ import Process from '@/sections/Process'
 import DemandeChantier from '@/sections/DemandeChantier'
 import photo from '@/assets/hero-retrait-plaque.jpg'
 
-const sizes = '(min-width: 1024px) 47vw, 100vw'
+// L'image est recadrée en hauteur (object-fit: cover) : sa largeur utile suit la hauteur de l'écran, pas seulement sa largeur.
+const sizes = '(min-width: 1024px) max(47vw, 169vh), max(100vw, 83vh)'
 const visuel = await getImage({ src: photo, widths: [480, 760, 1100, 1500], sizes, format: 'webp', quality: 72 })
 const image = { src: visuel.src, srcSet: visuel.srcSet.attribute, sizes, width: photo.width, height: photo.height }
 ---

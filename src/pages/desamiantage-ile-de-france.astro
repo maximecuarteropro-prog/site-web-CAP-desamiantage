@@ -1,0 +1,100 @@
+---
+import ZoneDevis from '@/layouts/ZoneDevis.astro'
+import AppelDevis from '@/components/AppelDevis.astro'
+import BlocPro from '@/components/BlocPro.astro'
+
+// Page orientée devis : la personne cherche un pro. Chiffres : Insee RP 2023 et Sitadel (permis de démolir autorisés
+// en 2025, hors annulés), relevés le 4 nov. 2026. Le détail des déchets est dans /dechetterie-amiante.
+const sources = [
+  { titre: 'Insee, dossier complet de la région Île-de-France, recensement 2023, tableaux LOG T3 et LOG T8', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=REG-11', date: 'consulté le 4 novembre 2026' },
+  { titre: 'Insee, dossiers complets des départements 75, 77, 78, 91, 92, 93, 94 et 95, recensement 2023', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=DEP-77', date: 'consultés le 4 novembre 2026' },
+  { titre: 'SDES, base Sitadel, liste des permis de démolir', url: 'https://www.data.gouv.fr/datasets/689c42fa521ccf80ce954f83', date: 'permis autorisés en 2025, hors permis annulés, comptage du 4 novembre 2026' },
+  { titre: 'Service-public.fr, fiche F288 « Amiante dans les bâtiments »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F288', date: 'vérifiée le 13 octobre 2026' },
+  { titre: 'Code du travail, article L4412-2 (recherche d’amiante avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013763', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Ville de Paris, déchèteries parisiennes', url: 'https://www.paris.fr/pages/huit-decheteries-parisiennes-recyclent-vos-encombrants-17799', date: 'mise à jour le 30 octobre 2026' },
+  { titre: 'Versailles Grand Parc, foire aux questions sur les déchèteries', url: 'https://www.versaillesgrandparc.fr/1551/au-quotidien/gestion-des-dechets/trier-jeter-valoriser/les-decheteries-intercommunales/faq-decheteries.htm', date: 'consultée le 4 novembre 2026' },
+  { titre: 'Cergy-Pontoise, déchèteries', url: 'https://www.cergypontoise.fr/decheteries', date: 'consultée le 4 novembre 2026' },
+]
+
+const faq = [
+  { question: 'Comment obtenir un devis de désamiantage en Île-de-France ?', reponse: 'Décrivez votre chantier dans le formulaire de cette page, avec son code postal. L’un de nos pros vous rappelle sous 24 h, puis se déplace pour établir un devis détaillé. La demande et le devis sont gratuits et sans engagement.' },
+  { question: 'Combien coûte le retrait d’une toiture en fibrociment ?', reponse: 'Nos relevés nationaux du 29 octobre 2026 donnent le plus souvent 40 à 100 €/m², évacuation des déchets comprise et couverture neuve non comprise. Le prix réel dépend de la surface, de l’accès et de l’état des plaques : seul un devis après visite le fixe.' },
+  { question: 'Un pavillon est-il concerné comme une copropriété ?', reponse: 'Les règles du chantier sont les mêmes : pro certifié, plan de retrait déposé au moins trente jours avant, déchets tracés. La différence est la décision : en copropriété, les travaux sur les parties communes passent par un vote en assemblée générale.' },
+  { question: 'Puis-je déposer moi-même de l’amiante en déchèterie en Île-de-France ?', reponse: 'Seulement du fibrociment intact, en petite quantité, et sur les rares territoires qui l’acceptent, surtout en Seine-et-Marne. Paris et de nombreuses intercommunalités le refusent. Sinon, c’est le pro qui évacue les déchets. Le détail figure dans notre guide déchetterie et amiante.' },
+]
+---
+<ZoneDevis
+  titre="Désamiantage en Île-de-France : devis d’un pro certifié"
+  description="Copropriété en petite couronne, pavillon en grande couronne, démolition : l’un de nos pros certifiés vous rappelle sous 24 h, puis chiffre votre chantier."
+  chemin="/desamiantage-ile-de-france"
+  h1="Désamiantage en Île-de-France : votre devis gratuit"
+  chapo="Copropriété en petite couronne, pavillon en Seine-et-Marne ou démolition : l’un de nos pros certifiés sous-section 3 vous rappelle sous 24 h, puis se déplace pour un devis."
+  exempleCodePostal="77000"
+  publie="2026-11-04"
+  misAJour="2026-11-04"
+  sources={sources}
+  faq={faq}
+>
+  <section class="zone-bloc">
+    <h2>Quel chantier, selon votre secteur</h2>
+    <div class="article-body">
+      <ul class="zone-cartes">
+        <li><h3>À Paris et en petite couronne : surtout en copropriété</h3><p>Dans les Hauts-de-Seine, le Val-de-Marne ou la Seine-Saint-Denis, moins d’un logement sur quatre est une maison. Le sujet se traite donc souvent avec le syndic : dossier technique amiante des parties communes, devis présenté en assemblée générale, puis chantier. Pour la capitale, voyez notre page du <a href="/desamiantage-paris">désamiantage à Paris</a>.</p></li>
+        <li><h3>En grande couronne : souvent une maison et ses annexes</h3><p>En Seine-et-Marne, plus d’un logement sur deux est une maison. Les demandes y concernent logiquement les toitures en fibrociment, les garages, les abris et les dépendances, et le propriétaire décide seul. Notre guide du <a href="/desamiantage-toiture-amiante">désamiantage de toiture</a> détaille les étapes.</p></li>
+        <li><h3>Avant des travaux ou une démolition</h3><p>La région a compté 1 680 permis de démolir autorisés en 2025 (Sitadel). Pour un bâtiment construit avant 1997, un repérage amiante est obligatoire avant l’intervention d’un pro (code du travail, art. L4412-2). Si de l’amiante est trouvé, il doit être retiré par un pro certifié avant la suite du chantier.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <BlocPro titre="Un pro que vous pouvez vérifier">
+    <p>Le retrait est réservé aux pros certifiés (art. R4412-129). Tous nos pros le sont, et nous vous donnons le nom du vôtre avant qu’il intervienne. Voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>.</p>
+  </BlocPro>
+
+  <section class="zone-bloc">
+    <h2>Ce que votre pro prend en charge</h2>
+    <div class="article-body">
+      <p>Après sa visite, le pro détaille chaque poste de son devis. S’il est retenu, il s’occupe de tout :</p>
+      <ul>
+        <li>le plan de retrait, déposé sur DEMAT@MIANTE au moins trente jours avant le chantier (art. R4412-137) ;</li>
+        <li>le retrait sous protection, dans une zone confinée ;</li>
+        <li>l’évacuation des déchets vers une installation autorisée, avec un bordereau de suivi.</li>
+      </ul>
+      <p>Ce dernier point compte ici : Paris, Versailles Grand Parc ou Cergy-Pontoise, entre autres, refusent l’amiante dans leurs déchèteries. Pour quelques plaques intactes, les rares solutions publiques sont dans notre guide <a href="/dechetterie-amiante">déchetterie et amiante</a>.</p>
+      <AppelDevis accroche="Maison, immeuble ou démolition : l’un de nos pros certifiés vient voir votre chantier." />
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Prix et délai</h2>
+    <div class="article-body">
+      <p>Pour une toiture en fibrociment, nos relevés nationaux du 29 octobre 2026 donnent le plus souvent 40 à 100 €/m², évacuation comprise. Le détail par matériau est sur notre page du <a href="/prix-desamiantage">prix du désamiantage au m²</a>. Seul un devis après visite donne le prix de votre chantier.</p>
+      <p>Comptez le repérage, le devis, puis au moins trente jours pour le plan de retrait, ou 8 jours en cas d’urgence liée à un sinistre. En copropriété, ajoutez le vote en assemblée générale.</p>
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Le bâti francilien par département</h2>
+    <div class="article-body">
+      <div class="tableau">
+        <table>
+          <caption>Insee, recensement 2023 ; permis de démolir : Sitadel, autorisés en 2025 hors permis annulés. Relevé du 4 novembre 2026.</caption>
+          <thead><tr><th scope="col">Département</th><th scope="col">Résidences principales d’avant 1991</th><th scope="col">Part de maisons</th><th scope="col">Permis de démolir</th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><a href="/desamiantage-paris">Paris (75)</a></th><td>89,4 %</td><td>0,8 %</td><td>140</td></tr>
+            <tr><th scope="row">Seine-et-Marne (77)</th><td>64,9 %</td><td>55,2 %</td><td>234</td></tr>
+            <tr><th scope="row">Yvelines (78)</th><td>72,8 %</td><td>40,4 %</td><td>249</td></tr>
+            <tr><th scope="row">Essonne (91)</th><td>68,2 %</td><td>44,4 %</td><td>235</td></tr>
+            <tr><th scope="row">Hauts-de-Seine (92)</th><td>72,9 %</td><td>10,6 %</td><td>167</td></tr>
+            <tr><th scope="row">Seine-Saint-Denis (93)</th><td>71,0 %</td><td>22,1 %</td><td>264</td></tr>
+            <tr><th scope="row">Val-de-Marne (94)</th><td>73,1 %</td><td>20,4 %</td><td>195</td></tr>
+            <tr><th scope="row">Val-d’Oise (95)</th><td>70,4 %</td><td>41,8 %</td><td>196</td></tr>
+            <tr><th scope="row">Île-de-France</th><td>74,6 %</td><td>25,0 %</td><td>1 680</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>L’amiante est interdit depuis le 1er janvier 1997, et l’Insee ne coupe pas à cette date : sa tranche suivante va de 1991 à 2005. Ces chiffres ne disent pas qu’un bâtiment contient de l’amiante : seul un repérage le dit.</p>
+    </div>
+  </section>
+</ZoneDevis>

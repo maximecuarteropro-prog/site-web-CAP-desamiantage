@@ -1,0 +1,78 @@
+---
+import ZoneDevis from '@/layouts/ZoneDevis.astro'
+import AppelDevis from '@/components/AppelDevis.astro'
+import BlocPro from '@/components/BlocPro.astro'
+
+// Page orientée devis : la personne cherche un pro. Chiffres : Insee RP 2023 et Sitadel (permis de démolir autorisés
+// en 2025, hors annulés), relevés le 4 nov. 2026. Les règles de dépôt de la MEL sont dans /dechetterie-amiante.
+const sources = [
+  { titre: 'Insee, dossier complet de la commune de Lille, recensement 2023, tableaux LOG T3 et LOG T8', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-59350', date: 'consulté le 4 novembre 2026' },
+  { titre: 'Insee, dossier complet du département du Nord, recensement 2023', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=DEP-59', date: 'consulté le 4 novembre 2026' },
+  { titre: 'SDES, base Sitadel, liste des permis de démolir', url: 'https://www.data.gouv.fr/datasets/689c42fa521ccf80ce954f83', date: 'permis autorisés en 2025, hors permis annulés, comptage du 4 novembre 2026' },
+  { titre: 'Métropole européenne de Lille, « Les déchèteries »', url: 'https://www.lillemetropole.fr/votre-quotidien/vivre-la-mel/gestion-des-dechets/les-decheteries', date: 'consultée le 4 novembre 2026' },
+  { titre: 'ADEME, « Que faire de mes déchets : fibrociment »', url: 'https://quefairedemesdechets.ademe.fr/dechet/fibro-ciment/', date: 'mise à jour le 1er octobre 2026' },
+  { titre: 'Service-public.fr, fiche F288 « Amiante dans les bâtiments »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F288', date: 'vérifiée le 13 octobre 2026' },
+  { titre: 'Code du travail, article L4412-2 (recherche d’amiante avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013763', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Code de la santé publique, article R1334-29-7 (état amiante à la vente)', url: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000024117147', date: 'version en vigueur depuis le 1er février 2012' },
+]
+
+const faq = [
+  { question: 'Comment obtenir un devis de désamiantage à Lille ?', reponse: 'Remplissez le formulaire de cette page en indiquant le code postal du chantier. L’un de nos pros vous rappelle sous 24 h, précise votre besoin, puis se déplace pour établir un devis détaillé. Tout cela est gratuit et sans engagement.' },
+  { question: 'Quels travaux à Lille imposent de chercher l’amiante ?', reponse: 'Tous ceux qu’un pro réalise dans un bâtiment construit avant 1997 : rénovation, démolition, reprise de toiture ou de sols. Le repérage amiante doit être fait avant le début des travaux (code du travail, art. L4412-2).' },
+  { question: 'Puis-je apporter mes plaques à une déchèterie de la métropole ?', reponse: 'Oui, si vous êtes un particulier de la métropole et que les plaques sont en amiante lié et intactes : 5 emballages au plus par passage, gratuitement. L’ADEME déconseille en revanche fortement de les retirer vous-même. Pour une toiture entière ou des plaques abîmées, passez par un pro certifié.' },
+  { question: 'Combien coûte un désamiantage à Lille ?', reponse: 'Nous ne publions pas de prix propre à Lille. Nos relevés nationaux donnent le plus souvent 40 à 100 €/m² pour une toiture en fibrociment et 25 à 80 €/m² pour des dalles de sol. Seul un devis après visite donne le prix de votre chantier.' },
+]
+---
+<ZoneDevis
+  titre="Désamiantage à Lille : devis gratuit d’un pro certifié"
+  description="Rénovation, toiture ou démolition à Lille : l’un de nos pros certifiés vous rappelle sous 24 h, se déplace et vous remet un devis détaillé gratuit."
+  chemin="/desamiantage-lille"
+  region={{ nom: 'Hauts-de-France', chemin: '/desamiantage-hauts-de-france' }}
+  h1="Désamiantage à Lille : votre devis gratuit"
+  chapo="Rénovation, toiture de garage ou démolition : l’un de nos pros certifiés sous-section 3 vous rappelle sous 24 h, puis se déplace pour un devis détaillé."
+  exempleCodePostal="59000"
+  publie="2026-11-04"
+  misAJour="2026-11-04"
+  sources={sources}
+  faq={faq}
+>
+  <section class="zone-bloc">
+    <h2>Vous avez un projet à Lille</h2>
+    <div class="article-body">
+      <ul class="zone-cartes">
+        <li><h3>Vous rénovez</h3><p>Plus d’un quart des résidences principales lilloises datent d’avant 1946, et 73,2 % d’avant 1991 (Insee, 2023). Dès qu’un pro intervient dans un bâtiment construit avant 1997, un repérage amiante est obligatoire avant les travaux (code du travail, art. L4412-2). Mieux vaut le lancer tôt : si de l’amiante est trouvé, son retrait se planifie avant les autres corps de métier.</p></li>
+        <li><h3>Vous avez une toiture ou un garage en fibrociment</h3><p>La métropole accepte gratuitement les plaques intactes des particuliers, à raison de 5 emballages par passage : les conditions sont dans notre guide <a href="/dechetterie-amiante">déchetterie et amiante</a>. Mais ce n’est que l’élimination : l’ADEME écrit que le retrait par soi-même est « fortement déconseillé », et une toiture entière représenterait de nombreux allers-retours. Un pro certifié s’occupe du retrait comme de l’évacuation. Voici <a href="/desamiantage-toiture-amiante">les étapes d’un désamiantage de toiture</a>.</p></li>
+        <li><h3>Vous vendez</h3><p>Si le permis de construire date d’avant le 1er juillet 1997, vous fournissez un état amiante à l’acheteur (code de la santé publique, art. R1334-29-7). Rien n’oblige à retirer l’amiante avant la vente. Un devis vous permet toutefois de répondre à l’acheteur avec un chiffre.</p></li>
+        <li><h3>Vous démolissez</h3><p>Lille a compté 102 permis de démolir autorisés en 2025 (Sitadel). Le repérage vient d’abord, puis le retrait par un pro certifié si de l’amiante est trouvé, et seulement ensuite la démolition.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <BlocPro titre="Un pro que vous pouvez vérifier">
+    <p>Le retrait et l’encapsulage sont réservés aux pros certifiés (art. R4412-129). Tous nos pros le sont, et nous vous donnons le nom du vôtre avant qu’il intervienne. Voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>.</p>
+  </BlocPro>
+
+  <section class="zone-bloc">
+    <h2>Comment se passe le chantier</h2>
+    <div class="article-body">
+      <p>Le pro visite les lieux et remet un devis détaillé. S’il est retenu, il dépose son plan de retrait sur DEMAT@MIANTE au moins trente jours avant le début des travaux (art. R4412-137), ou 8 jours en cas d’urgence liée à un sinistre. Il retire ensuite les matériaux sous protection, puis les évacue vers une installation autorisée, avec un bordereau de suivi. En copropriété, le syndic tient le dossier technique amiante des parties communes (service-public.fr, fiche F288), et les travaux sur ces parties passent par un vote en assemblée générale.</p>
+      <AppelDevis accroche="Rénovation, toiture ou démolition : l’un de nos pros certifiés vient voir votre chantier." />
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Quel budget prévoir</h2>
+    <div class="article-body">
+      <p>Nous ne publions pas de prix propre à Lille. Nos relevés nationaux du 29 octobre 2026 donnent le plus souvent 40 à 100 €/m² pour une toiture en fibrociment et 25 à 80 €/m² pour des dalles de sol. Le détail est sur notre page du <a href="/prix-desamiantage">prix du désamiantage au m²</a>. Seul un devis après visite donne le prix de votre chantier.</p>
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Le bâti lillois en chiffres</h2>
+    <div class="article-body">
+      <p>Lille tranche avec son département : 79,3 % des logements y sont des appartements et 19,7 % des maisons, quand les maisons représentent 64,4 % des logements du Nord (Insee, 2023). Ces chiffres ne disent pas qu’un logement contient de l’amiante : seul un repérage le dit. Hors de la métropole, voyez notre page du <a href="/desamiantage-hauts-de-france">désamiantage dans les Hauts-de-France</a>.</p>
+    </div>
+  </section>
+</ZoneDevis>

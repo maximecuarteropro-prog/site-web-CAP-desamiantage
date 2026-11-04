@@ -1,0 +1,139 @@
+---
+// Gabarit des pages par zone (4 nov. 2026). Le formulaire est dans le premier écran, les preuves juste dessous,
+// le texte de référencement ensuite. Aucun îlot React sur la page : voir FormulaireEtapes.astro.
+import { getImage } from 'astro:assets'
+import Base from '@/layouts/Base.astro'
+import SiteHeader from '@/components/SiteHeader.astro'
+import SiteFooter from '@/components/SiteFooter.astro'
+import FormulaireEtapes from '@/components/FormulaireEtapes.astro'
+import BandeauPreuves from '@/sections/BandeauPreuves.astro'
+import { ORGANISATION, SITE, absolu } from '@/lib/site'
+import partage from '@/assets/hero-retrait-plaque.jpg'
+import photo from '@/assets/encart-devis.jpg'
+import type { Question, Source } from '@/layouts/Guide.astro'
+
+interface Props {
+  titre: string
+  description: string
+  chemin: string
+  region?: { nom: string; chemin: string }
+  h1: string
+  chapo: string
+  exempleCodePostal: string
+  publie: string
+  misAJour: string
+  sources: Source[]
+  faq: Question[]
+}
+
+const { titre, description, chemin, region, h1, chapo, exempleCodePostal, publie, misAJour, sources, faq } = Astro.props
+const dateLisible = (iso: string) =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+
+const image = await getImage({ src: partage, width: 1200, height: 630, fit: 'cover', format: 'jpg' })
+// Sur ordinateur, la photo est dans le premier écran : préchargée. Sur mobile, elle passe sous le formulaire : pas de préchargement.
+const taillesPhoto = '(min-width: 1440px) 640px, (min-width: 1024px) 44vw, calc(100vw - 44px)'
+const visuel = await getImage({ src: photo, widths: [480, 760, 1100, 1500], sizes: taillesPhoto, format: 'webp', quality: 72 })
+
+const ariane = [
+  { name: 'Accueil', item: absolu('/') },
+  ...(region ? [{ name: region.nom, item: absolu(region.chemin) }] : []),
+  { name: h1, item: absolu(chemin) },
+]
+const donnees: Record<string, unknown>[] = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: ariane.map((etape, i) => ({ '@type': 'ListItem', position: i + 1, ...etape })),
+  },
+  {
+    '@type': 'Article',
+    '@id': `${absolu(chemin)}#article`,
+    headline: h1,
+    description,
+    inLanguage: 'fr-FR',
+    datePublished: publie,
+    dateModified: misAJour,
+    image: new URL(image.src, SITE.url).href,
+    mainEntityOfPage: absolu(chemin),
+    author: { '@type': 'Person', name: 'Maxime', worksFor: { '@id': ORGANISATION['@id'] } },
+    publisher: { '@id': ORGANISATION['@id'] },
+    citation: sources.map((s) => s.url),
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map((q) => ({ '@type': 'Question', name: q.question, acceptedAnswer: { '@type': 'Answer', text: q.reponse } })),
+  },
+]
+---
+<Base titre={titre} description={description} chemin={chemin} type="article" donnees={donnees}>
+  <link slot="head" rel="preload" as="image" imagesrcset={visuel.srcSet.attribute} imagesizes={taillesPhoto} media="(min-width: 1024px)" fetchpriority="high" />
+  <SiteHeader reduit />
+  <main class="page-article">
+    <section class="zone-hero" aria-labelledby="zone-titre">
+      <div class="zone-hero-grille">
+        <div class="zone-tete">
+          <h1 id="zone-titre">{h1}</h1>
+          <p class="zone-chapo">{chapo}</p>
+        </div>
+        <FormulaireEtapes exempleCodePostal={exempleCodePostal} />
+        <div class="zone-rassurance">
+          <ul class="zone-preuves">
+            <li>Gratuit et sans engagement</li>
+            <li>L’un de nos pros rappelle sous 24&nbsp;h</li>
+            <li>Tous certifiés sous-section&nbsp;3</li>
+          </ul>
+          <figure class="zone-photo">
+            <img src={visuel.src} srcset={visuel.srcSet.attribute} sizes={taillesPhoto} width={photo.width} height={photo.height} fetchpriority="high" decoding="async" alt="Un pro en combinaison de protection mesure une toiture en fibrociment avant de faire son devis" />
+            <figcaption>Photo d’illustration</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+    <BandeauPreuves />
+    <article class="zone-contenu">
+      <slot />
+      <section class="zone-bloc">
+        <h2 id="questions">Questions fréquentes</h2>
+        <div class="article-body">
+          <dl class="faq">
+            {faq.map((q) => (
+              <>
+                <dt>{q.question}</dt>
+                <dd>{q.reponse}</dd>
+              </>
+            ))}
+          </dl>
+        </div>
+      </section>
+      <footer class="zone-fin">
+        <nav class="fil-ariane" aria-label="Fil d'Ariane">
+          <ol>
+            <li><a href="/">Accueil</a></li>
+            {region && <li><a href={region.chemin}>{region.nom}</a></li>}
+            <li aria-current="page">{h1}</li>
+          </ol>
+        </nav>
+        <p class="article-maj">Par Maxime, de Cap Désamiantage · mis à jour le <time datetime={misAJour}>{dateLisible(misAJour)}</time> · chaque chiffre est daté et renvoie à sa source.</p>
+        <details class="sources zone-sources-repli">
+          <summary><h2 id="titre-sources">Sources</h2></summary>
+          <ol>
+            {sources.map((s) => (
+              <li><a href={s.url} rel="noopener">{s.titre}</a>, {s.date}.</li>
+            ))}
+          </ol>
+        </details>
+      </footer>
+    </article>
+  </main>
+  <section class="article-cta" aria-labelledby="titre-cta">
+    <div class="article-cta-inner">
+      <div>
+        <span class="projects-kicker">Votre chantier</span>
+        <h2 id="titre-cta">Obtenez votre devis.</h2>
+        <p>Gratuit et retour en 24&nbsp;h.</p>
+      </div>
+      <a class="hero-cta" href="#devis"><span>Décrire mon chantier</span><span class="cta-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></span></a>
+    </div>
+  </section>
+  <SiteFooter devis="#devis" />
+</Base>

@@ -1,0 +1,170 @@
+---
+// Formulaire de devis par étapes des pages par zone : une question à la fois, dans le premier écran.
+// Mêmes questions, mêmes libellés et même envoi que QuoteForm (contracts/demande.ts, /api/demande) : le Lead Router
+// ne voit aucune différence. Sans React : toutes les étapes sont dans le HTML et un petit script les fait défiler,
+// pour ne charger aucun îlot dans le premier écran (AGENTS.md, règle 1.7).
+// La case de consentement reprend mot pour mot celle de QuoteForm : si le parcours change, changer les deux.
+import { questions } from '@contracts/demande'
+
+interface Props {
+  exempleCodePostal: string
+}
+
+const { exempleCodePostal } = Astro.props
+
+// Le projet d'abord (la question la plus concrète), le profil ensuite. L'ordre n'a aucun effet sur le Lead Router.
+const ordre = ['materiau', 'surface', 'projet', 'profil'] as const
+const etapes = ordre.map((cle) => questions.find((q) => q.cle === cle)!)
+const total = etapes.length + 2
+const fleche = 'M7 7h10v10 M7 17 17 7'
+---
+<section class="devis-panneau" id="devis" aria-labelledby="devis-titre">
+  <div data-saisie>
+    <div class="devis-entete">
+      <h2 id="devis-titre">Votre devis gratuit</h2>
+      <p>Sans engagement, 1&nbsp;minute.</p>
+    </div>
+    <div class="devis-progression">
+      <p data-progression aria-live="polite">Étape 1 sur {total}</p>
+      <div class="devis-barre" aria-hidden="true"><span data-barre style={`width: ${100 / total}%`}></span></div>
+    </div>
+    <form novalidate>
+      {etapes.map((q, i) => (
+        <fieldset class="devis-etape" data-etape hidden={i > 0}>
+          <legend tabindex="-1">{q.libelle}</legend>
+          <div class="choix">
+            {q.options.map((option) => (
+              <label><input type="radio" name={q.cle} value={option} required />{option}</label>
+            ))}
+          </div>
+          <button class="quote-submit devis-continuer" type="button" data-suivant><span>Continuer</span></button>
+        </fieldset>
+      ))}
+      <fieldset class="devis-etape" data-etape hidden>
+        <legend tabindex="-1">Où se situe le chantier&nbsp;?</legend>
+        <div class="form-field"><label for="postal-code">Code postal du chantier</label><input id="postal-code" name="postalCode" inputmode="numeric" autocomplete="postal-code" pattern="\d{5}" title="5 chiffres" maxlength="5" placeholder={`Ex. ${exempleCodePostal}`} required /></div>
+        <button class="quote-submit" type="button" data-suivant><span>Continuer</span></button>
+      </fieldset>
+      <fieldset class="devis-etape" data-etape hidden>
+        <legend tabindex="-1">Qui l’un de nos pros doit-il rappeler&nbsp;?</legend>
+        <div class="form-grid">
+          <div class="form-field"><label for="first-name">Prénom</label><input id="first-name" name="firstName" autocomplete="given-name" maxlength="60" required /></div>
+          <div class="form-field"><label for="last-name">Nom</label><input id="last-name" name="lastName" autocomplete="family-name" maxlength="80" required /></div>
+          <div class="form-field form-field-full"><label for="phone">Téléphone</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="06 00 00 00 00" minlength="8" maxlength="20" required /></div>
+          <div class="form-field form-field-full"><label for="email">E-mail <span>(facultatif)</span></label><input id="email" name="email" type="email" autocomplete="email" maxlength="320" /></div>
+        </div>
+        <label class="consent-field"><input type="checkbox" name="consent" required /><span>J’accepte que ma demande et mes coordonnées soient transmises à un seul de nos pros, une entreprise certifiée indépendante de mon secteur, pour qu’il me rappelle et me propose un devis.</span></label>
+        <p class="form-error" role="alert" data-erreur hidden></p>
+        <button class="quote-submit" type="submit"><span data-envoyer>Être rappelé par un pro</span><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={fleche} /></svg></button>
+        <p class="form-note">Vos informations servent uniquement à traiter votre demande.</p>
+      </fieldset>
+      <div class="honeypot" aria-hidden="true"><label for="website">Ne pas remplir</label><input id="website" name="website" tabindex="-1" autocomplete="off" /></div>
+      <button class="devis-retour" type="button" data-retour hidden>Revenir à la question précédente</button>
+    </form>
+  </div>
+  <div class="quote-success" role="status" data-succes hidden>
+    <span class="success-check"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg></span>
+    <span class="success-kicker" data-numero>Demande enregistrée</span>
+    <h3 tabindex="-1">Merci, c’est bien enregistré.</h3>
+    <p>L’un de nos pros vous rappelle sous 24&nbsp;h (jours ouvrés). Si vous l’avez, gardez sous la main votre diagnostic amiante et l’année de construction du bâtiment.</p>
+    <button type="button" data-autre>Faire une autre demande<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={fleche} /></svg></button>
+  </div>
+</section>
+
+<script>
+  // Fait défiler les étapes et envoie la demande à /api/demande, comme QuoteForm.
+  const panneau = document.querySelector<HTMLElement>('.devis-panneau')
+  const form = panneau?.querySelector('form')
+  if (panneau && form) {
+    const el = <T extends HTMLElement>(selecteur: string) => panneau.querySelector<T>(selecteur)!
+    const etapes = [...form.querySelectorAll<HTMLFieldSetElement>('[data-etape]')]
+    const saisie = el('[data-saisie]')
+    const succes = el('[data-succes]')
+    const barre = el('[data-barre]')
+    const retour = el('[data-retour]')
+    const erreur = el('[data-erreur]')
+    const envoi = el<HTMLButtonElement>('button[type="submit"]')
+    const envoiTexte = el('[data-envoyer]')
+    const texteEnvoi = envoiTexte.textContent
+    const codePostal = el<HTMLInputElement>('#postal-code')
+    let courante = 0
+    let auClavier = false
+    let minuteur = 0
+
+    const amener = (cible: HTMLElement) => {
+      cible.focus({ preventScroll: true })
+      if (panneau.getBoundingClientRect().top < 80) panneau.scrollIntoView({ block: 'start' })
+    }
+    const afficher = (i: number) => {
+      courante = i
+      etapes.forEach((etape, n) => { etape.hidden = n !== i })
+      el('[data-progression]').textContent = `Étape ${i + 1} sur ${etapes.length}`
+      barre.style.width = `${(100 * (i + 1)) / etapes.length}%`
+      retour.hidden = i === 0
+      amener(etapes[i].querySelector<HTMLElement>('input:not([type="radio"]):not([type="checkbox"])') ?? etapes[i].querySelector('legend')!)
+    }
+    const valide = (etape: HTMLElement) => [...etape.querySelectorAll('input')].every((champ) => champ.reportValidity())
+    const suivant = () => {
+      if (valide(etapes[courante]) && courante < etapes.length - 1) afficher(courante + 1)
+    }
+    const signaler = (message: string) => {
+      erreur.textContent = message
+      erreur.hidden = false
+    }
+    const pageEntree = () => { try { return sessionStorage.getItem('cap-page-entree') ?? '' } catch { return '' } }
+
+    // Un choix à la souris ou au doigt passe à la question suivante. Pas au clavier : les flèches changent de réponse
+    // sans vouloir avancer ; le bouton « Continuer » apparaît alors (voir site.css) et Entrée fonctionne aussi.
+    form.addEventListener('keydown', () => { auClavier = true })
+    form.addEventListener('pointerdown', () => { auClavier = false })
+    form.addEventListener('click', (event) => {
+      const cible = event.target as HTMLElement
+      if (cible.closest('[data-suivant]')) suivant()
+      if (cible.closest('[data-retour]') && courante > 0) afficher(courante - 1)
+      if (cible.matches('input[type="radio"]') && !auClavier) {
+        window.clearTimeout(minuteur)
+        minuteur = window.setTimeout(suivant, 180)
+      }
+    })
+    form.addEventListener('input', () => { erreur.hidden = true })
+    codePostal.addEventListener('input', () => { codePostal.value = codePostal.value.replace(/\D/g, '').slice(0, 5) })
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault()
+      if (courante < etapes.length - 1) return suivant()
+      if (!valide(etapes[courante])) return
+      envoi.disabled = true
+      envoiTexte.textContent = 'Envoi en cours…'
+      try {
+        const reponse = await fetch('/api/demande', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...Object.fromEntries(new FormData(form)), consent: true, typeChantier: '', page: location.pathname, pageEntree: pageEntree() }),
+        })
+        // 422 : la demande est incomplète ; toute autre erreur est technique et ne doit pas accuser le visiteur.
+        if (reponse.status === 422) return signaler('Il manque une réponse ou une coordonnée. Vérifiez le formulaire et réessayez.')
+        if (!reponse.ok) throw new Error(String(reponse.status))
+        const { id } = (await reponse.json()) as { id?: string | null }
+        el('[data-numero]').textContent = id ? `Demande n° ${id.slice(0, 8).toUpperCase()}` : 'Demande enregistrée'
+        saisie.hidden = true
+        succes.hidden = false
+        amener(el('h3'))
+      } catch {
+        signaler('Un problème technique a empêché l’envoi, vos réponses sont conservées. Réessayez dans quelques minutes.')
+      } finally {
+        envoi.disabled = false
+        envoiTexte.textContent = texteEnvoi
+      }
+    })
+
+    el('[data-autre]').addEventListener('click', () => {
+      form.reset()
+      succes.hidden = true
+      saisie.hidden = false
+      afficher(0)
+    })
+
+    // Réponse donnée avant le chargement du script (réseau lent) : on avance sans la faire redonner.
+    if (etapes[0].querySelector('input:checked')) afficher(1)
+  }
+</script>

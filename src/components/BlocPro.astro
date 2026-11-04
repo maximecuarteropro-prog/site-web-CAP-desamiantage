@@ -1,0 +1,24 @@
+---
+// Section avec photo d'un pro, sur les pages par zone. Une seule photo à changer quand les nouvelles arriveront.
+// Photo générée : elle illustre le métier, elle ne présente pas un pro réel (d'où la légende).
+import { Picture } from 'astro:assets'
+import photo from '@/assets/hero-retrait-plaque.jpg'
+
+interface Props {
+  titre: string
+}
+
+const { titre } = Astro.props
+---
+<section class="zone-bloc zone-bloc-photo">
+  <figure class="zone-photo">
+    <Picture src={photo} formats={['avif', 'webp']} widths={[480, 760, 1100, 1500]} sizes="(min-width: 1440px) 460px, (min-width: 1024px) 32vw, calc(100vw - 44px)" quality={70} alt="Un pro en combinaison de protection et masque retire une plaque de fibrociment, à côté d’un sac à déchets" loading="lazy" decoding="async" />
+    <figcaption>Photo d’illustration</figcaption>
+  </figure>
+  <div>
+    <h2>{titre}</h2>
+    <div class="article-body">
+      <slot />
+    </div>
+  </div>
+</section>

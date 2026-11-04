@@ -1,8 +1,15 @@
 ---
 // Pied de page commun : maillage vers les pages éditoriales et pages légales obligatoires.
 import { PAGES_GUIDE, SITE } from '@/lib/site'
+import { PAGES_ZONE } from '@/lib/zones'
 import LogoMark from '@/components/LogoMark'
 import '@/styles/site.css'
+
+interface Props {
+  devis?: string // cible du lien de devis : le formulaire de l'accueil, ou celui de la page s'il y en a un
+}
+
+const { devis = '/#devis' } = Astro.props
 const annee = new Date().getFullYear()
 ---
 <footer class="site-footer">
@@ -17,10 +24,16 @@ const annee = new Date().getFullYear()
         {PAGES_GUIDE.map((page) => <li><a href={page.chemin}>{page.titreCourt}</a></li>)}
       </ul>
     </nav>
+    <nav class="site-footer-nav" aria-label="Zones">
+      <p class="site-footer-title">Zones</p>
+      <ul>
+        {PAGES_ZONE.map((page) => <li><a href={page.chemin}>{page.titreCourt}</a></li>)}
+      </ul>
+    </nav>
     <nav class="site-footer-nav" aria-label="Informations">
       <p class="site-footer-title">Informations</p>
       <ul>
-        <li><a href="/#devis">Décrire mon chantier</a></li>
+        <li><a href={devis}>Décrire mon chantier</a></li>
         <li><a href="/mentions-legales">Mentions légales</a></li>
         <li><a href="/confidentialite">Confidentialité</a></li>
       </ul>

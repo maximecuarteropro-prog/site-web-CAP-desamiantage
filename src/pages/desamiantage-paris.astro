@@ -1,0 +1,87 @@
+---
+import ZoneDevis from '@/layouts/ZoneDevis.astro'
+import AppelDevis from '@/components/AppelDevis.astro'
+import BlocPro from '@/components/BlocPro.astro'
+
+// Page orientée devis : la personne cherche un pro. Chiffres : Insee RP 2023 (LOG T3, LOG T8) et Sitadel (permis de
+// démolir autorisés en 2025, hors annulés), relevés le 4 nov. 2026. Le détail des déchets est dans /dechetterie-amiante.
+const sources = [
+  { titre: 'Insee, dossier complet de la commune de Paris, recensement 2023, tableaux LOG T3 et LOG T8', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-75056', date: 'consulté le 4 novembre 2026' },
+  { titre: 'Insee, dossier complet France entière, recensement 2023', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=FE-1', date: 'consulté le 4 novembre 2026' },
+  { titre: 'SDES, base Sitadel, liste des permis de démolir', url: 'https://www.data.gouv.fr/datasets/689c42fa521ccf80ce954f83', date: 'permis autorisés en 2025, hors permis annulés, comptage du 4 novembre 2026' },
+  { titre: 'Service-public.fr, fiche F288 « Amiante dans les bâtiments »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F288', date: 'vérifiée le 13 octobre 2026' },
+  { titre: 'Code de la santé publique, article R1334-29-7 (état amiante à la vente)', url: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000024117147', date: 'version en vigueur depuis le 1er février 2012' },
+  { titre: 'Code du travail, article L4412-2 (recherche d’amiante avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013763', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Arrêté du 21 décembre 2021 relatif au bordereau de suivi des déchets d’amiante, article 3', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000044571414', date: 'en vigueur depuis le 1er janvier 2022' },
+  { titre: 'Ville de Paris, déchèteries parisiennes', url: 'https://www.paris.fr/pages/huit-decheteries-parisiennes-recyclent-vos-encombrants-17799', date: 'mise à jour le 30 octobre 2026' },
+  { titre: 'Ville de Paris, programme d’actions de l’Anah 2026', url: 'https://cdn.paris.fr/paris/2026/08/18/programme-d-actions-paris-2026-3JIp.pdf', date: 'publié en août 2026' },
+]
+
+const faq = [
+  { question: 'Qui me rappelle après ma demande ?', reponse: 'L’un de nos pros, certifié sous-section 3, sous 24 h. Il précise votre besoin, puis se déplace pour établir un devis détaillé. La demande et le devis sont gratuits et sans engagement.' },
+  { question: 'Combien coûte un désamiantage à Paris ?', reponse: 'Nous ne publions pas de prix propre à Paris : le coût dépend du matériau, de la surface, de l’accès et du confinement. Au niveau national, nos relevés donnent par exemple 25 à 80 €/m² pour des dalles de sol. Seul un devis après visite donne le prix de votre chantier.' },
+  { question: 'Quel délai prévoir avant le chantier ?', reponse: 'Au moins trente jours entre le dépôt du plan de retrait par le pro et le début des travaux, ou 8 jours en cas d’urgence liée à un sinistre (code du travail, art. R4412-137). Ajoutez le repérage, le devis et, en copropriété, le vote des travaux sur les parties communes.' },
+  { question: 'Le syndic peut-il faire la demande pour l’immeuble ?', reponse: 'Oui. Le pro visite les parties concernées et remet un devis détaillé, que le syndic peut présenter en assemblée générale. Le dossier technique amiante des parties communes reste à la charge du syndicat des copropriétaires, représenté par le syndic.' },
+  { question: 'Y a-t-il une aide pour le désamiantage à Paris ?', reponse: 'Le programme d’actions 2026 de l’Anah à Paris cite l’élimination ou l’isolation des matériaux contenant de l’amiante parmi les travaux éligibles. Les conditions dépendent du projet : renseignez-vous auprès de l’Anah avant de signer. Nous n’avons pas trouvé d’autre aide dédiée à Paris.' },
+]
+---
+<ZoneDevis
+  titre="Désamiantage à Paris : devis gratuit d’un pro certifié"
+  description="Désamiantage à Paris, en appartement ou en copropriété : l’un de nos pros certifiés vous rappelle sous 24 h, puis vous remet un devis gratuit après visite."
+  chemin="/desamiantage-paris"
+  region={{ nom: 'Île-de-France', chemin: '/desamiantage-ile-de-france' }}
+  h1="Désamiantage à Paris : votre devis gratuit"
+  chapo="Appartement à rénover, parties communes ou vente à venir : l’un de nos pros certifiés sous-section 3 vous rappelle sous 24 h, puis se déplace pour un devis détaillé."
+  exempleCodePostal="75011"
+  publie="2026-11-04"
+  misAJour="2026-11-04"
+  sources={sources}
+  faq={faq}
+>
+  <section class="zone-bloc">
+    <h2>Votre situation à Paris</h2>
+    <div class="article-body">
+      <ul class="zone-cartes">
+        <li><h3>Vous rénovez un appartement</h3><p>Dès qu’un pro intervient dans un bâtiment construit avant 1997, un repérage amiante est obligatoire avant les travaux (code du travail, art. L4412-2). S’il trouve de l’amiante dans des dalles, une colle ou un conduit, faites-le retirer avant le début du chantier : vos autres artisans travailleront ensuite normalement.</p></li>
+        <li><h3>Vous êtes syndic ou membre du conseil syndical</h3><p>À Paris, 97 % des logements sont des appartements (Insee, 2023). Le dossier technique amiante des parties communes relève du syndicat, représenté par le syndic (service-public.fr, fiche F288). Si des travaux sont nécessaires, le pro visite l’immeuble et remet un devis détaillé poste par poste, à présenter en assemblée générale. Prévoyez ce vote dans votre calendrier.</p></li>
+        <li><h3>Vous vendez</h3><p>Si le permis de construire date d’avant le 1er juillet 1997, vous fournissez un état amiante à l’acheteur (code de la santé publique, art. R1334-29-7). Rien n’oblige à retirer l’amiante avant la vente, mais un devis vous permet de répondre à l’acheteur avec un chiffre.</p></li>
+        <li><h3>Vous préférez ne plus avoir d’amiante chez vous</h3><p>C’est aussi une bonne raison, par exemple avant l’arrivée d’un enfant. Selon le matériau et son état, rien ne vous y oblige : le pro vous dit ce qui est utile, et le devis ne vous engage à rien.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <BlocPro titre="Un pro que vous pouvez vérifier">
+    <p>Le retrait et l’encapsulage sont réservés aux pros certifiés (code du travail, art. R4412-129). Tous nos pros le sont, et nous vous donnons le nom du pro avant qu’il intervienne. Vous pouvez le contrôler vous-même : voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>.</p>
+  </BlocPro>
+
+  <section class="zone-bloc">
+    <h2>Ce que votre pro prend en charge</h2>
+    <div class="article-body">
+      <ol class="zone-cartes zone-etapes">
+        <li><strong>La visite et le devis</strong> Il se déplace, évalue le chantier et détaille chaque poste.</li>
+        <li><strong>Le plan de retrait</strong> Il le dépose sur la plateforme DEMAT@MIANTE au moins trente jours avant le chantier (art. R4412-137). Vous n’avez aucune démarche à faire.</li>
+        <li><strong>Le retrait</strong> Il confine la zone et retire les matériaux sous protection.</li>
+        <li><strong>Les déchets</strong> Les déchèteries parisiennes refusent l’amiante : votre pro évacue tout vers une installation autorisée, avec un bordereau de suivi. Demandez-en une copie à la fin du chantier.</li>
+      </ol>
+      <AppelDevis accroche="Appartement ou immeuble : l’un de nos pros certifiés vient voir votre chantier." />
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Prix et délai</h2>
+    <div class="article-body">
+      <p>Nous ne publions pas de prix propre à Paris. Nos relevés nationaux du 29 octobre 2026 donnent 25 à 80 €/m² pour des dalles de sol et 60 à 250 €/m² pour un flocage : le détail et les sources sont sur notre page du <a href="/prix-desamiantage">prix du désamiantage au m²</a>. L’accès, l’étage et le confinement comptent : seul un devis après visite donne le prix de votre chantier.</p>
+      <p>Côté calendrier, comptez le repérage, le devis, un éventuel vote en assemblée générale, puis au moins trente jours pour le plan de retrait, ou 8 jours en cas d’urgence liée à un sinistre.</p>
+      <p>Une aide est à vérifier : le programme d’actions 2026 de l’Anah à Paris cite l’élimination ou l’isolation des matériaux contenant de l’amiante parmi les travaux éligibles. Renseignez-vous auprès de l’Anah avant de signer.</p>
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Pourquoi la question se pose souvent à Paris</h2>
+    <div class="article-body">
+      <p>L’amiante est interdit depuis le 1er janvier 1997, et 89,4 % des résidences principales parisiennes ont été achevées avant 1991, contre 68,5 % en France (Insee, 2023). En 2025, 140 permis de démolir y ont été autorisés (Sitadel). Ces chiffres ne disent pas qu’un immeuble contient de l’amiante : seul un repérage le dit.</p>
+    </div>
+  </section>
+</ZoneDevis>

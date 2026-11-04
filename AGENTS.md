@@ -99,6 +99,24 @@ retirée exprès : ne la réintroduis pas.
       (`src/components/EncartDevis.astro`, un par guide, placé à la main avec une `accroche` liée à la section
       d'avant ; photo `src/assets/encart-devis.jpg` générée par kie.ai).
 13. **Pas de numéro de téléphone** sur le site tant qu'il n'y a pas de standard (Maxime, 1er nov. 2026).
+14. **Pages par zone** (`src/pages/desamiantage-<zone>.astro`, liste dans `src/lib/zones.ts`, décision de Maxime, 4 nov. 2026).
+    - Page orientée devis : la personne cherche un pro. Le détail des déchets et des filières va dans `/dechetterie-amiante`,
+      une phrase seulement sur les pages par zone.
+    - Gabarit `src/layouts/ZoneDevis.astro` (validé par Maxime sur Toulon, 4 nov. 2026) : formulaire dans le premier écran,
+      preuves, puis le texte, écrit à la main pour chaque page. La section avec photo passe par `src/components/BlocPro.astro`.
+      - `src/components/FormulaireEtapes.astro` : une question à la fois, sans React (script Astro, règle 1.7). Mêmes questions, libellés
+        et envoi que `QuoteForm.tsx`. La case de consentement est écrite aux deux endroits : changer les deux ensemble.
+      - Menu réduit (`SiteHeader reduit`) et lien de devis du pied de page vers le formulaire de la page (`SiteFooter devis="#devis"`).
+      - Les sources sont dans un `<details>`, seule exception à la règle 1.1 : leur texte reste dans le HTML. La FAQ reste affichée.
+    - Une page partout où il y a de la demande (décision de Maxime, 4 nov. 2026) : les leads d'une zone sans pro sous contrat sont
+      vendus au lead à des partenaires. La promesse du formulaire ne change pas : un pro certifié sous-section 3 rappelle sous 24 h.
+    - Aucun partenaire nommé sur le site pour l'instant (Maxime, 4 nov. 2026), ni sur les pages, ni dans les données structurées.
+    - Chaque page est écrite à la main avec des faits locaux sourcés et datés : Insee (tableaux LOG T3 et LOG T8), permis de
+      démolir de Sitadel, annuaire ADEME des déchèteries, règlements des collectivités. Jamais de gabarit où seul le nom
+      de la ville change : Google le classe en pages satellites.
+    - Les règles locales changent vite (Aix-Marseille-Provence, Courrières) : relire les pages et leur date au moins
+      une fois par an. Le chiffre de l'Insee s'arrête à 1990, il ne prouve pas la présence d'amiante : le dire sur la page.
+    - Pas de prix par ville : renvoyer vers `/prix-desamiantage`.
 
 ## 2. La page d'accueil
 

@@ -1,0 +1,101 @@
+---
+import ZoneDevis from '@/layouts/ZoneDevis.astro'
+import AppelDevis from '@/components/AppelDevis.astro'
+import BlocPro from '@/components/BlocPro.astro'
+
+// Page orientée devis : la personne cherche un pro. Chiffres : Insee RP 2023, Sitadel (permis de démolir autorisés en
+// 2025, hors annulés) et plan régional des déchets (données 2015, les dernières publiées), relevés le 4 nov. 2026.
+// Le détail des filières est dans /dechetterie-amiante. Ne pas lier guide-dechets-paca.com : le domaine a changé de main.
+const sources = [
+  { titre: 'Insee, dossier complet de la région Provence-Alpes-Côte d’Azur, recensement 2023, tableaux LOG T3 et LOG T8', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=REG-93', date: 'consulté le 4 novembre 2026' },
+  { titre: 'Insee, dossiers complets des départements 04, 05, 06, 13, 83 et 84, recensement 2023', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=DEP-13', date: 'consultés le 4 novembre 2026' },
+  { titre: 'SDES, base Sitadel, liste des permis de démolir', url: 'https://www.data.gouv.fr/datasets/689c42fa521ccf80ce954f83', date: 'permis autorisés en 2025, hors permis annulés, comptage du 4 novembre 2026' },
+  { titre: 'ADEME, SINOE, annuaire des déchèteries (données ouvertes)', url: 'https://www.data.gouv.fr/datasets/sinoe-r-annuaire-des-decheteries-dma', date: 'données 2023, comptage du 4 novembre 2026' },
+  { titre: 'Région Sud, plan régional de prévention et de gestion des déchets, tome 1', url: 'https://connaissance-territoire.maregionsud.fr/fileadmin/user_upload/Pages_SRADDET/Pages_Schema/Sraddet_2020_09/SRADDET_SUD_Annexe_PRPGD_-_Tome_1.pdf', date: 'juin 2019, données 2015' },
+  { titre: 'Région Sud, dispositif « Paré pour le solaire »', url: 'https://www.maregionsud.fr/vos-aides/detail/plan-solaire-dispositif-pare-pour-le-solaire', date: 'mise à jour le 19 janvier 2026' },
+  { titre: 'Code du travail, article L4412-2 (recherche d’amiante avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013763', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+]
+
+const faq = [
+  { question: 'Comment trouver un pro du désamiantage en PACA ?', reponse: 'Décrivez votre chantier dans le formulaire de cette page, avec son code postal. L’un de nos pros, certifié sous-section 3, vous rappelle sous 24 h, puis se déplace pour établir un devis détaillé, gratuit et sans engagement.' },
+  { question: 'Une aide peut-elle financer le désamiantage de ma toiture ?', reponse: 'Oui, si votre projet est solaire et que vous êtes une personne morale, par exemple un syndic de copropriété ou une entreprise : le dispositif « Paré pour le solaire » de la Région Sud couvre jusqu’à 40 % de l’assiette, dans la limite de 40 €/m². Vérifiez qu’il est ouvert avant de signer. Nous n’avons pas trouvé d’aide pour les particuliers à titre individuel.' },
+  { question: 'Puis-je me débarrasser moi-même de plaques d’amiante en PACA ?', reponse: 'C’est difficile. Dans l’annuaire de l’ADEME, 4 déchèteries sur 298 déclaraient l’amiante pour 2023, et les métropoles de Marseille et de Toulon ne le prennent pas dans leurs déchèteries. Le plus simple est que le pro qui retire les matériaux prenne aussi en charge leur évacuation.' },
+  { question: 'Pourquoi regarder la destination des déchets sur le devis ?', reponse: 'Parce qu’une grande partie des déchets d’amiante de la région était traitée ailleurs : 12 % seulement l’étaient sur place en 2015, selon le plan régional, dernières données que nous ayons trouvées. Le transport pèse donc sur le prix. Un devis sérieux indique le tonnage estimé et l’installation de destination.' },
+]
+---
+<ZoneDevis
+  titre="Désamiantage en PACA : devis d’un pro certifié"
+  description="Toiture, copropriété ou démolition en PACA : l’un de nos pros certifiés vous rappelle sous 24 h et chiffre le chantier. Aide de la Région si projet solaire."
+  chemin="/desamiantage-paca"
+  h1="Désamiantage en PACA : votre devis gratuit"
+  chapo="Toiture, copropriété ou bâtiment à démolir : l’un de nos pros certifiés sous-section 3 vous rappelle sous 24 h, puis se déplace pour un devis détaillé."
+  exempleCodePostal="84000"
+  publie="2026-11-04"
+  misAJour="2026-11-04"
+  sources={sources}
+  faq={faq}
+>
+  <section class="zone-bloc">
+    <h2>Votre chantier dans la région</h2>
+    <div class="article-body">
+      <p>Dans les Bouches-du-Rhône, voyez notre page du <a href="/desamiantage-marseille">désamiantage à Marseille</a>. Dans le Var, celle du <a href="/desamiantage-toulon">désamiantage à Toulon</a>. Ailleurs, les situations sont les mêmes :</p>
+      <ul class="zone-cartes">
+        <li><strong>Une toiture, un garage, un hangar</strong> Voici <a href="/desamiantage-toiture-amiante">les étapes d’un désamiantage de toiture</a>. Si votre toiture est saine, rien n’oblige à la retirer : notre page <a href="/toiture-amiante-que-faire">toiture en amiante : que faire ?</a> vous aide à décider.</li>
+        <li><strong>Des travaux ou une démolition</strong> Dans un bâtiment construit avant 1997, le repérage amiante est obligatoire avant l’intervention d’un pro (code du travail, art. L4412-2). La région a compté 829 permis de démolir autorisés en 2025 (Sitadel).</li>
+        <li><strong>Une copropriété</strong> Le pro remet un devis détaillé au syndic, à présenter en assemblée générale.</li>
+      </ul>
+    </div>
+  </section>
+
+  <BlocPro titre="Ce que votre pro prend en charge">
+    <p>Le pro visite, chiffre, dépose le plan de retrait sur DEMAT@MIANTE au moins trente jours avant le chantier (art. R4412-137), retire les matériaux sous protection et évacue les déchets avec un bordereau de suivi. Vous n’avez aucune démarche à faire auprès des administrations.</p>
+    <p>Les grandes métropoles de la région ne prennent pas l’amiante dans leurs déchèteries : pour vous en débarrasser, le plus simple est que le pro s’occupe aussi des déchets.</p>
+    <p>Le retrait étant réservé aux pros certifiés (art. R4412-129), voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>. Nous vous donnons le nom de votre pro avant qu’il intervienne.</p>
+  </BlocPro>
+
+  <section class="zone-bloc">
+    <h2>Une aide régionale, si votre projet est solaire</h2>
+    <div class="article-body">
+      <p>C’est la seule aide locale que nous ayons trouvée pour financer un désamiantage. Le dispositif « Paré pour le solaire » de la Région Sud rend éligible le désamiantage de la toiture, diagnostic préalable compris, quand il prépare une installation solaire.</p>
+      <ul class="zone-cartes">
+        <li><strong>Pour qui</strong> Collectivités, associations, entreprises, bailleurs sociaux, syndics de copropriété et collectifs citoyens. Les particuliers à titre individuel n’y figurent pas.</li>
+        <li><strong>Combien</strong> 40 % de l’assiette éligible au plus, 50 % avec une isolation performante de la toiture ou dans une grappe de projets, dans la limite de 40 €/m² et de 200 000 € par site.</li>
+        <li><strong>À quelles conditions</strong> Au moins 35 % de la surface traitée couverte en photovoltaïque, et un temps de retour sur investissement supérieur à 5 ans.</li>
+      </ul>
+      <p>La page de la Région ne dit pas si le dispositif est ouvert à ce jour : vérifiez auprès d’elle avant de signer un devis.</p>
+      <AppelDevis accroche="Toiture, immeuble ou démolition : l’un de nos pros certifiés vient voir votre chantier." />
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Prix : regardez la destination des déchets</h2>
+    <div class="article-body">
+      <p>Pour une toiture en fibrociment, nos relevés nationaux du 29 octobre 2026 donnent le plus souvent 40 à 100 €/m², évacuation comprise : le détail est sur notre page du <a href="/prix-desamiantage">prix du désamiantage au m²</a>. Dans la région, un poste mérite une attention particulière : selon le plan régional, seuls 12 % des 10 510 tonnes collectées en 2015 y ont été traités. Ces données sont anciennes, mais nous n’en avons pas trouvé de plus récentes. Le transport peut donc peser : vérifiez que le devis indique le tonnage estimé et l’installation de destination.</p>
+      <p>Pour quelques plaques intactes, les rares filières publiques sont dans notre guide <a href="/dechetterie-amiante">déchetterie et amiante</a>&nbsp;: seules 4 déchèteries sur 298 déclaraient l’amiante dans l’annuaire de l’ADEME pour 2023.</p>
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Le bâti de la région par département</h2>
+    <div class="article-body">
+      <div class="tableau">
+        <table>
+          <caption>Insee, recensement 2023 ; permis de démolir : Sitadel, autorisés en 2025 hors permis annulés. Relevé du 4 novembre 2026.</caption>
+          <thead><tr><th scope="col">Département</th><th scope="col">Résidences principales d’avant 1991</th><th scope="col">Part de maisons</th><th scope="col">Permis de démolir</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Alpes-de-Haute-Provence (04)</th><td>69,1 %</td><td>60,4 %</td><td>14</td></tr>
+            <tr><th scope="row">Hautes-Alpes (05)</th><td>66,1 %</td><td>43,1 %</td><td>40</td></tr>
+            <tr><th scope="row">Alpes-Maritimes (06)</th><td>76,3 %</td><td>23,2 %</td><td>272</td></tr>
+            <tr><th scope="row">Bouches-du-Rhône (13)</th><td>71,0 %</td><td>36,5 %</td><td>258</td></tr>
+            <tr><th scope="row">Var (83)</th><td>66,8 %</td><td>46,2 %</td><td>160</td></tr>
+            <tr><th scope="row">Vaucluse (84)</th><td>67,3 %</td><td>63,4 %</td><td>85</td></tr>
+            <tr><th scope="row">Provence-Alpes-Côte d’Azur</th><td>70,7 %</td><td>39,4 %</td><td>829</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>L’amiante est interdit depuis le 1er janvier 1997, et l’Insee ne coupe pas à cette date : sa tranche suivante va de 1991 à 2005. Ces chiffres ne disent pas qu’un bâtiment contient de l’amiante : seul un repérage le dit.</p>
+    </div>
+  </section>
+</ZoneDevis>

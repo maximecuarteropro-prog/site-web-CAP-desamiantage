@@ -2,8 +2,15 @@
 // Bandeau de menu de toutes les pages : marque, liens et bouton de devis. Il reste collé en haut de
 // l'écran pendant le défilement ; sur mobile, c'est aussi le bouton de devis toujours visible.
 // Sous 1024 px, les liens passent dans un panneau ouvert par le bouton « Menu ».
+// `reduit` : marque et bouton de devis seuls, vers le formulaire de la page (gabarit ZoneDevis, pour ne pas faire sortir de la page).
 import LogoMark from '@/components/LogoMark'
 import '@/styles/site.css'
+
+interface Props {
+  reduit?: boolean
+}
+
+const { reduit = false } = Astro.props
 
 const liens = [
   { href: '/#comment-ca-marche', texte: 'Comment ça marche' },
@@ -15,14 +22,16 @@ const liens = [
 <header class="site-header" data-menu="ferme">
   <div class="site-header-inner">
     <a class="brand" href="/" aria-label="Cap Désamiantage, accueil"><LogoMark /><span class="brand-cap">cap<span class="brand-dot" aria-hidden="true"></span></span> <span class="brand-name">désamiantage</span></a>
-    <nav class="site-nav" id="menu-principal" aria-label="Menu principal">
-      <ul>
-        {liens.map((lien) => <li><a href={lien.href}>{lien.texte}</a></li>)}
-      </ul>
-    </nav>
+    {!reduit && (
+      <nav class="site-nav" id="menu-principal" aria-label="Menu principal">
+        <ul>
+          {liens.map((lien) => <li><a href={lien.href}>{lien.texte}</a></li>)}
+        </ul>
+      </nav>
+    )}
     <div class="site-header-actions">
-      <a class="site-header-cta" href="/#devis"><span class="cta-long">Obtenir un devis</span><span class="cta-court">Devis</span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></a>
-      <button class="site-menu-bouton" type="button" aria-expanded="false" aria-controls="menu-principal"><span class="site-menu-trait" aria-hidden="true"></span><span class="site-menu-texte">Menu</span></button>
+      <a class="site-header-cta" href={reduit ? '#devis' : '/#devis'}><span class="cta-long">Obtenir un devis</span><span class="cta-court">Devis</span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></a>
+      {!reduit && <button class="site-menu-bouton" type="button" aria-expanded="false" aria-controls="menu-principal"><span class="site-menu-trait" aria-hidden="true"></span><span class="site-menu-texte">Menu</span></button>}
     </div>
   </div>
 </header>

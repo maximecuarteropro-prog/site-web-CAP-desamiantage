@@ -1,0 +1,215 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Règles et conditions locales relues le 4 nov. 2026. Le comptage des déchèteries vient de l'annuaire ouvert de
+// l'ADEME (SINOE, colonne LST_TYPE_DECHET, code 13.5) : données déclaratives, à refaire à chaque mise à jour.
+const sources = [
+  { titre: 'Arrêté du 21 décembre 2012 relatif aux recommandations générales de sécurité du dossier technique amiante, annexe I, point 4', url: 'https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000043239620', date: 'version en vigueur depuis le 1er avril 2021' },
+  { titre: 'Arrêté du 27 mars 2012 relatif aux déchèteries sous déclaration (rubrique 2710-1), point 7.5', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000025687401/', date: 'mis à jour le 21 juin 2025' },
+  { titre: 'Arrêté du 15 février 2016 relatif aux installations de stockage de déchets non dangereux', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000032275960', date: 'modifié en dernier lieu par l’arrêté du 7 août 2023' },
+  { titre: 'INRS, « Amiante : réglementation »', url: 'https://www.inrs.fr/risques/amiante/reglementation.html', date: 'page du 6 octobre 2022' },
+  { titre: 'Arrêté du 21 décembre 2021 relatif au bordereau de suivi des déchets d’amiante, article 3', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000044571414', date: 'en vigueur depuis le 1er janvier 2022' },
+  { titre: 'Code de l’environnement, article L541-30-1 (liste des installations pouvant accueillir de l’amiante)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000031928155', date: 'version en vigueur depuis le 28 janvier 2016' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'ADEME, « Que faire de mes déchets : fibrociment »', url: 'https://quefairedemesdechets.ademe.fr/dechet/fibro-ciment/', date: 'mise à jour le 1er octobre 2026' },
+  { titre: 'Service-public.fr, fiche F288 « Amiante dans les bâtiments »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F288', date: 'vérifiée le 13 octobre 2026' },
+  { titre: 'Trackdéchets (service de l’État), « Particuliers » et amiante', url: 'https://faq.trackdechets.fr/amiante/page-a-venir-avec-plus-dinformations/particuliers', date: 'non datée, consultée le 4 novembre 2026' },
+  { titre: 'ADEME, SINOE, annuaire des déchèteries (données ouvertes)', url: 'https://www.data.gouv.fr/datasets/sinoe-r-annuaire-des-decheteries-dma', date: 'données 2013, 2021 et 2023, comptage du 4 novembre 2026' },
+  { titre: 'Ministères chargés du logement et de la santé, brochure « Bricolage dans votre logement : attention à l’amiante ! »', url: 'https://www.notre-environnement.gouv.fr/IMG/pdf/dgaln_plaque8f26.pdf', date: 'consultée le 4 novembre 2026' },
+  { titre: 'Métropole européenne de Lille, règlement d’accès aux déchèteries', url: 'https://lillemetropole.fr/sites/default/files/2024-09/Edition%20MEL%20REGLEMENT%20decheterie%202024-WEB.pdf', date: 'édition 2024' },
+  { titre: 'SMAV, dépliant amiante', url: 'https://campagnesartois.fr/app/uploads/2024/03/Depliant-amiante-2024.pdf', date: 'fichier de 2024' },
+  { titre: 'SMITOM du Nord Seine-et-Marne, « Collecte de l’amiante »', url: 'https://www.smitom-nord77.fr/les-decheteries/collecte-de-lamiante/', date: 'sessions 2026, consultée le 4 novembre 2026' },
+  { titre: 'Communauté de communes du Val de l’Oise, « Du nouveau pour la collecte de l’amiante »', url: 'https://www.ccvo.fr/du-nouveau-pour-la-collecte-de-lamiante/', date: 'mise à jour le 8 janvier 2026' },
+  { titre: 'SIAVED, « Déploiement de la collecte de l’amiante »', url: 'https://www.siaved.fr/deploiement-de-la-collecte-de-l-amiante', date: 'site mis à jour le 30 octobre 2026' },
+  { titre: 'Agglomération du Bocage Bressuirais, « Collecte de l’amiante »', url: 'https://www.agglo2b.fr/environnement/dechets/1192-collecte-de-l-amiante', date: 'consultée le 4 novembre 2026' },
+  { titre: 'Ville de Paris, déchèteries parisiennes', url: 'https://www.paris.fr/pages/huit-decheteries-parisiennes-recyclent-vos-encombrants-17799', date: 'mise à jour le 30 octobre 2026' },
+  { titre: 'Métropole Aix-Marseille-Provence, « Je trie en déchèterie »', url: 'https://dechets.ampmetropole.fr/je-trie-en-decheterie/', date: 'non datée, consultée le 4 novembre 2026' },
+  { titre: 'Communauté d’agglomération d’Hénin-Carvin, arrêt de la collecte d’amiante à Courrières', url: 'https://www.agglo-henincarvin.fr/arret-de-la-collecte-damiante-la-decheterie-de-courrieres', date: 'à effet du 1er janvier 2026' },
+  { titre: 'Sigidurs, déchèteries', url: 'https://www.sigidurs.fr/particulier/decheteries/', date: 'consultée le 4 novembre 2026' },
+  { titre: 'Ville de Mitry-Mory, la déchetterie', url: 'https://www.mitry-mory.fr/une-ville-durable/proprete-urbaine/la-dechetterie/', date: 'mise à jour le 24 mars 2026' },
+  { titre: 'SMITOM-LOMBRIC, règlement intérieur des déchèteries', url: 'https://www.lombric.com/wp-content/uploads/2025/05/Reglement-interieur-decheteries_2025-VF.pdf', date: 'version du 1er mai 2025' },
+  { titre: 'SITREVA, « Collecte d’amiante »', url: 'https://www.sitreva.fr/actualites/121-actualites-non-carousel/438-collecte-damiante', date: '1er octobre 2026' },
+  { titre: 'Grand Paris Grand Est, règlement de collecte', url: 'https://www.grandparisgrandest.fr/app/uploads/2024/09/RIC_GPGE-Version-print-Mars_2025.pdf', date: 'mars 2025' },
+  { titre: 'Syctom, règlement de la déchèterie de Romainville', url: 'https://www.syctom-paris.fr/fileadmin/mediatheque/Decheteries/2026/RI_decheteries_Romainville.pdf', date: 'mis à jour le 4 décembre 2025' },
+  { titre: 'Syctom, règlement de la déchèterie de Saint-Ouen', url: 'https://www.syctom-paris.fr/fileadmin/mediatheque/Decheteries/2026/RI_decheteries_STO.pdf', date: 'mis à jour le 4 décembre 2025' },
+  { titre: 'Versailles Grand Parc, foire aux questions sur les déchèteries', url: 'https://www.versaillesgrandparc.fr/1551/au-quotidien/gestion-des-dechets/trier-jeter-valoriser/les-decheteries-intercommunales/faq-decheteries.htm', date: 'consultée le 4 novembre 2026' },
+  { titre: 'SIOM, déchèterie de Villejust', url: 'https://www.siom.fr/infos-pratiques/decheterie-ressourcerie-de-villejust/', date: 'consultée le 4 novembre 2026' },
+  { titre: 'Est Ensemble, guide des déchèteries', url: 'https://pratique.pantin.fr/fileadmin/2._PRATIQUE/Proprete_et_dechets/Collecte_et_tri/GuideDecheterie_EstEnsemble_mai25.pdf', date: 'mai 2025' },
+  { titre: 'Paris Est Marne & Bois, déchèteries', url: 'https://www.parisestmarnebois.fr/fr/decheteries', date: 'consultée le 4 novembre 2026' },
+  { titre: 'Cergy-Pontoise, déchèteries', url: 'https://www.cergypontoise.fr/decheteries', date: 'consultée le 4 novembre 2026' },
+  { titre: 'Métropole européenne de Lille, « Les déchèteries »', url: 'https://www.lillemetropole.fr/votre-quotidien/vivre-la-mel/gestion-des-dechets/les-decheteries', date: 'consultée le 4 novembre 2026' },
+  { titre: 'SYMEVAD, « Amiante »', url: 'https://www.symevad.org/valoriser-mes-dechets/amiante', date: 'consultée le 4 novembre 2026' },
+  { titre: 'Communauté d’agglomération du Boulonnais, déchetteries', url: 'https://www.agglo-boulonnais.fr/a-votre-service/dechets/les-dechetteries', date: 'consultée le 4 novembre 2026' },
+  { titre: 'Communauté d’agglomération de Béthune-Bruay, « Amiante »', url: 'https://www.bethunebruay.fr/fr/amiante', date: 'consultée le 4 novembre 2026' },
+  { titre: 'GrandSoissons Agglomération, « Collecte d’amiante »', url: 'https://www.grandsoissons.com/vie-pratique/collecte-damiante/', date: 'consultée le 4 novembre 2026' },
+  { titre: 'Communauté d’agglomération de la région de Château-Thierry, « L’amiante »', url: 'https://www.carct.fr/et-agit/les-dechets/la-collecte-de-mes-dechets/les-consignes-de-tri/lamiante-1', date: 'mise à jour le 5 mai 2026' },
+  { titre: 'Communauté de communes des Trois Rivières, déchèteries', url: 'https://cc3r.fr/component/flexicontent/50-decheteries/30-decheteries.html', date: 'consultée le 4 novembre 2026' },
+  { titre: 'Provence Alpes Agglomération, règlement intérieur des déchèteries', url: 'https://www.provencealpesagglo.fr/wp-content/uploads/2023/11/47_DECH_REGLEMENT_ANNEXE2_19.2_-_annexe_delib_Projet_Reglement_interieur_decheteries_PAA_2023_v2-1.pdf', date: 'fichier du 3 novembre 2023' },
+  { titre: 'Sydevom 04, « Aller en déchetterie »', url: 'https://www.sydevom04.fr/aller-en-dechetterie/', date: 'consultée le 4 novembre 2026' },
+  { titre: 'Vallée des Baux-Alpilles, déchets et déchèteries', url: 'https://www.vallee-des-baux-alpilles.fr/mon-quotidien/dechets/ou-deposer-mes-dechets/je-suis-un-professionnel-cartes-des-decheteries-pro-conditions-et-tarifs-dans-les-decheteries-ccvba-liens-internet-guide-dechets-paca-et-batiments/', date: 'mise à jour le 16 décembre 2025' },
+  { titre: 'Métropole Toulon Provence Méditerranée, pôles environnementaux', url: 'https://metropoletpm.fr/nos-missions/dechets-proprete-voirie/les-poles-environnementaux-de-tpm', date: 'non datée, consultée le 4 novembre 2026' },
+  { titre: 'Métropole Toulon Provence Méditerranée, règlement de collecte, annexe 2', url: 'https://metropoletpm.fr/sites/default/files/2025-06/reglement_de_collecte_ddg_v19.pdf', date: 'fichier du 18 juin 2025' },
+  { titre: 'Sud Sainte-Baume, règlement des déchèteries', url: 'https://www.agglo-sudsaintebaume.fr/wp-content/uploads/2022/11/PJ018.pdf', date: 'fichier du 28 novembre 2022' },
+  { titre: 'Grand Avignon, règlement des déchèteries', url: 'https://www.grandavignon.fr/sites/default/files/2019-07/reglement_des_decheteries_du_grand_avignon.pdf', date: 'fichier de juillet 2019' },
+]
+
+const faq = [
+  { question: 'Peut-on apporter des plaques d’amiante à la déchetterie ?', reponse: 'Oui, si la déchèterie accepte l’amiante et si les plaques sont en amiante lié, comme le fibrociment, et restées intactes. Tout autre déchet contenant de l’amiante y est interdit (arrêté du 21 décembre 2012, annexe I). Contactez le site avant de vous déplacer : le dépôt se fait souvent sur rendez-vous, et certaines collectivités le refusent.' },
+  { question: 'Combien de déchèteries acceptent l’amiante en France ?', reponse: 'Environ une sur dix. L’arrêté du 21 décembre 2012 avance ce chiffre, et l’annuaire de l’ADEME le confirme : 427 déchèteries sur 4 556 déclaraient les déchets amiantés pour 2023, soit 9,4 %.' },
+  { question: 'Le dépôt d’amiante en déchèterie est-il gratuit ?', reponse: 'Cela dépend de la collectivité. Il est gratuit dans la Métropole européenne de Lille ou au SMAV dans le Pas-de-Calais. D’autres font payer le contenant ou le poids, comme le Val de l’Oise dans l’Aisne (big-bag à 10 €) ou le Bocage Bressuirais (18 € TTC sous 30 kg). Vérifiez le tarif auprès de votre collectivité.' },
+  { question: 'Faut-il remplir un bordereau de suivi pour déposer de l’amiante ?', reponse: 'Non. Le particulier qui dépose de l’amiante en déchèterie n’a pas de bordereau à remplir : c’est la déchèterie qui l’établit. Quand un particulier commande un retrait à un pro, c’est le pro qui émet le bordereau (arrêté du 21 décembre 2021, art. 3).' },
+  { question: 'Que faire si aucune déchèterie n’accepte l’amiante dans mon secteur ?', reponse: 'Demandez à votre mairie ou à votre intercommunalité s’il existe une collecte ponctuelle ou un enlèvement sur rendez-vous : plusieurs territoires ont remplacé le dépôt par ce type de service. Sinon, un pro certifié retire les matériaux et prend en charge l’élimination, avec un bordereau de suivi.' },
+]
+---
+<Guide
+  titre="Déchetterie amiante : où déposer vos plaques de fibrociment"
+  description="Environ 1 déchèterie sur 10 accepte l’amiante lié. Ce qui est accepté, comment trouver un site, comment préparer le dépôt et quand appeler un pro."
+  chemin="/dechetterie-amiante"
+  rubrique="Déchets"
+  h1="Déchetterie et amiante : où déposer vos plaques de fibrociment ?"
+  chapo="Un particulier peut apporter du fibrociment intact dans une déchèterie, à condition qu’elle l’accepte, ce qui est le cas d’environ une sur dix. Les règles changent d’un territoire à l’autre : certains offrent le dépôt, d’autres le font payer, d’autres encore l’ont arrêté. Voici ce qui est accepté, comment trouver un site et à quel moment il faut passer par un pro certifié."
+  publie="2026-11-04"
+  misAJour="2026-11-04"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Ce qu’une déchèterie peut accepter</h2>
+  <p>Les déchets d’amiante sont des déchets dangereux. La déchèterie n’est ouverte qu’à une seule catégorie : l’amiante lié à des matériaux inertes, resté intact (arrêté du 21 décembre 2012, annexe I, point 4).</p>
+  <div class="tableau">
+    <table>
+      <caption>Selon l’arrêté du 21 décembre 2012 et l’INRS, relus le 4 novembre 2026.</caption>
+      <thead><tr><th scope="col">Déchet</th><th scope="col">En déchèterie ?</th><th scope="col">Sinon</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Fibrociment intact</strong> : plaques, ardoises, tuyaux en amiante-ciment</td><td>Oui, si le site l’accepte</td><td>Enlèvement par un pro certifié</td></tr>
+        <tr><td><strong>Plaques cassées ou dégradées</strong></td><td>Non : le matériau a perdu son intégrité</td><td>Pro certifié</td></tr>
+        <tr><td><strong>Flocages, calorifugeages, amiante libre</strong></td><td>Non</td><td>Pro certifié, puis installation de déchets dangereux ou vitrification</td></tr>
+        <tr><td><strong>Dalles de sol amiantées</strong></td><td>Selon le site : le SMITOM du Nord Seine-et-Marne les accepte, d’autres les excluent</td><td>Pro certifié</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Aucune déchèterie n’est obligée de l’accepter</h2>
+  <p>Les règles nationales s’appliquent « si » le site accepte l’amiante (arrêté du 27 mars 2012, point 7.5) : c’est un choix de la collectivité. Et le nombre de sites diminue dans l’annuaire de l’ADEME.</p>
+  <div class="tableau">
+    <table>
+      <caption>Déchèteries déclarant les déchets amiantés (code 13.5) dans l’annuaire SINOE de l’ADEME. Données déclaratives, comptage de Cap Désamiantage le 4 novembre 2026.</caption>
+      <thead><tr><th scope="col">Année</th><th scope="col">Déchèteries acceptant l’amiante</th><th scope="col">Total des déchèteries</th><th scope="col">Part</th></tr></thead>
+      <tbody>
+        <tr><td>2013</td><td>561</td><td>4 532</td><td>12,4 %</td></tr>
+        <tr><td>2021</td><td>492</td><td>4 574</td><td>10,8 %</td></tr>
+        <tr><td>2023</td><td>427</td><td>4 556</td><td>9,4 %</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Les conditions bougent vite. La métropole Aix-Marseille-Provence indique que ses déchèteries ne prennent plus l’amiante. La déchèterie de Courrières, dans le Pas-de-Calais, a arrêté sa collecte au 1er janvier 2026. Méfiez-vous donc des listes anciennes.</p>
+
+  <h2>Comment trouver un site dans votre département</h2>
+  <ol>
+    <li><strong>Contactez votre déchèterie ou votre intercommunalité.</strong> C’est le conseil de l’ADEME, car le dépôt se fait souvent sur rendez-vous.</li>
+    <li><strong>Lisez le règlement de la déchèterie.</strong> Il dit si l’amiante est accepté, en quelle quantité et à quelles dates.</li>
+    <li><strong>Demandez à la mairie, au conseil départemental ou à la préfecture.</strong> Ce sont les interlocuteurs cités par l’arrêté du 21 décembre 2012.</li>
+    <li><strong>Consultez l’annuaire de l’ADEME.</strong> Le site sinoe.org, auquel les textes renvoient, était en maintenance lors de notre relevé du 4 novembre 2026. Ses <a href="https://www.data.gouv.fr/datasets/sinoe-r-annuaire-des-decheteries-dma" rel="noopener">données ouvertes</a> restent disponibles, mais elles ne donnent pas les conditions d’accès.</li>
+  </ol>
+  <p>La loi prévoit que le ministre chargé de l’environnement rende publique la liste des installations de stockage pouvant accueillir de l’amiante (code de l’environnement, art. L541-30-1). Nous n’avons pas trouvé cette liste en ligne au 4 novembre 2026.</p>
+  <p>Nous avons relevé les règles de trois régions : voyez <a href="#regles-locales">les règles locales</a> plus bas.</p>
+
+  <h2>Des règles et des prix très différents</h2>
+  <div class="tableau">
+    <table>
+      <caption>Exemples relevés le 4 novembre 2026 sur les pages des collectivités. Ce ne sont pas des moyennes : vérifiez auprès de votre collectivité.</caption>
+      <thead><tr><th scope="col">Territoire</th><th scope="col">Règle</th><th scope="col">Prix publié</th></tr></thead>
+      <tbody>
+        <tr><td>Métropole européenne de Lille (59)</td><td>Film à retirer à l’accueil, carte de déchèterie obligatoire, 5 emballages maximum par passage</td><td>Gratuit</td></tr>
+        <tr><td>SMAV, Saint-Laurent-Blangy (62)</td><td>Résidents, sur rendez-vous, 10 plaques ou équivalent par jour de collecte</td><td>Gratuit</td></tr>
+        <tr><td>SMITOM du Nord Seine-et-Marne (77)</td><td>Une opération par mois, sur réservation, 10 plaques ou environ 1 m³ par dépôt</td><td>Non affiché</td></tr>
+        <tr><td>Val de l’Oise (02)</td><td>Une fois par mois, 200 kg par foyer et par an</td><td>Big-bag à 10 €</td></tr>
+        <tr><td>Bocage Bressuirais (79)</td><td>Collecte organisée par l’agglomération</td><td>18 € TTC sous 30 kg, puis 0,60 €/kg</td></tr>
+        <tr><td>SIAVED (59)</td><td>Plus de dépôt : enlèvement sur rendez-vous, 2 demandes par an et par foyer</td><td>30 € le big-bag</td></tr>
+        <tr><td>Ville de Paris (75)</td><td>Amiante refusé dans les déchèteries</td><td>Sans objet</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="regles-locales">Les règles locales que nous avons relevées</h2>
+  <p>Voici ce que publient les collectivités de trois régions, relevé le 4 novembre 2026. Ces solutions sont réservées aux particuliers du territoire. Nous n’avons pas relevé tous les territoires, et les règles changent : vérifiez avant de vous déplacer.</p>
+
+  <h3>En Île-de-France</h3>
+  <p>Paris et le Syctom refusent toute forme d’amiante. Dans l’annuaire de l’ADEME, 24 déchèteries sur 206 déclaraient l’amiante pour 2023, dont 21 en Seine-et-Marne.</p>
+  <div class="tableau">
+    <table>
+      <caption>Pages et règlements des collectivités, relus le 4 novembre 2026.</caption>
+      <thead><tr><th scope="col">Dép.</th><th scope="col">Collectivité et site</th><th scope="col">Conditions publiées</th></tr></thead>
+      <tbody>
+        <tr><td>77, 95</td><td>Sigidurs : Dammartin-en-Goële et Bouqueval</td><td>Sur inscription, habitants du territoire</td></tr>
+        <tr><td>77</td><td>SMITOM du Nord Seine-et-Marne : Jouarre, Jouy-sur-Morin, Crégy-lès-Meaux, Ocquerre</td><td>Une opération par mois de février à novembre 2026, sur réservation, avec badge, 10 plaques ou environ 1 m³ par dépôt</td></tr>
+        <tr><td>77</td><td>SMITOM-LOMBRIC : réseau de 11 déchèteries</td><td>Petits formats seulement, en contenant fermé : voir le règlement</td></tr>
+        <tr><td>91</td><td>SITREVA : Angerville</td><td>Opération ponctuelle du 30 novembre 2026, déjà complète ; d’autres collectes sont annoncées</td></tr>
+        <tr><td>93</td><td>Grand Paris Grand Est</td><td>Pas de dépôt : collecte à domicile sur rendez-vous, 10 plaques au plus par opération</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><strong>Refus que nous avons vérifiés :</strong> Ville de Paris et Syctom (75, 93), Versailles Grand Parc (78), SIOM à Villejust (91), Est Ensemble (93), Paris Est Marne &amp; Bois (94) et Cergy-Pontoise (95). Nous n’avons trouvé aucune information fiable pour les Hauts-de-Seine.</p>
+
+  <h3>Dans les Hauts-de-France</h3>
+  <p>Dans l’annuaire de l’ADEME, 63 déchèteries sur 294 déclaraient l’amiante pour 2023.</p>
+  <div class="tableau">
+    <table>
+      <caption>Pages et règlements des collectivités, relus le 4 novembre 2026.</caption>
+      <thead><tr><th scope="col">Dép.</th><th scope="col">Territoire</th><th scope="col">Ce qui est prévu</th><th scope="col">Prix publié</th></tr></thead>
+      <tbody>
+        <tr><td>59</td><td>Métropole européenne de Lille : déchèteries fixes</td><td>Film à retirer à l’accueil, carte obligatoire, 5 emballages maximum par passage. Interdit aux professionnels</td><td>Gratuit</td></tr>
+        <tr><td>59, 62</td><td>SYMEVAD : Arleux ou Cuincy (Douaisis), Carvin et Évin-Malmaison (Hénin-Carvin), Biache-Saint-Vaast (Osartis-Marquion)</td><td>Dépôt sur rendez-vous, film à retirer avant, quantité limitée. Courrières n’accepte plus l’amiante depuis le 1er janvier 2026</td><td>Gratuit</td></tr>
+        <tr><td>59</td><td>SIAVED : Solesmois, Mormal, Maubeuge notamment</td><td>Plus de dépôt : enlèvement sur rendez-vous, big-bag rempli par l’usager, 2 demandes par an et par foyer</td><td>30 € le big-bag</td></tr>
+        <tr><td>62</td><td>SMAV : Saint-Laurent-Blangy</td><td>Résidents, justificatif de domicile, rendez-vous, film fourni, 10 plaques ou équivalent par jour de collecte</td><td>Gratuit</td></tr>
+        <tr><td>62</td><td>Boulonnais : Saint-Léonard, Saint-Martin-Boulogne</td><td>Premier mardi du mois, sur inscription, 15 m² maximum</td><td>Non indiqué</td></tr>
+        <tr><td>62</td><td>Béthune-Bruay</td><td>Dépôt interdit : collecte à domicile sur rendez-vous, en big-bags</td><td>À vérifier auprès de l’agglomération</td></tr>
+        <tr><td>02</td><td>Val de l’Oise : Mézières-sur-Oise</td><td>Une fois par mois, big-bag à retirer avant, 200 kg par foyer et par an</td><td>Big-bag à 10 €</td></tr>
+        <tr><td>02</td><td>GrandSoissons : Mercin-et-Vaux</td><td>Places limitées, big-bag fourni, 300 kg par foyer et par an au plus</td><td>30 € jusqu’à 200 kg, puis 1 €/kg</td></tr>
+        <tr><td>02</td><td>Château-Thierry</td><td>Collectes ponctuelles sur inscription, 20 places</td><td>90 € le big-bag, 2 €/kg au-delà de 200 kg</td></tr>
+        <tr><td>02</td><td>Trois Rivières : Hirson</td><td>Amiante interdit</td><td>Sans objet</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>En Provence-Alpes-Côte d’Azur</h3>
+  <p>C’est la région la plus difficile : dans l’annuaire de l’ADEME, seules 4 déchèteries sur 298 déclaraient l’amiante pour 2023, toutes dans les Alpes-de-Haute-Provence et les Hautes-Alpes.</p>
+  <div class="tableau">
+    <table>
+      <caption>Pages et règlements des collectivités, relus le 4 novembre 2026.</caption>
+      <thead><tr><th scope="col">Dép.</th><th scope="col">Territoire</th><th scope="col">Ce qui est prévu</th></tr></thead>
+      <tbody>
+        <tr><td>04</td><td>Provence Alpes Agglomération</td><td>Amiante lié intact accepté sur rendez-vous, dans les déchèteries équipées, emballé hermétiquement et manipulé par le particulier</td></tr>
+        <tr><td>04</td><td>Sydevom 04</td><td>Dépôt en déchèteries habilitées, en sacs étanches et étiquetés</td></tr>
+        <tr><td>13</td><td>Aix-Marseille-Provence</td><td>Refus : les déchèteries ne prennent plus l’amiante, la métropole renvoie vers un prestataire privé. Un flyer du Pays d’Aix, avec un calendrier de 2021, circule encore : ne vous y fiez pas sans appeler</td></tr>
+        <tr><td>13</td><td>Vallée des Baux-Alpilles</td><td>Refus</td></tr>
+        <tr><td>83</td><td>Toulon Provence Méditerranée</td><td>Refus dans les pôles, mais traitement de 2 m³ au plus par foyer et par an : demande à contactdechets@metropoletpm.fr avec vos coordonnées, le type et le volume, puis rendez-vous</td></tr>
+        <tr><td>83</td><td>Sud Sainte-Baume</td><td>Filière pour les habitants, après validation d’une fiche par les services techniques</td></tr>
+        <tr><td>84</td><td>Grand Avignon</td><td>Refus, y compris l’amiante-ciment (règlement de 2019)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <EncartDevis accroche="Trop de plaques, ou des plaques abîmées ? L’un de nos pros certifiés vient voir votre chantier." />
+
+  <h2>Préparer le dépôt</h2>
+  <ul>
+    <li><strong>Prévenez le site.</strong> Le particulier le contacte d’abord pour obtenir le matériel d’emballage : le vrac n’est pas accepté (Trackdéchets).</li>
+    <li><strong>Demandez l’emballage.</strong> Depuis le 1er janvier 2013, l’exploitant doit fournir aux usagers les emballages et l’étiquetage adaptés. Le texte ne dit pas que c’est gratuit.</li>
+    <li><strong>Ne cassez, ne sciez et ne percez jamais les plaques.</strong> La Métropole européenne de Lille interdit de les casser sur place, et une plaque cassée n’est plus admise.</li>
+    <li><strong>Prévoyez le transport.</strong> La brochure des ministères demande de limiter les envols, par exemple avec une remorque bâchée.</li>
+    <li><strong>Prévoyez de décharger seul.</strong> À Lille comme au SMAV, les agents ne manipulent pas l’amiante.</li>
+  </ul>
+  <p>Vous n’avez pas de bordereau à remplir : c’est la déchèterie qui l’établit (arrêté du 21 décembre 2012, annexe I, point 4).</p>
+
+  <h2>Quand il faut passer par un pro certifié</h2>
+  <p>Ce guide porte sur le dépôt, pas sur le retrait. L’ADEME écrit que le retrait par soi-même est « fortement déconseillé », et service-public.fr indique que le retrait et le confinement doivent être confiés à un pro certifié. Dans quatre cas, le dépôt n’est de toute façon pas une solution :</p>
+  <ul>
+    <li>les plaques sont cassées ou dégradées ;</li>
+    <li>le matériau n’est pas du fibrociment : flocage, calorifugeage, colle ;</li>
+    <li>la quantité dépasse le plafond de la collectivité ;</li>
+    <li>aucun site ne l’accepte sur votre territoire.</li>
+  </ul>
+  <p>Le pro doit être <a href="/certification-sous-section-3">certifié sous-section 3</a> (code du travail, art. R4412-129). Il dépose le plan de retrait, retire les matériaux sous protection et prend en charge l’élimination : quand un particulier commande les travaux, c’est lui qui émet le bordereau de suivi (arrêté du 21 décembre 2021, art. 3). Pour le budget, lisez notre page sur le <a href="/prix-desamiantage">prix du désamiantage au m²</a>.</p>
+  <p>Pour obtenir un devis, voyez nos pages du <a href="/desamiantage-ile-de-france">désamiantage en Île-de-France</a>, du <a href="/desamiantage-hauts-de-france">désamiantage dans les Hauts-de-France</a> et du <a href="/desamiantage-paca">désamiantage en PACA</a>.</p>
+</Guide>

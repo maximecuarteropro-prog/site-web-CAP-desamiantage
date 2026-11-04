@@ -1,0 +1,87 @@
+---
+import ZoneDevis from '@/layouts/ZoneDevis.astro'
+import AppelDevis from '@/components/AppelDevis.astro'
+import BlocPro from '@/components/BlocPro.astro'
+
+// Page orientée devis : la personne cherche un pro. Chiffres : Insee RP 2023 et Sitadel (permis de démolir autorisés
+// en 2025, hors annulés), relevés le 4 nov. 2026. La filière de 2 m³ de la métropole est détaillée dans
+// /dechetterie-amiante : ici, une phrase pour rester honnête, pas le sujet de la page.
+const sources = [
+  { titre: 'Insee, dossier complet de la commune de Toulon, recensement 2023, tableaux LOG T3 et LOG T8', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-83137', date: 'consulté le 4 novembre 2026' },
+  { titre: 'Insee, dossier complet du département du Var, recensement 2023', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=DEP-83', date: 'consulté le 4 novembre 2026' },
+  { titre: 'Insee, dossier complet France entière, recensement 2023', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=FE-1', date: 'consulté le 4 novembre 2026' },
+  { titre: 'SDES, base Sitadel, liste des permis de démolir', url: 'https://www.data.gouv.fr/datasets/689c42fa521ccf80ce954f83', date: 'permis autorisés en 2025, hors permis annulés, comptage du 4 novembre 2026' },
+  { titre: 'Métropole Toulon Provence Méditerranée, pôles environnementaux', url: 'https://metropoletpm.fr/nos-missions/dechets-proprete-voirie/les-poles-environnementaux-de-tpm', date: 'non datée, consultée le 4 novembre 2026' },
+  { titre: 'Métropole Toulon Provence Méditerranée, règlement de collecte, annexe 2', url: 'https://metropoletpm.fr/sites/default/files/2025-06/reglement_de_collecte_ddg_v19.pdf', date: 'fichier du 18 juin 2025' },
+  { titre: 'ADEME, « Que faire de mes déchets : fibrociment »', url: 'https://quefairedemesdechets.ademe.fr/dechet/fibro-ciment/', date: 'mise à jour le 1er octobre 2026' },
+  { titre: 'Arrêté du 21 décembre 2021 relatif au bordereau de suivi des déchets d’amiante, article 3', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000044571414', date: 'en vigueur depuis le 1er janvier 2022' },
+  { titre: 'Code du travail, article L4412-2 (recherche d’amiante avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013763', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+]
+
+const faq = [
+  { question: 'Comment faire retirer une toiture en amiante à Toulon ?', reponse: 'Décrivez votre toiture dans le formulaire de cette page. L’un de nos pros certifiés sous-section 3 vous rappelle sous 24 h, se déplace et remet un devis détaillé. S’il est retenu, il dépose le plan de retrait, retire les plaques sous protection et les évacue.' },
+  { question: 'Combien coûte un désamiantage à Toulon ?', reponse: 'Nous ne publions pas de prix propre à Toulon. Pour une toiture en fibrociment, nos relevés nationaux donnent le plus souvent 40 à 100 €/m², évacuation comprise et couverture neuve non comprise. Seul un devis après visite donne le prix de votre chantier.' },
+  { question: 'Quel délai prévoir pour un désamiantage à Toulon ?', reponse: 'Au moins trente jours entre le dépôt du plan de retrait par le pro et le début des travaux, ramenés à 8 jours en cas d’urgence liée à un sinistre (code du travail, art. R4412-137). Il faut y ajouter le repérage et le devis.' },
+  { question: 'La métropole de Toulon reprend-elle l’amiante ?', reponse: 'Pas dans ses pôles environnementaux. Elle prend en charge le traitement de 2 m³ au plus par foyer et par an, sur demande préalable et rendez-vous. Cela ne couvre pas le retrait, que l’ADEME déconseille fortement de faire soi-même.' },
+]
+---
+<ZoneDevis
+  titre="Désamiantage à Toulon : devis gratuit d’un pro certifié"
+  description="Toiture, garage, immeuble ou démolition à Toulon : l’un de nos pros certifiés vous rappelle sous 24 h, se déplace, chiffre le retrait et s’occupe des déchets."
+  chemin="/desamiantage-toulon"
+  region={{ nom: 'PACA', chemin: '/desamiantage-paca' }}
+  h1="Désamiantage à Toulon : votre devis gratuit"
+  chapo="Décrivez votre chantier en 1 minute. L’un de nos pros certifiés sous-section 3 vous rappelle sous 24 h, puis se déplace pour un devis détaillé."
+  exempleCodePostal="83000"
+  publie="2026-11-04"
+  misAJour="2026-11-04"
+  sources={sources}
+  faq={faq}
+>
+  <section class="zone-bloc">
+    <h2>Ce que nos pros peuvent retirer</h2>
+    <div class="article-body">
+      <ul class="zone-cartes">
+        <li><strong>Toitures et plaques en fibrociment</strong> Garage, abri, carport, hangar. Voici <a href="/desamiantage-toiture-amiante">les étapes d’un désamiantage de toiture</a>.</li>
+        <li><strong>Conduits et canalisations</strong> Conduits de ventilation, descentes d’eaux pluviales.</li>
+        <li><strong>Dalles et colles de sol</strong> À repérer avant une rénovation.</li>
+        <li><strong>Tout un bâtiment avant travaux ou démolition</strong> Toulon a compté 39 permis de démolir autorisés en 2025 (Sitadel). Le repérage est obligatoire avant l’intervention d’un pro (code du travail, art. L4412-2).</li>
+      </ul>
+      <p>Si votre toiture est saine, rien n’oblige à la retirer : notre page <a href="/toiture-amiante-que-faire">toiture en amiante : que faire ?</a> vous aide à décider. Le pro vous le dira aussi lors de sa visite.</p>
+    </div>
+  </section>
+
+  <BlocPro titre="Un pro que vous pouvez vérifier">
+    <p>Le retrait et l’encapsulage sont réservés aux pros certifiés (art. R4412-129). Tous nos pros le sont, et nous vous donnons le nom du vôtre avant qu’il intervienne. Voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>.</p>
+  </BlocPro>
+
+  <section class="zone-bloc">
+    <h2>Comment se passe le chantier</h2>
+    <div class="article-body">
+      <ol class="zone-cartes zone-etapes">
+        <li><strong>Le rappel, sous 24 h</strong> Le pro précise votre besoin et répond à vos questions.</li>
+        <li><strong>La visite et le devis</strong> Il évalue le chantier et détaille chaque poste, sans engagement.</li>
+        <li><strong>Le plan de retrait</strong> Il le dépose sur DEMAT@MIANTE au moins trente jours avant le chantier, ou 8 jours en cas d’urgence liée à un sinistre (art. R4412-137).</li>
+        <li><strong>Le retrait et l’évacuation</strong> Il retire les matériaux sous protection, puis les évacue avec un bordereau de suivi : quand un particulier commande les travaux, c’est lui qui l’émet (arrêté du 21 décembre 2021, art. 3).</li>
+      </ol>
+      <p>Pour moins de 2 m³ de plaques intactes, la métropole a prévu une filière sur demande, détaillée dans notre guide <a href="/dechetterie-amiante">déchetterie et amiante</a>. Elle ne couvre que le traitement : l’ADEME écrit que le retrait par soi-même est « fortement déconseillé ».</p>
+      <AppelDevis accroche="Toiture, immeuble ou démolition : l’un de nos pros certifiés vient voir votre chantier." />
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Quel budget prévoir</h2>
+    <div class="article-body">
+      <p>Nous ne publions pas de prix propre à Toulon. Pour une toiture en fibrociment, nos relevés nationaux du 29 octobre 2026 donnent le plus souvent 40 à 100 €/m², évacuation comprise et couverture neuve non comprise. Tous les matériaux sont sur notre page du <a href="/prix-desamiantage">prix du désamiantage au m²</a>. Seul un devis après visite donne le prix de votre chantier. Si votre projet est solaire et porté par une personne morale, une aide de la Région Sud peut couvrir une partie du désamiantage : le détail est sur notre page du <a href="/desamiantage-paca">désamiantage en PACA</a>.</p>
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Le bâti toulonnais en chiffres</h2>
+    <div class="article-body">
+      <p>Plus d’un tiers des résidences principales de Toulon (37,7 %) ont été achevées entre 1946 et 1970, contre 21,0 % dans le Var et 20,4 % en France, et 85,0 % avant 1991 (Insee, 2023). La ville compte aussi 79,2 % d’appartements. L’amiante est interdit depuis le 1er janvier 1997, mais la date seule ne prouve rien : seul un repérage dit si un bâtiment en contient.</p>
+    </div>
+  </section>
+</ZoneDevis>

@@ -1,0 +1,78 @@
+---
+import ZoneDevis from '@/layouts/ZoneDevis.astro'
+import AppelDevis from '@/components/AppelDevis.astro'
+import BlocPro from '@/components/BlocPro.astro'
+
+// Page orientée devis : la personne cherche un pro. Chiffres : Insee RP 2023 et Sitadel (permis de démolir autorisés
+// en 2025, hors annulés), relevés le 4 nov. 2026. Le refus de la métropole vient de sa page déchèteries, relue le même
+// jour : c'est l'argument pour le pro, le détail est dans /dechetterie-amiante.
+const sources = [
+  { titre: 'Insee, dossier complet de la commune de Marseille, recensement 2023, tableaux LOG T3 et LOG T8', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-13055', date: 'consulté le 4 novembre 2026' },
+  { titre: 'Insee, dossier complet France entière, recensement 2023', url: 'https://www.insee.fr/fr/statistiques/2011101?geo=FE-1', date: 'consulté le 4 novembre 2026' },
+  { titre: 'SDES, base Sitadel, liste des permis de démolir', url: 'https://www.data.gouv.fr/datasets/689c42fa521ccf80ce954f83', date: 'permis autorisés en 2025, hors permis annulés, comptage du 4 novembre 2026' },
+  { titre: 'Métropole Aix-Marseille-Provence, « Je trie en déchèterie »', url: 'https://dechets.ampmetropole.fr/je-trie-en-decheterie/', date: 'non datée, consultée le 4 novembre 2026' },
+  { titre: 'Arrêté du 21 décembre 2021 relatif au bordereau de suivi des déchets d’amiante, article 3', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000044571414', date: 'en vigueur depuis le 1er janvier 2022' },
+  { titre: 'Service-public.fr, fiche F288 « Amiante dans les bâtiments »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F288', date: 'vérifiée le 13 octobre 2026' },
+  { titre: 'Code de la santé publique, article R1334-29-7 (état amiante à la vente)', url: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000024117147', date: 'version en vigueur depuis le 1er février 2012' },
+  { titre: 'Code du travail, article L4412-2 (recherche d’amiante avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013763', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+]
+
+const faq = [
+  { question: 'Que faire de vieilles plaques de fibrociment à Marseille ?', reponse: 'Ne les cassez pas et ne les déplacez pas inutilement. Les déchèteries de la métropole ne prennent plus l’amiante : demandez un devis à un pro certifié sous-section 3, qui retire les plaques et prend en charge leur évacuation, avec un bordereau de suivi.' },
+  { question: 'Faut-il un diagnostic amiante pour vendre à Marseille ?', reponse: 'Oui, si le permis de construire date d’avant le 1er juillet 1997 : le vendeur fournit un état mentionnant la présence ou l’absence d’amiante (code de la santé publique, art. R1334-29-7). Cet état n’impose pas à lui seul de retirer les matériaux.' },
+  { question: 'Combien coûte un désamiantage à Marseille ?', reponse: 'Nous ne publions pas de prix propre à Marseille : le coût dépend du matériau, de la surface et de l’accès. Nos relevés nationaux donnent le plus souvent 40 à 100 €/m² pour une toiture en fibrociment. Seul un devis après visite donne le prix de votre chantier.' },
+  { question: 'Sous quel délai le chantier peut-il commencer ?', reponse: 'Le pro doit déposer son plan de retrait au moins trente jours avant le début des travaux, ou 8 jours en cas d’urgence liée à un sinistre (code du travail, art. R4412-137). Comptez aussi le repérage, le devis et, en copropriété, le vote en assemblée générale.' },
+]
+---
+<ZoneDevis
+  titre="Désamiantage à Marseille : devis gratuit d’un pro certifié"
+  description="À Marseille, les déchèteries ne prennent plus l’amiante : l’un de nos pros certifiés vous rappelle sous 24 h, chiffre le retrait et évacue les déchets."
+  chemin="/desamiantage-marseille"
+  region={{ nom: 'PACA', chemin: '/desamiantage-paca' }}
+  h1="Désamiantage à Marseille : votre devis gratuit"
+  chapo="Les déchèteries de la métropole ne prennent plus l’amiante. L’un de nos pros certifiés sous-section 3 vous rappelle sous 24 h, chiffre le retrait et s’occupe des déchets."
+  exempleCodePostal="13008"
+  publie="2026-11-04"
+  misAJour="2026-11-04"
+  sources={sources}
+  faq={faq}
+>
+  <section class="zone-bloc">
+    <h2>Trois situations fréquentes</h2>
+    <div class="article-body">
+      <ul class="zone-cartes">
+        <li><h3>Vous vendez</h3><p>Si le permis de construire date d’avant le 1er juillet 1997, vous fournissez à l’acheteur un état mentionnant la présence ou l’absence d’amiante (code de la santé publique, art. R1334-29-7). Si le diagnostic en trouve, rien n’oblige à le retirer avant la vente, mais l’acheteur en tiendra compte : faites chiffrer le retrait avant de négocier.</p></li>
+        <li><h3>Vous faites des travaux ou vous démolissez</h3><p>Dès qu’un pro intervient dans un bâtiment construit avant 1997, un repérage amiante est obligatoire avant le début des travaux (code du travail, art. L4412-2). Marseille a compté 91 permis de démolir autorisés en 2025 (Sitadel). Si de l’amiante est trouvé, un pro certifié le retire avant la suite du chantier.</p></li>
+        <li><h3>Vous êtes en copropriété</h3><p>À Marseille, 84,3 % des logements sont des appartements (Insee, 2023). Le syndic tient le dossier technique amiante des parties communes, et chaque copropriétaire le dossier de son logement (service-public.fr, fiche F288). Le pro remet un devis détaillé à présenter en assemblée générale. Pour un projet solaire en toiture, une aide de la Région Sud peut couvrir une partie du désamiantage : voyez notre page du <a href="/desamiantage-paca">désamiantage en PACA</a>.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Le pro s’occupe aussi des déchets</h2>
+    <div class="article-body">
+      <p>La métropole Aix-Marseille-Provence indique que ses déchèteries ne prennent plus en charge l’amiante, et les matériaux en fibrociment figurent parmi les déchets interdits. Votre pro évacue donc tout vers une installation autorisée. Quand un particulier commande les travaux, c’est lui qui émet le bordereau de suivi (arrêté du 21 décembre 2021, art. 3). Demandez-en une copie à la fin du chantier. Le reste des règles est dans notre guide <a href="/dechetterie-amiante">déchetterie et amiante</a>.</p>
+      <AppelDevis accroche="Plaques, conduits ou dalles : l’un de nos pros certifiés vient voir votre chantier." />
+    </div>
+  </section>
+
+  <BlocPro titre="Le reste, votre pro s’en charge aussi">
+    <p>Il dépose le plan de retrait sur DEMAT@MIANTE au moins trente jours avant le chantier, ou 8 jours en cas d’urgence liée à un sinistre (art. R4412-137), puis retire les matériaux sous protection, dans une zone confinée. Vous n’avez aucune démarche à faire auprès des administrations. Comme ce travail est réservé aux pros certifiés (art. R4412-129), nous vous donnons le nom du vôtre avant qu’il intervienne : voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>.</p>
+  </BlocPro>
+
+  <section class="zone-bloc">
+    <h2>Quel budget prévoir</h2>
+    <div class="article-body">
+      <p>Nous ne publions pas de prix propre à Marseille. Nos relevés nationaux du 29 octobre 2026 donnent le plus souvent 40 à 100 €/m² pour une toiture en fibrociment et 25 à 80 €/m² pour des dalles de sol. Le détail est sur notre page du <a href="/prix-desamiantage">prix du désamiantage au m²</a>. Seul un devis après visite donne le prix de votre chantier.</p>
+    </div>
+  </section>
+
+  <section class="zone-bloc">
+    <h2>Le bâti marseillais en chiffres</h2>
+    <div class="article-body">
+      <p>Un tiers des résidences principales de Marseille (33,8 %) ont été achevées entre 1946 et 1970, contre 20,4 % en France, et 77,0 % avant 1991 (Insee, 2023). L’amiante est interdit depuis le 1er janvier 1997, mais la date seule ne prouve rien : seul un repérage dit si un bâtiment en contient. Si votre chantier est dans le Var, voyez notre page du <a href="/desamiantage-toulon">désamiantage à Toulon</a>.</p>
+    </div>
+  </section>
+</ZoneDevis>

@@ -15,6 +15,7 @@ export const PAGES_GUIDE = [
   { chemin: '/desamiantage-toiture-amiante', titreCourt: 'Désamiantage de toiture' },
   { chemin: '/toiture-amiante-que-faire', titreCourt: 'Toiture en amiante : que faire ?' },
   { chemin: '/certification-sous-section-3', titreCourt: 'Certification sous-section 3' },
+  { chemin: '/dechetterie-amiante', titreCourt: 'Déchetterie et amiante' },
 ] as const
 
 export const absolu = (chemin: string) => SITE.url + chemin
