@@ -34,6 +34,7 @@ retirée exprès : ne la réintroduis pas.
    - `width` et `height` toujours renseignés.
    - `alt` descriptif en français pour une image qui montre quelque chose ; `alt=""` seulement
      pour une image décorative.
+   - Pas de légende « Photo d’illustration » (Maxime, 4 nov. 2026). Sur les pages par zone, l'habillage des photos est dans `.zone-photo`.
    - Image du premier écran : `fetchpriority="high"`, préchargée, sans `loading="lazy"`.
      Les autres images : `loading="lazy"`.
 6. **Premier affichage.**
