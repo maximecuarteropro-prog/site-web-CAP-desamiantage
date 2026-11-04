@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro'
-import { questions } from '@contracts/demande'
+import { parametresCampagne, questions } from '@contracts/demande'
 
 // Seule route exécutée sur le serveur : valide la demande du formulaire et la transmet au Lead Router
 // (source « Site cap-desamiantage.fr », créée par la migration 20261101000006 du dépôt lead-router-v2).
@@ -48,6 +48,13 @@ export const POST: APIRoute = async ({ request }) => {
   const endpoint = process.env.LEAD_ROUTER_ENDPOINT
   if (!endpoint) return repondre({ erreur: 'Réception des demandes non configurée' }, 503)
 
+  // Campagne d'origine, seulement si l'adresse de la page en portait une.
+  const campagne: Record<string, string> = {}
+  for (const nom of parametresCampagne) {
+    const valeur = texte(d[nom], 300)
+    if (valeur) campagne[`suivi_${nom}`] = valeur
+  }
+
   const lead = {
     id: crypto.randomUUID(),
     prenom,
@@ -61,6 +68,7 @@ export const POST: APIRoute = async ({ request }) => {
     suivi_page_entree: texte(d.pageEntree, 300),
     suivi_page: texte(d.page, 300),
     suivi_consentement: 'Case cochée sur le site : transmission à un seul de nos pros (entreprise certifiée indépendante du secteur) pour rappel et devis',
+    ...campagne,
   }
 
   try {

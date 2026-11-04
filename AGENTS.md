@@ -95,7 +95,7 @@ retirée exprès : ne la réintroduis pas.
       accueil compris), le formulaire (`QuoteForm.tsx` et `contracts/demande.ts` : les questions du formulaire
       Meta, avec leurs libellés exacts, que le Lead Router qualifie), la route `src/pages/api/demande.ts`
       (branchée au Lead Router, variable Vercel `LEAD_ROUTER_ENDPOINT` ; les champs `suivi_…` y restent internes,
-      jamais envoyés au pro) ;
+      jamais envoyés au pro ; la campagne d'origine, `utm`, `gclid` et `fbclid`, y passe aussi, lue dans l'adresse au moment de l'envoi, sans rien stocker chez le visiteur) ;
     - ajouté le 1er nov. 2026 à la demande de Maxime : l'encart de devis au milieu des guides
       (`src/components/EncartDevis.astro`, un par guide, placé à la main avec une `accroche` liée à la section
       d'avant ; photo `src/assets/encart-devis.jpg` générée par kie.ai).

@@ -73,6 +73,8 @@ const fleche = 'M7 7h10v10 M7 17 17 7'
 
 <script>
   // Fait défiler les étapes et envoie la demande à /api/demande, comme QuoteForm.
+  import { lireCampagne } from '@contracts/demande'
+
   const panneau = document.querySelector<HTMLElement>('.devis-panneau')
   const form = panneau?.querySelector('form')
   if (panneau && form) {
@@ -139,7 +141,7 @@ const fleche = 'M7 7h10v10 M7 17 17 7'
         const reponse = await fetch('/api/demande', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...Object.fromEntries(new FormData(form)), consent: true, typeChantier: '', page: location.pathname, pageEntree: pageEntree() }),
+          body: JSON.stringify({ ...Object.fromEntries(new FormData(form)), consent: true, typeChantier: '', page: location.pathname, pageEntree: pageEntree(), ...lireCampagne(location.search) }),
         })
         // 422 : la demande est incomplète ; toute autre erreur est technique et ne doit pas accuser le visiteur.
         if (reponse.status === 422) return signaler('Il manque une réponse ou une coordonnée. Vérifiez le formulaire et réessayez.')

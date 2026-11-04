@@ -13,6 +13,20 @@ export const questions = [
 
 export type CleQuestion = (typeof questions)[number]['cle']
 
+// Campagne d'origine : lue dans l'adresse de la page au moment de l'envoi, rien n'est stocké chez le visiteur.
+// La route la transmet au Lead Router en champs « suivi_ », affichés sur la fiche du lead et jamais envoyés au pro.
+export const parametresCampagne = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid', 'fbclid'] as const
+
+export function lireCampagne(recherche: string): Record<string, string> {
+  const adresse = new URLSearchParams(recherche)
+  const campagne: Record<string, string> = {}
+  for (const nom of parametresCampagne) {
+    const valeur = adresse.get(nom)
+    if (valeur) campagne[nom] = valeur
+  }
+  return campagne
+}
+
 // Une carte « Quel est votre projet ? » préremplit la deuxième question.
 export const materiauParType: Record<ProjectTypeId, string> = {
   'toitures-fibrociment': 'Toiture ou bardage en fibrociment',

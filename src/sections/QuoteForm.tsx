@@ -1,7 +1,7 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { ArrowUpRight, Check, LoaderCircle } from 'lucide-react'
 import { projectTypeLabels, type ProjectTypeId } from '@contracts/projects'
-import { materiauParType, questions, type CleQuestion } from '@contracts/demande'
+import { lireCampagne, materiauParType, questions, type CleQuestion } from '@contracts/demande'
 
 // Envoi vers /api/demande (fonction Vercel), qui transmet la demande au Lead Router.
 // 422 : la demande est incomplète ; toute autre erreur est technique et ne doit pas accuser le visiteur.
@@ -44,7 +44,7 @@ export default function QuoteForm({ selectedProject }: { selectedProject: Projec
     event.preventDefault()
     // Le type de la carte choisie n'est transmis que s'il correspond encore à la réponse donnée.
     const typeChantier = selectedProject && materiauParType[selectedProject] === formData.materiau ? projectTypeLabels[selectedProject] : ''
-    submitQuote.mutate({ ...formData, typeChantier, page: window.location.pathname, pageEntree: pageEntree() })
+    submitQuote.mutate({ ...formData, typeChantier, page: window.location.pathname, pageEntree: pageEntree(), ...lireCampagne(window.location.search) })
   }
   const startAnotherRequest = () => { setRequestId(null); setFormData(initialData); submitQuote.reset() }
   return (
