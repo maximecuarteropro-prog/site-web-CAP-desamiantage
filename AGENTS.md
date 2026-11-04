@@ -119,6 +119,7 @@ retirée exprès : ne la réintroduis pas.
       de la ville change : Google le classe en pages satellites.
     - Les règles locales changent vite (Aix-Marseille-Provence, Courrières) : relire les pages et leur date au moins
       une fois par an. Le chiffre de l'Insee s'arrête à 1990, il ne prouve pas la présence d'amiante : le dire sur la page.
+    - Pas de jargon administratif : « auprès de l'administration » plutôt que le nom du service de dépôt du plan de retrait (Maxime, 4 nov. 2026).
     - Pas de prix par ville : renvoyer vers `/prix-desamiantage`.
 
 ## 2. La page d'accueil
