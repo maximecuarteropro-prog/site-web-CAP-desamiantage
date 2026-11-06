@@ -146,10 +146,11 @@
 .project-card-help p { margin: 8px 0 0; font-size: 15px; line-height: 1.55; }
 .project-help-arrow { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; color: var(--accent-primary); background: var(--accent-ink); }
 .project-help-arrow svg { width: 20px; height: 20px; }
-.quote-section { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); color: var(--text-primary); background: var(--surface-page); scroll-margin-top: 24px; }
-.quote-container { display: grid; width: 100%; max-width: 1440px; margin: 0 auto; padding: 32px 22px 80px; gap: 40px; }
+/* Sur un gris foncé, pour se détacher des cartes noires juste au-dessus (demande de Maxime, 6 nov. 2026). */
+.quote-section { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); color: var(--text-primary); background: oklch(0.27 0.009 115); scroll-margin-top: 24px; }
+.quote-container { display: grid; width: 100%; max-width: 1440px; margin: 0 auto; padding: 56px 22px 64px; gap: 32px; }
 .quote-intro h2 { max-width: 520px; }
-.quote-intro > p { max-width: 450px; margin: 24px 0 0; color: var(--text-secondary); font-size: 17px; line-height: 1.65; }
+.quote-intro > p { max-width: 450px; margin: 24px 0 0; color: oklch(0.86 0.008 105); font-size: 17px; line-height: 1.65; }
 .quote-reassurance { display: flex; align-items: center; margin-top: 28px; gap: 10px; font-size: 15px; font-weight: 500; }
 .quote-reassurance svg { width: 20px; height: 20px; color: var(--accent-primary); }
 /* Questions à choix du formulaire (les mêmes que le formulaire Meta) : une pastille par réponse, un seul toucher. */
@@ -194,7 +195,7 @@
   .projects-container { padding: 100px 36px; }
   .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 56px; }
   .project-card-help { grid-column: 1 / -1; padding: 28px; gap: 22px; }
-  .quote-container { padding: 40px 36px 100px; }
+  .quote-container { padding: 72px 36px 80px; }
   .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
   .form-grid .form-field-full { grid-column: 1 / -1; }
 }
@@ -208,7 +209,7 @@
   .project-card-copy h3 { font-size: 25px; }
   .project-card-help { min-height: 0; padding: 28px 32px; }
   .project-card-help h3 { font-size: 24px; }
-  .quote-container { grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); align-items: start; padding: 24px clamp(48px, 5.5vw, 88px) 128px; gap: clamp(56px, 7vw, 110px); }
+  .quote-container { grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); align-items: start; padding: 88px clamp(48px, 5.5vw, 88px) 96px; gap: clamp(56px, 7vw, 110px); }
   .quote-intro { position: sticky; top: 48px; }
 }
 @media (prefers-reduced-motion: reduce) {
