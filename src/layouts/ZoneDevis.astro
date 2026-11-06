@@ -6,6 +6,7 @@ import Base from '@/layouts/Base.astro'
 import SiteHeader from '@/components/SiteHeader.astro'
 import SiteFooter from '@/components/SiteFooter.astro'
 import FormulaireEtapes from '@/components/FormulaireEtapes.astro'
+import FaqAccordeon from '@/components/FaqAccordeon.astro'
 import BandeauPreuves from '@/sections/BandeauPreuves.astro'
 import { CalendarClock, CircleCheck, ShieldCheck } from 'lucide-react'
 import { ORGANISATION, SITE, absolu } from '@/lib/site'
@@ -101,14 +102,7 @@ const donnees: Record<string, unknown>[] = [
       <section class="zone-bloc">
         <h2 id="questions">Questions fréquentes</h2>
         <div class="article-body">
-          <dl class="faq">
-            {faq.map((q) => (
-              <>
-                <dt>{q.question}</dt>
-                <dd>{q.reponse}</dd>
-              </>
-            ))}
-          </dl>
+          <FaqAccordeon faq={faq} />
         </div>
       </section>
       <footer class="zone-fin">

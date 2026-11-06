@@ -2,6 +2,7 @@
 // Fin de l'accueil, après le formulaire pour ne pas l'éloigner : pour qui, certification, FAQ et guides.
 // Le tableau `faq` vient de index.astro, qui en tire aussi le FAQPage : le texte affiché et le JSON-LD restent identiques.
 // Pas de prix ici (décision de Maxime, 1er nov. 2026) : la page renvoie vers /prix-desamiantage.
+import FaqAccordeon from '@/components/FaqAccordeon.astro'
 import { PAGES_GUIDE } from '@/lib/site'
 
 interface Props {
@@ -34,17 +35,7 @@ const { faq } = Astro.props
     <section class="zone-bloc">
       <h2 id="questions">Questions fréquentes</h2>
       <div class="article-body">
-        <dl class="faq">
-          {faq.map((q) => (
-            <>
-              <dt>{q.question}</dt>
-              <dd>
-                {q.reponse}
-                {q.lien && <span class="faq-lien">Pour aller plus loin&nbsp;: <a href={q.lien.href}>{q.lien.texte}</a>.</span>}
-              </dd>
-            </>
-          ))}
-        </dl>
+        <FaqAccordeon faq={faq} />
       </div>
     </section>
 

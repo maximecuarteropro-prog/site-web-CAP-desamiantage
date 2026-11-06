@@ -106,8 +106,22 @@
 .encadre { padding: 20px 22px; border: 1px solid oklch(0.82 0.012 105); border-radius: 12px; background: oklch(0.98 0.006 100); }
 .encadre > * + * { margin-top: 10px; }
 .encadre p { margin: 0; }
-.faq dt { margin-top: 26px; color: oklch(0.2 0.009 115); font-size: 19px; font-weight: 600; line-height: 1.3; letter-spacing: -0.02em; }
-.faq dd { margin: 10px 0 0; }
+/* FAQ en accordéon : <details> natif, sans JavaScript. Seule l'icône s'anime, en transform. */
+.faq { display: grid; margin-top: 20px; gap: 10px; }
+.faq-item { border: 1px solid oklch(0.85 0.01 105); border-radius: 12px; background: oklch(0.98 0.006 100); }
+.faq-item summary { display: flex; align-items: center; justify-content: space-between; min-height: 60px; padding: 14px 16px 14px 20px; gap: 16px; border-radius: 11px; color: oklch(0.2 0.009 115); font-size: 17px; font-weight: 600; line-height: 1.3; letter-spacing: -0.02em; cursor: pointer; list-style: none; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:focus-visible { outline: 2px solid oklch(0.2 0.009 115); outline-offset: 2px; }
+.faq-icone { position: relative; flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--accent-primary); transition: transform 180ms ease-out; }
+.faq-icone::before, .faq-icone::after { position: absolute; top: 13px; left: 8px; width: 12px; height: 2px; border-radius: 1px; background: var(--accent-ink); content: ''; }
+.faq-icone::after { transform: rotate(90deg); }
+.faq-item[open] .faq-icone { transform: rotate(45deg); }
+.article-body .faq-reponse { padding: 0 20px 18px; font-size: 16px; line-height: 1.6; }
+.article-body .faq-reponse p { margin: 0; }
+.article-body .faq-reponse .faq-lien { margin-top: 8px; }
+@media (prefers-reduced-motion: reduce) {
+  .faq-icone { transition: none; }
+}
 .sources { margin-top: 64px; padding-top: 28px; border-top: 1px solid oklch(0.82 0.012 105); color: oklch(0.38 0.012 110); font-size: 14px; line-height: 1.6; }
 .sources h2 { margin: 0; font-size: 14px; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; }
 .sources ol { margin: 14px 0 0; padding-left: 20px; }
@@ -220,7 +234,7 @@
 .zone-bloc:first-child { border-top: 0; }
 .zone-bloc h2 { margin: 0; color: oklch(0.2 0.009 115); font-size: clamp(1.7rem, 5vw, 2.4rem); font-weight: 500; line-height: 1.12; letter-spacing: -0.04em; scroll-margin-top: calc(var(--entete) + 16px); }
 .zone-bloc .article-body { min-width: 0; margin-top: 0; }
-.zone-bloc .article-body > .faq dt:first-child { margin-top: 0; }
+.zone-bloc .article-body > .faq { margin-top: 0; }
 .article-body .zone-cartes { display: grid; margin: 0; padding: 0; gap: 12px; list-style: none; counter-reset: etape; }
 .article-body .zone-cartes li { margin: 0; padding: 18px 20px; border: 1px solid oklch(0.85 0.01 105); border-radius: 12px; background: oklch(0.98 0.006 100); font-size: 16px; line-height: 1.6; }
 .article-body .zone-cartes strong { display: block; margin-bottom: 4px; }
@@ -236,10 +250,9 @@
 .zone-sources-repli summary { display: list-item; min-height: 44px; padding: 10px 0; cursor: pointer; }
 .zone-sources-repli summary h2 { display: inline; }
 
-/* Accueil : badge cliquable, liens du parcours, renvois de la FAQ et liste des guides. */
+/* Accueil : badge cliquable, liens du parcours et liste des guides. */
 a.hero-badge { transition: border-color 180ms ease-out; }
 a.hero-badge:hover { border-color: var(--accent-primary); }
-.faq-lien { display: block; margin-top: 8px; }
 .article-body .accueil-guides li { padding: 0; }
 .article-body .accueil-guides a { display: flex; align-items: center; min-height: 56px; padding: 12px 20px; font-weight: 600; }
 

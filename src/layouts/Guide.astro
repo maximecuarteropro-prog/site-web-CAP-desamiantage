@@ -5,6 +5,7 @@ import { getImage } from 'astro:assets'
 import Base from '@/layouts/Base.astro'
 import SiteHeader from '@/components/SiteHeader.astro'
 import SiteFooter from '@/components/SiteFooter.astro'
+import FaqAccordeon from '@/components/FaqAccordeon.astro'
 import { ORGANISATION, SITE, absolu } from '@/lib/site'
 import partage from '@/assets/hero-retrait-plaque.jpg'
 
@@ -85,14 +86,7 @@ if (faq.length) {
         {faq.length > 0 && (
           <>
             <h2 id="questions">Questions fréquentes</h2>
-            <dl class="faq">
-              {faq.map((q) => (
-                <>
-                  <dt>{q.question}</dt>
-                  <dd>{q.reponse}</dd>
-                </>
-              ))}
-            </dl>
+            <FaqAccordeon faq={faq} />
           </>
         )}
         <section class="sources" aria-labelledby="titre-sources">

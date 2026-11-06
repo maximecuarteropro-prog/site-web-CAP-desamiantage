@@ -1,0 +1,23 @@
+---
+// FAQ en accordéon (décision de Maxime, 6 nov. 2026), sur toutes les pages. <details> natif, sans JavaScript :
+// les réponses restent dans le HTML, mot pour mot comme dans le FAQPage de la page.
+// Plusieurs réponses peuvent rester ouvertes : en fermer une au-dessus ferait sauter la page sur iPhone.
+import type { Question } from '@/layouts/Guide.astro'
+
+interface Props {
+  faq: (Question & { lien?: { href: string; texte: string } })[]
+}
+
+const { faq } = Astro.props
+---
+<div class="faq">
+  {faq.map((q) => (
+    <details class="faq-item">
+      <summary><span>{q.question}</span><span class="faq-icone" aria-hidden="true"></span></summary>
+      <div class="faq-reponse">
+        <p>{q.reponse}</p>
+        {q.lien && <p class="faq-lien">Pour aller plus loin&nbsp;: <a href={q.lien.href}>{q.lien.texte}</a>.</p>}
+      </div>
+    </details>
+  ))}
+</div>

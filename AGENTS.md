@@ -13,7 +13,8 @@ retirée exprès : ne la réintroduis pas.
 1. **Tout le texte est dans le HTML au build.** Les composants React sont rendus côté serveur.
    `client:visible` ou `client:idle` seulement pour ce qui réagit au clic (formulaire, sélection
    du type de chantier). Jamais `client:only`, jamais de texte chargé par `fetch` dans le navigateur,
-   jamais de contenu qui n'apparaît qu'après une action.
+   jamais de contenu qui n'apparaît qu'après une action. Seules exceptions, repliées dans un `<details>` dont le
+   texte reste dans le HTML : la FAQ (règle 10) et les sources des pages par zone (règle 14).
    Contrôle : après `npm run build`, le H1 et les paragraphes sont lisibles dans
    `.vercel/output/static/index.html`.
 2. **Balises de tête : uniquement par `src/layouts/Base.astro`.** Chaque page passe `titre`,
@@ -65,7 +66,9 @@ retirée exprès : ne la réintroduis pas.
       ne les duplique pas.
     - Interdits : `LocalBusiness` (on ne réalise pas les travaux), `Review`, `AggregateRating`
       (aucun avis inventé).
-    - `FAQPage` seulement si la FAQ est affichée sur la page, mot pour mot.
+    - `FAQPage` seulement si la FAQ est sur la page, mot pour mot.
+    - La FAQ passe par `src/components/FaqAccordeon.astro` sur toutes les pages (accueil, zones, guides) : accordéon en
+      `<details>` natif, sans JavaScript, toutes les réponses dans le HTML (décision de Maxime, 6 nov. 2026).
 11. **Texte.**
     - Espace insécable avant `: ; ! ?`, avant `€` et `%`, et entre un nombre et son unité.
       Séparateur de milliers : espace fine insécable (U+202F), par exemple 12 000 €.
@@ -109,7 +112,7 @@ retirée exprès : ne la réintroduis pas.
         cartes « Quel est votre projet ? » préremplissent la première question.
       - Réassurance reprise de l'accueil : badge, carte sur la photo, bandeau de preuves, gratuité et délai indicatif.
       - Menu réduit (`SiteHeader reduit`) et lien de devis du pied de page vers le formulaire de la page (`SiteFooter devis="#devis"`).
-      - Les sources sont dans un `<details>`, seule exception à la règle 1.1 : leur texte reste dans le HTML. La FAQ reste affichée.
+      - Les sources sont dans un `<details>`, comme la FAQ : leur texte reste dans le HTML.
     - Une page partout où il y a de la demande (décision de Maxime, 4 nov. 2026) : les leads d'une zone sans pro sous contrat sont
       vendus au lead à des partenaires. La promesse du formulaire ne change pas : un pro certifié sous-section 3 rappelle sous 24 h.
     - Aucun pro nommé, signé ou non, ni sur le site, ni dans les données structurées, ni dans les créas par zone, sauf décision
