@@ -27,13 +27,14 @@ import photo from '@/assets/encart-devis.jpg'
 
 <script>
   // À l'arrivée sur la section, les traits se remplissent une fois, étape par étape. Sans script, tout est déjà rempli.
+  // Rythme lent, demandé par Maxime (6 nov. 2026) : 1 400 ms entre deux étapes, pour 1 200 ms de remplissage dans site.css.
   const liste = document.querySelector<HTMLElement>('.process-etapes')
   if (liste && 'IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     liste.classList.add('process-anime')
     const observateur = new IntersectionObserver((entrees) => {
       if (!entrees[0].isIntersecting) return
       observateur.disconnect()
-      Array.from(liste.children).forEach((etape, i) => window.setTimeout(() => etape.classList.add('est-fait'), i * 800))
+      Array.from(liste.children).forEach((etape, i) => window.setTimeout(() => etape.classList.add('est-fait'), i * 1400))
     }, { threshold: 0.3 })
     observateur.observe(liste)
   }

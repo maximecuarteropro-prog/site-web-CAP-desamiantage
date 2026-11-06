@@ -43,7 +43,8 @@ retirée exprès : ne la réintroduis pas.
      qui part de `opacity: 0` ou d'un `clip-path` masquant sur ces deux éléments : Google mesure
      l'affichage du plus gros élément (LCP) à la fin de l'animation.
    - Animer `transform` plutôt que l'opacité, en 300 ms au plus, et respecter
-     `prefers-reduced-motion`.
+     `prefers-reduced-motion`. Seule exception, demandée par Maxime (6 nov. 2026) : les traits de `Process.astro`, hors du
+     premier écran, se remplissent lentement (1 200 ms) pour que le défilement des étapes se suive.
    - Objectifs sur mobile : LCP sous 2,5 s, CLS sous 0,1, INP sous 200 ms.
 7. **JavaScript.**
    - Aujourd'hui, aucun îlot React sur le site : les composants React sont rendus au build, sans JavaScript dans le
