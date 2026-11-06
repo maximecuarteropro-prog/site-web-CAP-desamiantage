@@ -6,7 +6,7 @@ import SiteFooter from '@/components/SiteFooter.astro'
 import Hero from '@/sections/Hero'
 import BandeauPreuves from '@/sections/BandeauPreuves.astro'
 import Process from '@/sections/Process.astro'
-import DemandeChantier from '@/sections/DemandeChantier'
+import DemandeAccueil from '@/sections/DemandeAccueil.astro'
 import AccueilInfos from '@/sections/AccueilInfos.astro'
 import photo from '@/assets/hero-retrait-plaque.jpg'
 
@@ -36,7 +36,7 @@ const image = { src: visuel.src, srcSet: visuel.srcSet.attribute, sizes, width: 
     <Hero image={image} />
     <BandeauPreuves />
     <Process />
-    <DemandeChantier client:visible />
+    <DemandeAccueil />
     <AccueilInfos faq={faq} />
   </main>
   <SiteFooter />

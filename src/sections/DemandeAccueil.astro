@@ -1,0 +1,19 @@
+---
+// Types de chantiers et formulaire de l'accueil. Le formulaire par étapes est le même que sur les pages par zone
+// (demande de Maxime, 6 nov. 2026) : plus aucun îlot React sur l'accueil.
+import { Check } from 'lucide-react'
+import ProjectTypes from '@/sections/ProjectTypes'
+import FormulaireEtapes from '@/components/FormulaireEtapes.astro'
+---
+<ProjectTypes />
+<section class="quote-section" aria-labelledby="quote-title">
+  <div class="quote-container">
+    <div class="quote-intro">
+      <span class="quote-kicker">Votre demande</span>
+      <h2 id="quote-title">Parlons de votre chantier.</h2>
+      <p>4 questions, 1&nbsp;minute. L’un de nos pros vous rappelle sous 24&nbsp;h.</p>
+      <div class="quote-reassurance"><Check aria-hidden="true" />Gratuit et sans engagement</div>
+    </div>
+    <FormulaireEtapes exempleCodePostal="33000" />
+  </div>
+</section>

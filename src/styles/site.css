@@ -207,6 +207,13 @@
 .devis-panneau .quote-success { min-height: 340px; padding: 8px 4px; }
 .devis-panneau .quote-success h3:focus { outline: none; }
 
+/* Le même formulaire dans la section de l'accueil, à côté de son accroche. */
+.quote-container .devis-panneau { grid-area: auto; }
+.quote-section .devis-entete p { display: none; }
+@media (min-width: 1024px) {
+  .quote-container .devis-panneau { width: 100%; max-width: 640px; }
+}
+
 /* Texte de la page : le titre à gauche, le contenu à droite sur ordinateur. */
 .zone-contenu { width: 100%; max-width: 1440px; margin: 0 auto; padding: 8px 22px 48px; }
 .zone-bloc { display: grid; padding: 40px 0; gap: 18px; border-top: 1px solid oklch(0.85 0.01 105); }

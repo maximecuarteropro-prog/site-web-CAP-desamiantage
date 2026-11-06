@@ -1,9 +1,8 @@
 ---
-// Formulaire de devis par étapes des pages par zone : une question à la fois, dans le premier écran.
-// Mêmes questions, mêmes libellés et même envoi que QuoteForm (contracts/demande.ts, /api/demande) : le Lead Router
-// ne voit aucune différence. Sans React : toutes les étapes sont dans le HTML et un petit script les fait défiler,
-// pour ne charger aucun îlot dans le premier écran (AGENTS.md, règle 1.7).
-// La case de consentement reprend mot pour mot celle de QuoteForm : si le parcours change, changer les deux.
+// Formulaire de devis par étapes, sur l'accueil et les pages par zone : une question à la fois.
+// Questions et libellés dans contracts/demande.ts : les mêmes que le formulaire Meta, que le Lead Router qualifie.
+// Sans React : toutes les étapes sont dans le HTML et un petit script les fait défiler (AGENTS.md, règle 1.7).
+// Si le parcours change, changer aussi la case de consentement, suivi_consentement et /confidentialite.
 import { questions } from '@contracts/demande'
 
 interface Props {
@@ -72,8 +71,9 @@ const fleche = 'M7 7h10v10 M7 17 17 7'
 </section>
 
 <script>
-  // Fait défiler les étapes et envoie la demande à /api/demande, comme QuoteForm.
-  import { lireCampagne } from '@contracts/demande'
+  // Fait défiler les étapes et envoie la demande à /api/demande.
+  import { lireCampagne, materiauParType } from '@contracts/demande'
+  import { projectTypeLabels, type ProjectTypeId } from '@contracts/projects'
 
   const panneau = document.querySelector<HTMLElement>('.devis-panneau')
   const form = panneau?.querySelector('form')
@@ -92,6 +92,7 @@ const fleche = 'M7 7h10v10 M7 17 17 7'
     let courante = 0
     let auClavier = false
     let minuteur = 0
+    let carte: ProjectTypeId | null = null
 
     const amener = (cible: HTMLElement) => {
       cible.focus({ preventScroll: true })
@@ -129,6 +130,19 @@ const fleche = 'M7 7h10v10 M7 17 17 7'
       }
     })
     form.addEventListener('input', () => { erreur.hidden = true })
+
+    // Accueil : une carte « Quel est votre projet ? » répond à la première question.
+    document.querySelectorAll<HTMLElement>('[data-projet]').forEach((lien) => {
+      lien.addEventListener('click', () => {
+        const id = lien.dataset.projet as ProjectTypeId
+        const choix = [...form.querySelectorAll<HTMLInputElement>('input[name="materiau"]')].find((c) => c.value === materiauParType[id])
+        if (!choix) return
+        choix.checked = true
+        carte = id
+        erreur.hidden = true
+        if (courante === 0) afficher(1)
+      })
+    })
     codePostal.addEventListener('input', () => { codePostal.value = codePostal.value.replace(/\D/g, '').slice(0, 5) })
 
     form.addEventListener('submit', async (event) => {
@@ -136,12 +150,15 @@ const fleche = 'M7 7h10v10 M7 17 17 7'
       if (courante < etapes.length - 1) return suivant()
       if (!valide(etapes[courante])) return
       envoi.disabled = true
+      const donnees = Object.fromEntries(new FormData(form))
+      // Le type de la carte choisie n'est transmis que s'il correspond encore à la réponse donnée.
+      const typeChantier = carte && materiauParType[carte] === donnees.materiau ? projectTypeLabels[carte] : ''
       envoiTexte.textContent = 'Envoi en cours…'
       try {
         const reponse = await fetch('/api/demande', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...Object.fromEntries(new FormData(form)), consent: true, typeChantier: '', page: location.pathname, pageEntree: pageEntree(), ...lireCampagne(location.search) }),
+          body: JSON.stringify({ ...donnees, consent: true, typeChantier, page: location.pathname, pageEntree: pageEntree(), ...lireCampagne(location.search) }),
         })
         // 422 : la demande est incomplète ; toute autre erreur est technique et ne doit pas accuser le visiteur.
         if (reponse.status === 422) return signaler('Il manque une réponse ou une coordonnée. Vérifiez le formulaire et réessayez.')
@@ -161,6 +178,7 @@ const fleche = 'M7 7h10v10 M7 17 17 7'
 
     el('[data-autre]').addEventListener('click', () => {
       form.reset()
+      carte = null
       succes.hidden = true
       saisie.hidden = false
       afficher(0)

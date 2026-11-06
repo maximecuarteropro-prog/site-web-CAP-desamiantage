@@ -10,9 +10,8 @@ const projectCards = [
   { id: 'avant-travaux-vente-demolition', title: 'Désamiantage avant travaux, vente ou démolition', description: 'Retrait complet de tous les matériaux repérés dans le diagnostic, pour débloquer une rénovation, une vente ou une démolition.', icon: Hammer },
 ] satisfies Array<{ id: ProjectTypeId; title: string; description: string; icon: typeof House }>
 
-type ProjectTypesProps = { onSelect: (projectType: ProjectTypeId) => void }
-
-export default function ProjectTypes({ onSelect }: ProjectTypesProps) {
+// Rendu au build, sans React dans le navigateur : FormulaireEtapes lit data-projet au clic sur une carte.
+export default function ProjectTypes() {
   return (
     <section className="projects-section" id="types-de-chantiers" aria-labelledby="projects-title">
       <div className="projects-container">
@@ -23,14 +22,14 @@ export default function ProjectTypes({ onSelect }: ProjectTypesProps) {
           {projectCards.map((project, index) => {
             const Icon = project.icon
             return (
-              <a className="project-card" href="#devis" key={project.id} onClick={() => onSelect(project.id)}>
+              <a className="project-card" href="#devis" key={project.id} data-projet={project.id}>
                 <div className="project-card-top"><Icon aria-hidden="true" /><span>0{index + 1}</span></div>
                 <div className="project-card-copy"><h3>{project.title}</h3><p>{project.description}</p></div>
                 <span className="project-card-action" aria-hidden="true">Décrire ce projet<ArrowUpRight /></span>
               </a>
             )
           })}
-          <a className="project-card project-card-help" href="#devis" onClick={() => onSelect(projectTypeIds[6])}>
+          <a className="project-card project-card-help" href="#devis" data-projet={projectTypeIds[6]}>
             <CircleHelp aria-hidden="true" />
             <div><h3>Autre / je ne sais pas</h3><p>Vous ne savez pas ce que vous avez&nbsp;? Décrivez-nous votre situation, on vous oriente.</p></div>
             <span className="project-help-arrow" aria-hidden="true"><ArrowUpRight /></span>

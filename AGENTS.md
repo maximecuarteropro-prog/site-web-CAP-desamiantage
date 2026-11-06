@@ -45,9 +45,9 @@ retirée exprès : ne la réintroduis pas.
      `prefers-reduced-motion`.
    - Objectifs sur mobile : LCP sous 2,5 s, CLS sous 0,1, INP sous 200 ms.
 7. **JavaScript.**
-   - Aujourd'hui, React ne se charge qu'à l'arrivée sur le formulaire (`client:visible`). Garde ce
-     fonctionnement : pas de nouvel îlot dans le premier écran, pas de `client:load` sur une grande
-     section.
+   - Aujourd'hui, aucun îlot React sur le site : les composants React sont rendus au build, sans JavaScript dans le
+     navigateur, et les formulaires passent par `FormulaireEtapes.astro`. Garde ce fonctionnement : pas de nouvel îlot dans le
+     premier écran, pas de `client:load` sur une grande section.
    - Pas de bibliothèque d'animation (framer-motion, GSAP) : les animations se font en CSS.
    - Un petit effet se fait dans un `<script>` Astro, comme la parallaxe de `index.astro`.
 8. **Police.** Archivo, dans `src/assets/fonts/` (passée par Vite : nom versionné, cache illimité ; la licence
@@ -91,7 +91,7 @@ retirée exprès : ne la réintroduis pas.
     - refaits le 1er nov. 2026 à la demande de Maxime : `src/sections/BandeauPreuves.astro` (sous le hero)
       et le nom en grand du pied de page (`SiteFooter.astro`, `.site-footer-wordmark`) ;
     - refaits le 1er nov. 2026 (suite) : le bandeau de menu collant (`SiteHeader.astro`, sur toutes les pages,
-      accueil compris), le formulaire (`QuoteForm.tsx` et `contracts/demande.ts` : les questions du formulaire
+      accueil compris), le formulaire (`src/components/FormulaireEtapes.astro` et `contracts/demande.ts` : les questions du formulaire
       Meta, avec leurs libellés exacts, que le Lead Router qualifie), la route `src/pages/api/demande.ts`
       (branchée au Lead Router, variable Vercel `LEAD_ROUTER_ENDPOINT` ; les champs `suivi_…` y restent internes,
       jamais envoyés au pro ; la campagne d'origine, `utm`, `gclid` et `fbclid`, y passe aussi, lue dans l'adresse au moment de l'envoi, sans rien stocker chez le visiteur ; identifiants de clic conservés sur décision de Maxime du 4 nov. 2026, malgré le risque signalé sur le consentement) ;
@@ -104,8 +104,9 @@ retirée exprès : ne la réintroduis pas.
       une phrase seulement sur les pages par zone.
     - Gabarit `src/layouts/ZoneDevis.astro` (validé par Maxime sur Toulon, 4 nov. 2026) : formulaire dans le premier écran,
       preuves, puis le texte, écrit à la main pour chaque page. La section avec photo passe par `src/components/BlocPro.astro`.
-      - `src/components/FormulaireEtapes.astro` : une question à la fois, sans React (script Astro, règle 1.7). Mêmes questions, libellés
-        et envoi que `QuoteForm.tsx`. La case de consentement est écrite aux deux endroits : changer les deux ensemble.
+      - `src/components/FormulaireEtapes.astro` : une question à la fois, sans React (script Astro, règle 1.7). Les libellés exacts
+        sont dans `contracts/demande.ts`. Aussi sur l'accueil (`src/sections/DemandeAccueil.astro`, demande de Maxime, 6 nov. 2026), où les
+        cartes « Quel est votre projet ? » préremplissent la première question.
       - Réassurance reprise de l'accueil : badge, carte sur la photo, bandeau de preuves, gratuité et délai indicatif.
       - Menu réduit (`SiteHeader reduit`) et lien de devis du pied de page vers le formulaire de la page (`SiteFooter devis="#devis"`).
       - Les sources sont dans un `<details>`, seule exception à la règle 1.1 : leur texte reste dans le HTML. La FAQ reste affichée.
