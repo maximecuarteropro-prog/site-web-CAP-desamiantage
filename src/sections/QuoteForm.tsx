@@ -52,14 +52,14 @@ export default function QuoteForm({ selectedProject }: { selectedProject: Projec
       <div className="quote-container">
         <div className="quote-intro">
           <span className="quote-kicker">Votre demande</span><h2 id="quote-title">Parlons de votre chantier.</h2>
-          <p>4 questions, 1 minute. L’un de nos pros vous rappelle sous 24 h.</p>
+          <p>4 questions, 1 minute. L’un de nos pros vous rappelle sous 24 h.</p>
           <div className="quote-reassurance"><Check aria-hidden="true" />Gratuit et sans engagement</div>
         </div>
         <div className="quote-form-panel">
           {requestId !== null ? (
             <div className="quote-success" role="status">
               <span className="success-check"><Check aria-hidden="true" /></span><span className="success-kicker">{requestId ? `Demande n° ${requestId}` : 'Demande enregistrée'}</span>
-              <h3>Merci, c’est bien enregistré.</h3><p>L’un de nos pros vous rappelle sous 24 h (jours ouvrés). Si vous l’avez, gardez sous la main votre diagnostic amiante et l’année de construction du bâtiment.</p>
+              <h3>Merci, c’est bien enregistré.</h3><p>L’un de nos pros vous rappelle sous 24 h (jours ouvrés). Si vous l’avez, gardez sous la main votre diagnostic amiante et l’année de construction du bâtiment.</p>
               <button type="button" onClick={startAnotherRequest}>Faire une autre demande<ArrowUpRight aria-hidden="true" /></button>
             </div>
           ) : (

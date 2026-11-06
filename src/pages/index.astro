@@ -5,9 +5,19 @@ import SiteHeader from '@/components/SiteHeader.astro'
 import SiteFooter from '@/components/SiteFooter.astro'
 import Hero from '@/sections/Hero'
 import BandeauPreuves from '@/sections/BandeauPreuves.astro'
-import Process from '@/sections/Process'
+import Process from '@/sections/Process.astro'
 import DemandeChantier from '@/sections/DemandeChantier'
+import AccueilInfos from '@/sections/AccueilInfos.astro'
 import photo from '@/assets/hero-retrait-plaque.jpg'
+
+// Affichée par AccueilInfos et reprise dans le FAQPage : le texte de `reponse` reste le même aux deux endroits.
+const faq = [
+  { question: 'Qui peut retirer de l’amiante ?', reponse: 'Dès qu’un pro fait le travail, il doit être certifié amiante sous-section 3 (code du travail, art. R4412-129). L’ADEME déconseille fortement à un particulier de retirer lui-même des matériaux amiantés.' },
+  { question: 'Comment se passe un désamiantage chez un particulier ?', reponse: 'Vous décrivez votre chantier dans le formulaire. L’un de nos pros vous rappelle sous 24 h, se déplace et remet un devis détaillé. S’il est retenu, il dépose le plan de retrait, retire les matériaux sous protection et évacue les déchets.' },
+  { question: 'Combien coûte un désamiantage ?', reponse: 'Le prix dépend du matériau, de la surface, de l’accès et du confinement. Seul un devis après visite donne le prix de votre chantier.', lien: { href: '/prix-desamiantage', texte: 'le prix du désamiantage au m²' } },
+  { question: 'Le service est-il payant ?', reponse: 'Non. La demande, le rappel et le devis sont gratuits et sans engagement. Si vous acceptez le devis, vous réglez les travaux à votre pro.' },
+  { question: 'Combien de temps avant le chantier ?', reponse: 'Prévoyez environ un mois entre le devis signé et le début du chantier. Le pro doit déposer son plan de retrait au moins trente jours avant les travaux, ou 8 jours en cas d’urgence liée à un sinistre (code du travail, art. R4412-137).', lien: { href: '/desamiantage-toiture-amiante', texte: 'les étapes d’un désamiantage de toiture' } },
+]
 
 // L'image est recadrée en hauteur (object-fit: cover) : sa largeur utile suit la hauteur de l'écran, pas seulement sa largeur.
 const sizes = '(min-width: 1024px) max(47vw, 169vh), max(100vw, 83vh)'
@@ -18,6 +28,7 @@ const image = { src: visuel.src, srcSet: visuel.srcSet.attribute, sizes, width: 
   titre="Entreprise de désamiantage certifiée | Cap Désamiantage"
   description="Toiture en fibrociment, dalles, flocage : décrivez votre chantier et recevez le devis de l’un de nos pros certifiés amiante sous-section 3. Gratuit."
   chemin="/"
+  donnees={[{ '@type': 'FAQPage', mainEntity: faq.map(({ question, reponse }) => ({ '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: reponse } })) }]}
 >
   <link slot="head" rel="preload" as="image" imagesrcset={image.srcSet} imagesizes={sizes} fetchpriority="high" />
   <SiteHeader />
@@ -26,6 +37,7 @@ const image = { src: visuel.src, srcSet: visuel.srcSet.attribute, sizes, width: 
     <BandeauPreuves />
     <Process />
     <DemandeChantier client:visible />
+    <AccueilInfos faq={faq} />
   </main>
   <SiteFooter />
 </Base>

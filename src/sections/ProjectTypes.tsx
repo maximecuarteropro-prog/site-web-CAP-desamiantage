@@ -2,9 +2,9 @@ import { ArrowUpRight, Cable, CircleHelp, Flame, Grid3X3, Hammer, House, Layers3
 import { projectTypeIds, type ProjectTypeId } from '@contracts/projects'
 
 const projectCards = [
-  { id: 'toitures-fibrociment', title: 'Toitures et plaques en fibrociment', description: 'Garage, abri de jardin, carport, grange, hangar agricole. Le cas le plus courant : plaques ondulées posées avant 1997.', icon: House },
+  { id: 'toitures-fibrociment', title: 'Toitures et plaques en fibrociment', description: 'Garage, abri de jardin, carport, grange, hangar agricole. Le cas le plus courant : plaques ondulées posées avant 1997.', icon: House },
   { id: 'conduits-canalisations', title: 'Conduits et canalisations', description: 'Conduits de cheminée ou de ventilation, descentes d’eaux pluviales, tuyaux en fibrociment.', icon: Cable },
-  { id: 'dalles-revetements-sol', title: 'Dalles et revêtements de sol', description: 'Dalles vinyle (souvent 30 × 30 cm) et colle noire bitumineuse, fréquentes dans les maisons et appartements des années 60 à 90.', icon: Grid3X3 },
+  { id: 'dalles-revetements-sol', title: 'Dalles et revêtements de sol', description: 'Dalles vinyle (souvent 30 × 30 cm) et colle noire bitumineuse, fréquentes dans les maisons et appartements des années 60 à 90.', icon: Grid3X3 },
   { id: 'murs-plafonds-cloisons', title: 'Murs, plafonds et cloisons', description: 'Enduits, plâtres, faux plafonds, cloisons et plaques contenant de l’amiante, à retirer avant rénovation.', icon: Layers3 },
   { id: 'flocages-calorifugeages', title: 'Flocages et calorifugeages', description: 'Isolation projetée sur structures, tuyaux de chauffage, chaufferies. Fréquent en copropriété et dans les bâtiments professionnels.', icon: Flame },
   { id: 'avant-travaux-vente-demolition', title: 'Désamiantage avant travaux, vente ou démolition', description: 'Retrait complet de tous les matériaux repérés dans le diagnostic, pour débloquer une rénovation, une vente ou une démolition.', icon: Hammer },

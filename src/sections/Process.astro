@@ -1,0 +1,40 @@
+---
+// Comment ça marche, en une seule vue (demande de Maxime, 6 nov. 2026) : étapes courtes à gauche, photo à droite, bouton.
+// C'est l'un de nos pros qui rappelle, puis vient chiffrer (règle 2.8) : jamais « un conseiller », il n'y a pas de standard.
+// Tout le texte reste lisible en permanence : le script souligne seulement les étapes une à une, une seule fois.
+import { Picture } from 'astro:assets'
+import photo from '@/assets/encart-devis.jpg'
+---
+<section class="process" id="comment-ca-marche" aria-labelledby="process-titre">
+  <div class="process-grille">
+    <div class="process-texte">
+      <h2 id="process-titre"><span>Comment</span> ça marche&nbsp;?</h2>
+      <ol class="process-etapes">
+        <li><h3>Décrivez votre chantier</h3><p>Quelques questions, 1&nbsp;minute. C’est gratuit et sans engagement.</p></li>
+        <li><h3>L’un de nos pros vous rappelle sous 24&nbsp;h</h3><p>Il précise votre besoin et donne une première fourchette. Nos repères&nbsp;: <a href="/prix-desamiantage">prix du désamiantage au m²</a>.</p></li>
+        <li><h3>Visite et devis gratuit</h3><p>Le même pro se déplace et vous remet un devis détaillé, sans engagement.</p></li>
+        <li><h3>Retrait et documents remis</h3><p>Il confine la zone, retire les matériaux et les évacue vers une filière agréée.</p></li>
+      </ol>
+      <p class="process-fin">Et votre désamiantage se fait <span>sans le stress.</span></p>
+      <a class="hero-cta" href="#devis"><span>Obtenir un devis</span><span class="cta-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg></span></a>
+      <p class="process-note">Prévoyez environ 1&nbsp;mois entre le devis signé et le début du chantier (délai réglementaire, détaillé dans <a href="/desamiantage-toiture-amiante">les étapes d’un désamiantage de toiture</a>).</p>
+    </div>
+    <figure class="zone-photo process-photo">
+      <Picture src={photo} formats={['avif', 'webp']} widths={[480, 760, 1100]} sizes="(min-width: 1440px) 600px, (min-width: 1024px) 42vw, calc(100vw - 44px)" quality={70} alt="Un pro en combinaison de protection mesure une toiture en fibrociment avant de faire son devis" loading="lazy" decoding="async" />
+    </figure>
+  </div>
+</section>
+
+<script>
+  // À l'arrivée sur la section, les traits se remplissent une fois, étape par étape. Sans script, tout est déjà rempli.
+  const liste = document.querySelector<HTMLElement>('.process-etapes')
+  if (liste && 'IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    liste.classList.add('process-anime')
+    const observateur = new IntersectionObserver((entrees) => {
+      if (!entrees[0].isIntersecting) return
+      observateur.disconnect()
+      Array.from(liste.children).forEach((etape, i) => window.setTimeout(() => etape.classList.add('est-fait'), i * 800))
+    }, { threshold: 0.3 })
+    observateur.observe(liste)
+  }
+</script>

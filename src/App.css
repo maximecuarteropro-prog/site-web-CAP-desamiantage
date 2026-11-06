@@ -83,58 +83,9 @@
   .visual-parallax { transform: none !important; }
   .hero-cta, .cta-icon svg, .visual-method, .visual-method svg, .visual-parallax { transition: none !important; }
 }
-/* Comment ça marche : ligne de temps verticale et vignettes, sur le modèle d'Indemnis. */
-.process-section { scroll-margin-top: 0; color: oklch(0.2 0.009 115); background: oklch(0.96 0.008 100); }
-.process-container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 88px 22px 64px; }
-.process-heading { display: grid; justify-items: center; text-align: center; }
+/* Surtitre commun, et lignes de réassurance reprises sur les pages par zone. */
 .section-kicker { display: inline-flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; }
 .section-kicker svg { width: 18px; height: 18px; color: oklch(0.67 0.16 92); stroke-width: 1.8; }
-.process-heading .section-kicker { gap: 16px; color: oklch(0.43 0.012 110); font-size: 12px; letter-spacing: 0.2em; }
-.process-heading .section-kicker::before, .process-heading .section-kicker::after { width: 40px; height: 1px; background: oklch(0.67 0.16 92); content: ''; }
-.process-heading h2 { max-width: 15ch; margin: 28px 0 0; font-size: clamp(2.3rem, 8.6vw, 3.9rem); font-weight: 450; line-height: 1.06; letter-spacing: -0.05em; }
-.process-heading h2 span { color: oklch(0.48 0.015 110); }
-.process-intro { max-width: 34rem; margin: 24px 0 0; color: oklch(0.39 0.012 110); font-size: 17px; line-height: 1.7; letter-spacing: -0.012em; }
-/* La colonne de la ligne de temps : à gauche sur téléphone, au centre sur grand écran. */
-.process-steps { position: relative; max-width: 62rem; margin: 64px auto 0; padding: 0; list-style: none; }
-.process-steps::before { position: absolute; top: 0; bottom: 0; left: 13px; width: 1px; background: oklch(0.2 0.009 115 / 0.13); content: ''; }
-.process-step { position: relative; display: grid; gap: 28px; padding: 0 0 72px 48px; scroll-margin-top: 24px; }
-.process-step:last-child { padding-bottom: 0; }
-.step-marker { position: absolute; top: 0; left: 0; z-index: 1; display: grid; width: 27px; height: 27px; place-items: center; border: 1px solid oklch(0.2 0.009 115 / 0.14); border-radius: 50%; color: oklch(0.47 0.1 92); background: oklch(0.96 0.008 100); font-size: 11px; font-weight: 650; font-variant-numeric: tabular-nums; line-height: 1; }
-.step-duration { margin: 4px 0 0; color: oklch(0.47 0.1 92); font-size: 11px; font-weight: 650; letter-spacing: 0.18em; line-height: 1.4; text-transform: uppercase; }
-.step-copy h3 { margin: 14px 0 0; font-size: clamp(1.35rem, 5vw, 1.75rem); font-weight: 500; line-height: 1.2; letter-spacing: -0.03em; }
-.step-description { max-width: 32rem; margin: 16px 0 0; color: oklch(0.34 0.012 110); font-size: 16px; line-height: 1.7; letter-spacing: -0.01em; }
-.step-visual { max-width: 21rem; }
-/* Vignette : fiche de chantier sur fond d'encre quadrillé, avec le carré jaune du logo en repère.
-   Deux fois moins haute que le panneau d'Indemnis (format 5:2). */
-.vignette-panneau { position: relative; display: flex; align-items: center; padding: 24px 12px 12px; overflow: hidden; border-radius: 12px; color: var(--text-primary); background-color: var(--surface-page); background-image: linear-gradient(oklch(0.97 0.006 100 / 0.05) 1px, transparent 1px), linear-gradient(90deg, oklch(0.97 0.006 100 / 0.05) 1px, transparent 1px); background-size: 18px 18px; background-position: -1px -1px; }
-.vignette-panneau::before { position: absolute; top: 10px; left: 12px; width: 8px; height: 8px; border-radius: 2px; background: var(--accent-primary); content: ''; }
-.vignette-carte { width: 100%; padding: 12px 14px 14px; border: 1px solid oklch(0.32 0.009 115); border-radius: 10px; background: oklch(0.21 0.009 115 / 0.92); }
-.vignette-entete { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid oklch(0.3 0.009 115); font-size: 9.5px; font-weight: 650; letter-spacing: 0.14em; line-height: 1.3; text-transform: uppercase; }
-.vignette-entete-gauche { display: inline-flex; align-items: center; gap: 7px; color: var(--text-secondary); white-space: nowrap; }
-.vignette-entete-gauche svg { width: 13px; height: 13px; color: var(--accent-primary); stroke-width: 2; }
-.vignette-entete-droite { flex: 0 0 auto; color: var(--accent-primary); white-space: nowrap; }
-.vignette-puces { display: flex; flex-wrap: wrap; margin-top: 12px; gap: 6px; }
-.vignette-puces span { padding: 5px 10px; border: 1px solid oklch(0.38 0.009 115); border-radius: 999px; color: var(--text-secondary); font-size: 11.5px; line-height: 1.3; white-space: nowrap; }
-.vignette-puces .vignette-puce-choisie { border-color: var(--accent-primary); color: var(--accent-ink); background: var(--accent-primary); font-weight: 600; }
-.vignette-appel { display: flex; align-items: center; margin-top: 12px; gap: 10px; }
-.vignette-avatar { display: grid; width: 30px; height: 30px; flex: 0 0 auto; place-items: center; border-radius: 50%; color: var(--accent-ink); background: var(--accent-primary); font-size: 13px; font-weight: 750; }
-.vignette-appel-nom { display: grid; min-width: 0; font-size: 12px; font-weight: 600; line-height: 1.3; }
-.vignette-appel-nom small { color: var(--text-secondary); font-size: 11px; font-weight: 400; }
-.vignette-onde { display: flex; align-items: center; height: 18px; margin-left: auto; gap: 3px; }
-.vignette-onde i { width: 3px; border-radius: 2px; background: var(--accent-primary); }
-.vignette-onde i:nth-child(1), .vignette-onde i:nth-child(5) { height: 6px; }
-.vignette-onde i:nth-child(2), .vignette-onde i:nth-child(4) { height: 12px; }
-.vignette-onde i:nth-child(3) { height: 18px; }
-.vignette-devis { display: grid; margin: 10px 0 0; padding: 0; gap: 2px; list-style: none; }
-.vignette-devis li { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 12px; line-height: 1.3; }
-.vignette-devis li span { color: var(--text-secondary); }
-.vignette-devis li::after { order: 1; flex: 1; min-width: 16px; border-bottom: 1px dotted oklch(0.42 0.009 115); content: ''; }
-.vignette-devis li > svg, .vignette-devis li > b { order: 2; flex: 0 0 auto; }
-.vignette-devis svg { width: 13px; height: 13px; color: var(--accent-primary); stroke-width: 2.6; }
-.vignette-devis b { color: var(--text-secondary); font-weight: 400; letter-spacing: 0.18em; }
-.vignette-documents { display: flex; flex-wrap: wrap; margin-top: 12px; gap: 6px; }
-.vignette-documents span { display: inline-flex; align-items: center; padding: 4px 8px 4px 5px; gap: 5px; border: 1px solid oklch(0.38 0.009 115); border-radius: 6px; font-size: 11.5px; line-height: 1.3; white-space: nowrap; }
-.vignette-documents svg { width: 14px; height: 14px; padding: 2px; border-radius: 3px; color: var(--accent-ink); background: var(--accent-primary); stroke-width: 3; }
 .process-assurances { display: grid; max-width: 62rem; margin: 72px auto 0; padding-top: 36px; gap: 24px; border-top: 1px solid oklch(0.85 0.012 105); }
 .process-assurance { display: grid; grid-template-columns: 25px minmax(0, 1fr); align-items: start; gap: 12px; }
 .process-assurance svg { width: 22px; height: 22px; margin-top: 2px; color: oklch(0.58 0.15 92); stroke-width: 1.6; }
@@ -142,43 +93,16 @@
 .process-assurance strong { color: oklch(0.22 0.009 115); font-weight: 650; }
 .process-assurance p span { display: block; }
 @media (min-width: 640px) {
-  .process-container { padding: 112px 36px 72px; }
-  .process-steps { margin-top: 80px; }
-  .process-step { padding-bottom: 88px; }
-  .step-description { font-size: 16.5px; }
-  .vignette-panneau { aspect-ratio: 5 / 2; padding: 24px 18px 14px; }
   .process-assurances { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); gap: 28px 36px; }
   .process-assurance p span { display: inline; }
 }
 @media (min-width: 1024px) {
-  .process-container { padding: 144px clamp(48px, 5.5vw, 88px) 96px; }
-  .process-heading h2 { font-size: clamp(3.2rem, 4.4vw, 4.3rem); }
-  .process-intro { font-size: 18px; }
-  .process-steps { margin-top: 112px; }
-  .process-steps::before { left: 50%; transform: translateX(-50%); }
-  .process-step { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: 0; padding: 0 0 112px; }
-  .step-marker { left: 50%; transform: translateX(-50%); }
-  .step-copy { padding-right: 64px; text-align: right; }
-  .step-copy .step-description { margin-left: auto; }
-  .step-visual { max-width: none; padding-left: 64px; }
-  .vignette-panneau { max-width: 23rem; }
-  .process-step:nth-child(even) .step-copy { order: 2; padding: 0 0 0 64px; text-align: left; }
-  .process-step:nth-child(even) .step-copy .step-description { margin-left: 0; }
-  .process-step:nth-child(even) .step-visual { order: 1; padding: 0 64px 0 0; }
-  .process-step:nth-child(even) .vignette-panneau { margin-left: auto; }
   .process-assurances { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); margin-top: 112px; padding-top: 40px; gap: 0; }
   .process-assurance { padding: 0 28px; border-left: 1px solid oklch(0.85 0.012 105); }
   .process-assurance:first-child { padding-left: 0; border-left: 0; }
   .process-timing { grid-column: auto; padding-right: 0; }
   .process-assurance p { font-size: 16px; }
 }
-/* Les vignettes montent légèrement en entrant à l'écran, sans JavaScript (navigateurs récents). */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .step-visual { animation: vignette-entree linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
-  }
-}
-@keyframes vignette-entree { from { transform: translateY(32px) scale(0.97); } to { transform: none; } }
 
 /* Bandeau de preuves, entre le hero et les étapes. */
 .preuves { color: var(--text-primary); background: var(--surface-page); border-top: 1px solid oklch(0.27 0.009 115); }

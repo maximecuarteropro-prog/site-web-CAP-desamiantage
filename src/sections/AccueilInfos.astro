@@ -1,0 +1,61 @@
+---
+// Fin de l'accueil, après le formulaire pour ne pas l'éloigner : pour qui, certification, FAQ et guides.
+// Le tableau `faq` vient de index.astro, qui en tire aussi le FAQPage : le texte affiché et le JSON-LD restent identiques.
+// Pas de prix ici (décision de Maxime, 1er nov. 2026) : la page renvoie vers /prix-desamiantage.
+import { PAGES_GUIDE } from '@/lib/site'
+
+interface Props {
+  faq: { question: string; reponse: string; lien?: { href: string; texte: string } }[]
+}
+
+const { faq } = Astro.props
+---
+<div class="page-article">
+  <div class="zone-contenu">
+    <section class="zone-bloc">
+      <h2>Pour qui interviennent nos pros</h2>
+      <div class="article-body">
+        <ul class="zone-cartes">
+          <li><h3>Particuliers</h3><p>Toit de garage, abri de jardin, dalles de sol, vente à venir&nbsp;: le retrait d’amiante chez un particulier passe aussi par un pro certifié. Il s’occupe des démarches et de l’évacuation des déchets.</p></li>
+          <li><h3>Agriculteurs</h3><p>Hangars, stabulations, granges et dépendances en fibrociment&nbsp;: le pro chiffre le retrait selon la surface et l’accès, puis organise le chantier avec vous.</p></li>
+          <li><h3>Copropriétés et syndics</h3><p>Parties communes, conduits, faux plafonds&nbsp;: le pro visite l’immeuble et remet un devis détaillé poste par poste, à présenter en assemblée générale.</p></li>
+          <li><h3>Entreprises et collectivités</h3><p>Locaux à rénover, bâtiment à démolir&nbsp;: le retrait se prévoit après le repérage et avant la suite du chantier, avec un plan de retrait déposé auprès de l’administration.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="zone-bloc">
+      <h2>Pourquoi passer par un pro certifié sous-section&nbsp;3</h2>
+      <div class="article-body">
+        <p>Le retrait et l’encapsulage de l’amiante sont réservés aux pros certifiés sous-section&nbsp;3, et le propriétaire qui fait faire ces travaux doit en choisir un (code du travail, art.&nbsp;R4412-129). Cette certification est délivrée par un organisme accrédité, selon les règles de l’arrêté du 25&nbsp;juillet 2022. Nos pros sont certifiés, et vous pouvez le contrôler vous-même&nbsp;: voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section&nbsp;3</a>.</p>
+      </div>
+    </section>
+
+    <section class="zone-bloc">
+      <h2 id="questions">Questions fréquentes</h2>
+      <div class="article-body">
+        <dl class="faq">
+          {faq.map((q) => (
+            <>
+              <dt>{q.question}</dt>
+              <dd>
+                {q.reponse}
+                {q.lien && <span class="faq-lien">Pour aller plus loin&nbsp;: <a href={q.lien.href}>{q.lien.texte}</a>.</span>}
+              </dd>
+            </>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <section class="zone-bloc">
+      <h2>Avant de vous lancer</h2>
+      <div class="article-body">
+        <p>Nos guides, sourcés et datés, pour comprendre ce qui vous attend avant de demander un devis.</p>
+        <ul class="zone-cartes accueil-guides">
+          {PAGES_GUIDE.map((page) => <li><a href={page.chemin}>{page.titreCourt}</a></li>)}
+        </ul>
+      </div>
+    </section>
+  </div>
+</div>

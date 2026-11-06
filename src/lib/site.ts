@@ -5,16 +5,16 @@ export const SITE = {
   editeur: 'France Acquisition',
   contact: 'quartzsolutions@gmail.com',
   description:
-    'Cap Désamiantage met en relation les propriétaires, agriculteurs, entreprises et copropriétés avec nos pros du désamiantage, tous certifiés amiante sous-section 3.',
+    'Cap Désamiantage met en relation les propriétaires, agriculteurs, entreprises et copropriétés avec nos pros du désamiantage, tous certifiés amiante sous-section 3.',
 }
 
 // Pages éditoriales, dans l'ordre du pied de page. `titreCourt` sert aux liens et au fil d'Ariane.
 export const PAGES_GUIDE = [
   { chemin: '/prix-desamiantage', titreCourt: 'Prix du désamiantage' },
-  { chemin: '/prix-remplacement-toiture-amiante', titreCourt: 'Changer une toiture en amiante : prix' },
+  { chemin: '/prix-remplacement-toiture-amiante', titreCourt: 'Changer une toiture en amiante : prix' },
   { chemin: '/desamiantage-toiture-amiante', titreCourt: 'Désamiantage de toiture' },
-  { chemin: '/toiture-amiante-que-faire', titreCourt: 'Toiture en amiante : que faire ?' },
-  { chemin: '/certification-sous-section-3', titreCourt: 'Certification sous-section 3' },
+  { chemin: '/toiture-amiante-que-faire', titreCourt: 'Toiture en amiante : que faire ?' },
+  { chemin: '/certification-sous-section-3', titreCourt: 'Certification sous-section 3' },
   { chemin: '/dechetterie-amiante', titreCourt: 'Déchetterie et amiante' },
 ] as const
 

@@ -59,9 +59,7 @@ retirée exprès : ne la réintroduis pas.
      « cliquez ici ».
    - Pas de lien dans un lien : une carte entièrement cliquable ne peut pas contenir un second lien.
    - Pas d'`aria-label` sur un lien dont le texte visible suffit. S'il en faut un, il commence par
-     le texte visible. À corriger sur l'accueil : les cartes de `ProjectTypes.tsx`, et le logo de
-     `Hero.tsx`, où il manque une espace entre `cap` et `désamiantage`. Le correctif est déjà fait
-     dans `SiteHeader.astro`.
+     le texte visible.
 10. **Données structurées.**
     - Elles passent par la prop `donnees` de `Base.astro`. `Organization` et `WebSite` y sont déjà :
       ne les duplique pas.
@@ -88,8 +86,9 @@ retirée exprès : ne la réintroduis pas.
     - `astro.config.mjs`, `public/robots.txt`, `src/lib/site.ts` ;
     - `src/layouts/Guide.astro` et les cinq pages guides ;
     - `mentions-legales.astro`, `confidentialite.astro`, `src/pages/api/demande.ts` ;
-    - refaits le 1er nov. 2026 à la demande de Maxime : `src/sections/Process.tsx` (ligne de temps
-      façon Indemnis, texte des étapes inchangé), `src/sections/BandeauPreuves.astro` (sous le hero)
+    - refait le 6 nov. 2026 à la demande de Maxime : `src/sections/Process.astro` (une seule vue : étapes courtes, photo, bouton ;
+      le texte reste toujours lisible) ;
+    - refaits le 1er nov. 2026 à la demande de Maxime : `src/sections/BandeauPreuves.astro` (sous le hero)
       et le nom en grand du pied de page (`SiteFooter.astro`, `.site-footer-wordmark`) ;
     - refaits le 1er nov. 2026 (suite) : le bandeau de menu collant (`SiteHeader.astro`, sur toutes les pages,
       accueil compris), le formulaire (`QuoteForm.tsx` et `contracts/demande.ts` : les questions du formulaire
@@ -132,23 +131,21 @@ Aucune autre page du site ne vise ces requêtes : l'accueil est la seule à pouv
 1. **Title.** Garder « Entreprise de désamiantage certifiée | Cap Désamiantage » (55 caractères),
    ou une variante qui commence par les mêmes mots.
 2. **H1.** Décision de Maxime (1er nov. 2026) : il reste « Votre désamiantage, sans le stress ». N'y touche pas.
-3. **Les deux premières phrases** disent ce qu'on fait et pour qui :
-   - nos pros, tous certifiés sous-section 3 ;
-   - pour les particuliers, les agriculteurs, les copropriétés et les entreprises ;
-   - gratuite, devis après visite.
-   Aujourd'hui, ni « particulier » ni « sous-section 3 » n'apparaissent sur l'accueil.
-4. **Liens vers les guides dans le contenu** (aujourd'hui, seulement dans le pied de page) :
+3. **Sous-titre du hero.** Décision de Maxime (6 nov. 2026) : il reste « Cap Désamiantage coordonne chaque étape de votre chantier
+   avec des explications claires, du premier diagnostic à la restitution. » N'y touche pas. La certification est dans le badge,
+   les publics et le devis après visite dans « Pour qui » et la FAQ.
+4. **Liens vers les guides dans le contenu** :
    - près de « Uniquement des entreprises certifiées » ou du badge : lien vers
      `/certification-sous-section-3` (« comment vérifier une certification sous-section 3 ») ;
    - près de « première fourchette de prix » : lien vers `/prix-desamiantage` ;
    - près du délai d'environ un mois : lien vers `/desamiantage-toiture-amiante`
      (le plan de retrait, déposé 30 jours avant) ;
-   - une section « Avant de vous lancer » avec les cinq guides et leur titre en texte du lien.
+   - une section « Avant de vous lancer » avec les guides et leur titre en texte du lien.
      La liste est dans `PAGES_GUIDE` (`src/lib/site.ts`) : réutilise-la, ne recopie pas les URL.
      Les cartes « Quel est votre projet ? » pointent vers `#devis` : n'y imbrique pas de second lien.
 5. **Sections à ajouter**, courtes, entre 900 et 1 500 mots en tout sur la page :
    - **Pour qui :** particuliers, agriculteurs, copropriétés, entreprises.
-   - **Pourquoi une entreprise certifiée sous-section 3 :** trois phrases et un lien vers la page
+   - **Pourquoi un pro certifié sous-section 3 :** trois phrases et un lien vers la page
      certification.
    - **Pas de prix sur l'accueil** (décision de Maxime, 1er nov. 2026) : les fourchettes restent sur
      `/prix-desamiantage`, vers laquelle l'accueil renvoie par un lien.
