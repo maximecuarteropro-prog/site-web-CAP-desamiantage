@@ -93,6 +93,9 @@ retirée exprès : ne la réintroduis pas.
       `/vendre-maison-toiture-amiante`, `/diagnostic-amiante-avant-travaux`, `/retrait-dalles-sol-amiante`,
       `/flocage-calorifugeage-amiante`. Deux points à relire chaque trimestre : la validité d'un état amiante avec amiante
       (service-public.fr dit illimitée, l'ANIL 3 ans) et l'obligation de repérage pour un particulier qui travaille seul ;
+    - nouveaux guides (Maxime, 11 nov. 2026) : méthode dans `contenu/consigne-redaction.md`, file des sujets dans
+      `contenu/file-articles.md`. La tâche planifiée « Article SEO du jour » (application Claude, jours ouvrés à 7 h) écrit le
+      sujet suivant sur une branche `brouillon/<chemin>` ; rien ne passe sur `main` sans le « publie » de Maxime ;
     - `mentions-legales.astro`, `confidentialite.astro`, `src/pages/api/demande.ts` ;
     - refait le 6 nov. 2026 à la demande de Maxime : `src/sections/Process.astro` (une seule vue : étapes courtes, photo, bouton ;
       le texte reste toujours lisible) ;

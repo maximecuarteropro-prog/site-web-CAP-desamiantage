@@ -1,0 +1,147 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Relu le 11 nov. 2026 sur Légifrance : code de la santé publique (art. R1334-14 à R1334-18, R1334-20, R1334-21, R1334-23,
+// R1334-29-4, R1334-29-5, R1334-29-7, R1337-2 à R1337-5), arrêté du 21 décembre 2012 (art. 1 à 3, annexes I et II),
+// arrêté du 12 décembre 2012 relatif à la liste B, arrêté du 16 juillet 2019 (art. 2, 3, 5, 6, 7 et 11), décret n° 2011-629
+// (art. 4 et 5), code pénal (art. 131-13), loi du 10 juillet 1965 (art. 10). Relus le même jour : ecologie.gouv.fr
+// (mis à jour le 15 oct. 2024) et service-public.fr (fiche F288, vérifiée le 13 oct. 2026). La page de sante.gouv.fr sur le
+// repérage, bloquée par une vérification anti-robot, n’a pas été lue.
+// Points incertains :
+// - Entreprises de travaux : R1334-29-5 range leur accès au DTA parmi les communications « sur leur demande » ;
+//   ecologie.gouv.fr parle de le transmettre, sans condition. La page donne les deux et conseille de le joindre aux devis.
+// - Destinataires du DAPP : R1334-29-4 ne cite que les occupants ; ecologie.gouv.fr ajoute employeurs, représentants du
+//   personnel et médecins du travail. La page donne les deux.
+// - ecologie.gouv.fr écrit que les éléments extérieurs n’étaient pas examinés dans les repérages « réalisés avant janvier 2023 »
+//   (sans doute 2013) : date non reprise.
+// - Coût du DTA en copropriété : lecture de l’art. 10 de la loi de 1965 (charges d’administration des parties communes) ;
+//   aucun texte lu ne le dit en toutes lettres.
+// - Écartés : le prix d’un DTA (aucun guide de prix publié et daté trouvé), l’amende des personnes morales (code pénal,
+//   art. 131-41) et les scores 1, 2 et 3 de la liste A, détaillés sur /flocage-calorifugeage-amiante.
+// Relire les textes au moins une fois par an.
+const sources = [
+  { titre: 'Code de la santé publique, articles R1334-14 à R1334-23 (champ, repérages des listes A et B, transmission au préfet)', url: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000006191045/', date: 'versions en vigueur depuis le 1er février 2012, et depuis le 23 août 2019 pour R1334-23' },
+  { titre: 'Code de la santé publique, article R1334-29-4 (dossier amiante – parties privatives)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000043841402', date: 'version en vigueur depuis le 1er juillet 2021' },
+  { titre: 'Code de la santé publique, article R1334-29-5 (dossier technique amiante)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000043841389', date: 'version en vigueur depuis le 1er juillet 2021' },
+  { titre: 'Code de la santé publique, articles R1334-29-4 à R1334-29-7 (dont R1334-29-7, état amiante à la vente)', url: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000024117147', date: 'version en vigueur depuis le 1er février 2012 pour R1334-29-7' },
+  { titre: 'Code de la santé publique, articles R1337-2 à R1337-5 (sanctions)', url: 'https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072665/LEGISCTA000006190345/', date: 'versions en vigueur depuis le 1er février 2012' },
+  { titre: 'Code pénal, article 131-13 (montant des amendes contraventionnelles)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006417259', date: 'version en vigueur depuis le 1er avril 2005' },
+  { titre: 'Arrêté du 21 décembre 2012 relatif aux recommandations générales de sécurité et au contenu de la fiche récapitulative du « dossier technique amiante »', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000026863286', date: 'en vigueur depuis le 1er janvier 2013, annexe I modifiée au 1er avril 2021' },
+  { titre: 'Arrêté du 12 décembre 2012 relatif aux critères d’évaluation de l’état de conservation des matériaux et produits de la liste B contenant de l’amiante', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000026843927', date: 'version en vigueur au 11 novembre 2026' },
+  { titre: 'Arrêté du 16 juillet 2019 relatif au repérage de l’amiante avant certaines opérations réalisées dans les immeubles bâtis', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000038777498', date: 'en vigueur depuis le 19 juillet 2019, modifié le 23 janvier 2020' },
+  { titre: 'Décret n° 2011-629 du 3 juin 2011 relatif à la protection de la population contre les risques sanitaires liés à une exposition à l’amiante dans les immeubles bâtis, articles 4 et 5', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000024114426', date: 'en vigueur depuis le 1er février 2012' },
+  { titre: 'Loi n° 65-557 du 10 juillet 1965 fixant le statut de la copropriété des immeubles bâtis, article 10', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000043977284', date: 'version en vigueur depuis le 1er janvier 2023' },
+  { titre: 'Ministère de la Transition écologique, « Amiante dans le bâtiment »', url: 'https://www.ecologie.gouv.fr/politiques-publiques/amiante-batiment', date: 'mis à jour le 15 octobre 2024' },
+  { titre: 'Service-public.fr, fiche F288 « Habitat contenant de l’amiante »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F288', date: 'vérifiée le 13 octobre 2026' },
+]
+
+const faq = [
+  { question: 'Le DTA a-t-il une durée de validité ?', reponse: 'Non. Aucun des textes qui l’encadrent ne lui fixe de date d’expiration. Il doit en revanche être mis à jour à chaque repérage, évaluation, mesure ou chantier qui concerne un matériau amianté, et sa fiche récapitulative renvoyée aux occupants dans le mois (arrêté du 21 décembre 2012, art. 3 ; code de la santé publique, art. R1334-29-5). Les matériaux de la liste A en bon état sont réévalués tous les trois ans (service-public.fr).' },
+  { question: 'Un locataire peut-il consulter le DTA de son immeuble ?', reponse: 'Oui. Le propriétaire, ou le syndic en copropriété, tient le DTA à la disposition des occupants et doit leur dire comment le consulter. Il leur transmet aussi la fiche récapitulative dans le mois qui suit sa constitution ou sa mise à jour (code de la santé publique, art. R1334-29-5). Pour le logement lui-même, le locataire peut consulter le dossier amiante – parties privatives (art. R1334-29-4).' },
+  { question: 'Faut-il un DTA pour une maison individuelle ?', reponse: 'Non. Une maison qui ne compte qu’un seul logement n’a ni DTA ni DAPP. Un repérage des listes A et B n’y est exigé qu’en cas de vente (code de la santé publique, art. R1334-15). Avant des travaux confiés à un pro dans une maison construite avant 1997, il faut en revanche un repérage amiante avant travaux.' },
+  { question: 'Le DTA peut-il être tenu sous forme numérique ?', reponse: 'Oui. Les textes n’imposent pas de support papier, et le modèle de fiche récapitulative prévoit une consultation sur support dématérialisé (arrêté du 21 décembre 2012, annexe II). Les occupants doivent seulement savoir où et comment le consulter.' },
+  { question: 'Je vends mon appartement : où trouver la fiche récapitulative du DTA ?', reponse: 'Auprès du syndic, qui tient le DTA des parties communes au nom du syndicat des copropriétaires. Elle est jointe à l’état amiante, avec les repérages des listes A et B de vos parties privatives (code de la santé publique, art. R1334-29-7). Si elle n’existe pas, vous ne pouvez vous engager que sur vos parties privatives, car seul le syndicat peut faire établir l’état des parties communes (ministère de la Transition écologique).' },
+]
+---
+<Guide
+  titre="DTA amiante : obligation, contenu, mise à jour et DAPP"
+  description="DTA amiante : obligatoire si le permis de construire date d’avant le 1er juillet 1997, sauf maison. Qui le paie, son contenu, sa mise à jour et le DAPP."
+  chemin="/dossier-technique-amiante"
+  rubrique="Copropriété et locaux"
+  h1="Dossier technique amiante (DTA) : qui doit l’avoir, que contient-il ?"
+  chapo="Tout immeuble dont le permis de construire a été délivré avant le 1er juillet 1997 doit avoir un dossier technique amiante, sauf les maisons individuelles : parties communes d’un immeuble collectif, bureaux, commerces, bâtiments publics ou agricoles. Le propriétaire, ou en copropriété le syndicat représenté par le syndic, le constitue, le paie et le tient à jour : il y réunit les repérages des listes A et B, leur suivi et une fiche récapitulative remise aux occupants. Pour un appartement, l’équivalent est le dossier amiante – parties privatives (DAPP)."
+  publie="2026-11-11"
+  misAJour="2026-11-11"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Qu’est-ce que le dossier technique amiante ?</h2>
+  <p>Le dossier technique amiante, ou DTA, est le dossier de suivi de l’amiante d’un bâtiment : où se trouvent les matériaux amiantés, dans quel état ils sont, et ce qui a été fait depuis leur repérage. Il sert à informer les occupants et ceux qui viennent y travailler (code de la santé publique, art. R1334-29-5). Ce n’est pas un diagnostic fait une fois pour toutes : il est mis à jour à chaque repérage, contrôle ou chantier qui concerne l’amiante (arrêté du 21 décembre 2012, art. 3).</p>
+
+  <h2>Mon immeuble doit-il avoir un DTA ?</h2>
+  <p>Oui, si son permis de construire a été délivré avant le 1er juillet 1997, que son propriétaire soit privé ou public (art. R1334-14). Sont concernés :</p>
+  <ul>
+    <li><strong>les parties communes d’un immeuble collectif d’habitation</strong>, en copropriété ou non (art. R1334-17) ;</li>
+    <li><strong>tous les autres bâtiments</strong> : bureaux, commerces, entrepôts, bâtiments publics ou agricoles (art. R1334-18).</li>
+  </ul>
+  <p>La <strong>maison individuelle</strong> n’a pas de DTA : un repérage des listes A et B n’y est exigé que pour la vente (art. R1334-15). Les <strong>parties privatives d’un immeuble collectif</strong> ont leur propre dossier, le DAPP.</p>
+  <p>La liste A devait être repérée au plus tard le 31 décembre 1999, la liste B avant le 1er février 2021 (ministère de la Transition écologique). Un DTA constitué avant le 1er février 2012 devait donc être complété au plus tard le 1er février 2021 par le repérage des matériaux de la liste B qui n’y figuraient pas (décret n° 2011-629, art. 4 et 5). Si celui de votre immeuble n’a pas été repris depuis, c’est la première chose à vérifier.</p>
+
+  <h2>Qui doit constituer le DTA, et qui le paie ?</h2>
+  <p>Le propriétaire, et en copropriété le syndicat des copropriétaires, représenté par le syndic (art. R1334-14 ; service-public.fr, fiche F288). Pour un bâtiment autre qu’un immeuble d’habitation dont le propriétaire ne peut pas être identifié, l’obligation passe à l’exploitant. Le locataire de bureaux ou d’un commerce n’est pas désigné : il consulte le DTA, il ne le constitue pas.</p>
+  <p>Celui qui porte l’obligation paie. En copropriété, le DTA est une dépense du syndicat, que les copropriétaires règlent avec leurs charges, selon la quote-part de leur lot, comme les autres frais d’administration des parties communes (loi du 10 juillet 1965, art. 10).</p>
+  <p>Les repérages sont confiés à un diagnostiqueur certifié (art. R1334-23), qui remet son rapport au propriétaire contre accusé de réception (art. R1334-20 et R1334-21). Nos pros, qui retirent l’amiante, ne font pas ces diagnostics.</p>
+
+  <h2>Que contient le DTA ?</h2>
+  <p>Quatre éléments, fixés par l’article R1334-29-5 :</p>
+  <ol>
+    <li><strong>Les rapports de repérage des listes A et B.</strong> La liste A regroupe les flocages, calorifugeages et faux plafonds ; la liste B, les parois, planchers, conduits et éléments extérieurs comme les toitures et bardages (service-public.fr ; ministère de la Transition écologique). Le diagnostiqueur n’y recherche que les matériaux accessibles sans travaux destructifs (art. R1334-20 et R1334-21).</li>
+    <li><strong>Le suivi :</strong> date, nature, localisation et résultats des évaluations périodiques, des mesures d’empoussièrement de l’air, des travaux de retrait ou de confinement et des mesures conservatoires.</li>
+    <li><strong>Les recommandations générales de sécurité,</strong> fixées par l’annexe I de l’arrêté du 21 décembre 2012 : précautions avant toute intervention, recours à des pros, gestion des déchets. Le propriétaire les adapte à son bâtiment (art. 1).</li>
+    <li><strong>La fiche récapitulative,</strong> établie par le propriétaire, une par immeuble bâti (art. 2 et annexe II).</li>
+  </ol>
+  <p>La fiche est le document que l’on transmet. Selon le modèle de l’arrêté, elle donne l’historique des mises à jour, le détenteur du DTA et la façon de le consulter, les rapports de repérage, chaque matériau amianté avec sa localisation, son état et les mesures à prendre, puis les évaluations et les travaux réalisés. Lisez de près la rubrique des locaux non visités : l’arrêté demande de tout visiter et, pour une cave fermée ou une toiture sans accès, la fiche doit donner le motif et la date du repérage complémentaire prévu.</p>
+
+  <h2>Quand faut-il mettre à jour le DTA ?</h2>
+  <p>Chaque fois que l’on apprend quelque chose de nouveau sur l’amiante du bâtiment (art. R1334-29-5 ; arrêté du 21 décembre 2012, art. 3) :</p>
+  <ul>
+    <li>un nouveau repérage, y compris avant travaux (arrêté du 16 juillet 2019, art. 11) ;</li>
+    <li>une évaluation périodique, tous les trois ans pour les matériaux de la liste A en bon état (service-public.fr) ;</li>
+    <li>une mesure de l’air, des travaux de retrait ou de confinement, des mesures conservatoires ;</li>
+    <li>des matériaux amiantés découverts pendant des travaux ou l’entretien.</li>
+  </ul>
+  <p>La fiche récapitulative est mise à jour en même temps, puis transmise dans le mois aux occupants, et aux employeurs si l’immeuble comporte des locaux de travail (art. R1334-29-5).</p>
+
+  <h2>Qui peut consulter le DTA, et à qui faut-il le transmettre ?</h2>
+  <div class="tableau">
+    <table>
+      <caption>Accès au DTA, d’après le code de la santé publique (art. R1334-29-5 et R1334-29-7), relu sur Légifrance le 11 novembre 2026.</caption>
+      <thead><tr><th scope="col">Qui</th><th scope="col">Ce que le propriétaire lui doit</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Occupants : copropriétaires, locataires, usagers</th><td>Le DTA à disposition, en leur disant comment le consulter ; la fiche récapitulative dans le mois</td></tr>
+        <tr><th scope="row">Employeurs, représentants du personnel, médecins du travail</th><td>Si l’immeuble comporte des locaux de travail : le DTA à disposition ; la fiche aux employeurs dans le mois</td></tr>
+        <tr><th scope="row">Pros appelés à faire des travaux</th><td>Le DTA sur demande, avec une attestation écrite de l’envoi</td></tr>
+        <tr><th scope="row">Services de contrôle (santé, travail, prévention)</th><td>Le DTA sur demande</td></tr>
+        <tr><th scope="row">Acheteur</th><td>La fiche récapitulative, dans l’état amiante joint à la vente</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><strong>Pour les pros qui feront des travaux,</strong> le code parle d’une communication sur demande ; le ministère de la Transition écologique demande de transmettre le DTA à toute personne appelée à faire des travaux. Joignez-le donc à chaque demande de devis et gardez la trace de l’envoi : les pros s’en servent pour repérer les travaux qui dégagent des poussières (arrêté du 16 juillet 2019, art. 7). Le DTA peut aussi se consulter sur support numérique (arrêté du 21 décembre 2012, annexe II).</p>
+  <p><strong>À la vente d’un appartement,</strong> la fiche des parties communes s’ajoute aux repérages des parties privatives ; pour un bâtiment qui n’est pas un immeuble d’habitation, elle tient lieu à elle seule d’état amiante (art. R1334-29-7). Le détail est dans notre guide pour <a href="/vendre-maison-toiture-amiante">vendre une maison avec une toiture en amiante</a>, qui traite aussi l’appartement.</p>
+
+  <h2>Le DTA remplace-t-il le repérage avant travaux ?</h2>
+  <p>Non. Ses repérages s’arrêtent aux matériaux accessibles sans travaux destructifs, alors que des travaux touchent aussi ce qui est caché. Le ministère de la Transition écologique le dit : le DTA ne suffit pas pour évaluer la présence d’amiante lors de travaux importants.</p>
+  <p>Avant des travaux confiés à un pro, le donneur d’ordre fait donc réaliser un <a href="/diagnostic-amiante-avant-travaux">repérage amiante avant travaux</a>. Le DTA en est le point de départ : l’opérateur exploite ses informations et prélève s’il les juge insuffisantes (arrêté du 16 juillet 2019, art. 6). Le donneur d’ordre n’est dispensé de recherche que si le DTA renseigne déjà assez précisément la zone des travaux (art. 3). Les résultats du repérage rejoignent ensuite le DTA (art. 11).</p>
+
+  <h2>Qu’est-ce que le DAPP, pour un appartement ?</h2>
+  <p>Le dossier amiante – parties privatives (DAPP) est le pendant du DTA pour un logement d’un immeuble collectif d’habitation dont le permis de construire date d’avant le 1er juillet 1997. Chaque propriétaire le constitue, le conserve et l’actualise pour son lot, qu’il l’habite ou qu’il le loue (art. R1334-29-4). Il ne porte que sur la liste A : la liste B des parties privatives n’est repérée que pour la vente (art. R1334-16).</p>
+  <p>Le propriétaire le tient à la disposition des occupants, locataire compris, et leur indique comment le consulter ; le ministère de la Transition écologique y ajoute les employeurs, les représentants du personnel et les médecins du travail quand l’immeuble comporte des locaux de travail. Toute personne qui organise ou fait des travaux dans l’immeuble le reçoit sans avoir à le demander, et le propriétaire garde une attestation écrite de cet envoi.</p>
+  <div class="tableau">
+    <table>
+      <caption>DTA et DAPP, d’après le code de la santé publique (art. R1334-14, R1334-29-4 et R1334-29-5), relu sur Légifrance le 11 novembre 2026.</caption>
+      <thead><tr><th scope="col"></th><th scope="col">DTA</th><th scope="col">DAPP</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Pour</th><td>Parties communes d’un immeuble collectif, autres bâtiments</td><td>Parties privatives d’un immeuble collectif d’habitation</td></tr>
+        <tr><th scope="row">Constitué par</th><td>Le propriétaire ou le syndicat des copropriétaires</td><td>Le propriétaire du logement</td></tr>
+        <tr><th scope="row">Matériaux repérés</th><td>Listes A et B</td><td>Liste A</td></tr>
+        <tr><th scope="row">Fiche récapitulative</th><td>Oui, transmise aux occupants dans le mois</td><td>Non</td></tr>
+        <tr><th scope="row">Pros appelés à faire des travaux</th><td>Communiqué sur demande</td><td>Communiqué par le propriétaire</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Que faire si le DTA signale de l’amiante ?</h2>
+  <p>Tout dépend de la liste et de l’état du matériau : en bon état, il peut rester en place sous surveillance.</p>
+  <ul>
+    <li><strong>Liste A :</strong> selon l’état, le rapport préconise une évaluation périodique, une mesure de l’air ou des travaux de retrait ou de confinement (art. R1334-20), avec des délais détaillés dans notre guide sur le <a href="/flocage-calorifugeage-amiante">flocage et le calorifugeage amiantés</a>. Si une mesure ou des travaux sont préconisés dans des parties communes ou un autre bâtiment, le diagnostiqueur envoie une copie de son rapport au préfet (art. R1334-23).</li>
+    <li><strong>Liste B :</strong> le rapport recommande une évaluation périodique (EP), une action corrective de premier niveau, limitée aux éléments dégradés (AC1), ou de second niveau, sur toute la zone, avec mesures conservatoires et analyse de risque (AC2). Il rappelle d’avertir toute personne qui interviendra sur ces matériaux ou à côté (arrêté du 12 décembre 2012). Pour une toiture, lisez <a href="/toiture-amiante-que-faire">toiture en amiante : que faire ?</a></li>
+  </ul>
+  <p>Un retrait ou un confinement est confié à un pro certifié (arrêté du 21 décembre 2012, annexe I) : voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>. Son prix dépend surtout du matériau et de la quantité ; nos repères sont sur la page <a href="/prix-desamiantage">prix du désamiantage au m²</a>. Après le chantier, le DTA est mis à jour et la nouvelle fiche part aux occupants dans le mois.</p>
+
+  <EncartDevis accroche="Votre DTA préconise un retrait ou un confinement ? Faites chiffrer les travaux par l’un de nos pros certifiés sous-section 3." />
+
+  <h2>Que risque-t-on sans DTA ?</h2>
+  <p>Ne pas constituer, tenir à jour ou communiquer le DTA est une contravention de la 5e classe (code de la santé publique, art. R1337-3-2), comme l’absence de repérage des listes A et B (art. R1337-3) ou, pour un appartement, de DAPP (art. R1337-3-1). L’amende va jusqu’à 1 500 €, et 3 000 € en récidive (code pénal, art. 131-13 ; service-public.fr). Quand un rapport conclut à des mesures ou à des travaux, le préfet peut aussi mettre le propriétaire en demeure ou lui imposer une expertise (service-public.fr).</p>
+  <p>À la vente, si l’état amiante manque à la signature de l’acte authentique, le vendeur ne peut pas s’exonérer de la garantie des vices cachés liés à l’amiante (ministère de la Transition écologique). Avant des travaux, un DTA absent ou trop vague oblige le repérage avant travaux à tout rechercher (arrêté du 16 juillet 2019, art. 3 et 6).</p>
+</Guide>

@@ -1,0 +1,144 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Relu le 11 nov. 2026 : page 1 de Google mobile (OpenSEO) pour « amiante dans une maison » et « amiante maison » ;
+// brochure de la DREETS Pays de la Loire (janv. 2023), page de l’ARS Auvergne-Rhône-Alpes (14 janv. 2026),
+// ecologie.gouv.fr (15 oct. 2024), Santé.fr (10 févr. 2023), service-public.fr (F742 et F288), annexe 13-9 du code de la santé publique (Légifrance),
+// article R1334-15 du même code (copie de l’OPPBTP), code du travail L4412-2 et R4412-137 (code.travail.gouv.fr),
+// brochure des ministères « Bricolage dans votre logement » et liste des textes de l’INRS. Prix relus le même jour sur
+// Construires.fr et ABC Travaux.
+// Écartés : les 53 % de diagnostics de vente positifs en maison individuelle (repris par infodiag.fr le 23 nov. 2023) :
+// le rapport de la DGS, sur sante.gouv.fr, est derrière une vérification anti-robot, donc non vérifié à la source ;
+// la page ADEME sur les déchets (accès refusé) ; l’état amiante annexé au bail (loi ALUR), dont l’entrée en vigueur n’a pas
+// pu être vérifiée. Service-public.fr (F288) écrit qu’un repérage est obligatoire dans les immeubles d’avant juillet 1997
+// sans distinguer la maison : l’article R1334-15, ecologie.gouv.fr, l’ARS et la DREETS limitent l’obligation de la maison
+// à la vente. La page suit ces derniers. Relire les prix chaque trimestre et les textes au moins une fois par an.
+const sources = [
+  { titre: 'DREETS Pays de la Loire, « Amiante chez les particuliers : une affaire de professionnels ! »', url: 'https://pays-de-la-loire.dreets.gouv.fr/sites/pays-de-la-loire.dreets.gouv.fr/IMG/pdf/document_particuliers_version_janvier__2023-5.pdf', date: 'janvier 2023 (3e édition)' },
+  { titre: 'ARS Auvergne-Rhône-Alpes, « Amiante : propriétaires, quelles sont vos obligations ? »', url: 'https://auvergne-rhone-alpes.ars.sante.fr/amiante-proprietaires-quelles-sont-vos-obligations', date: 'mis à jour le 14 janvier 2026' },
+  { titre: 'Ministère de la Transition écologique, « Amiante dans le bâtiment »', url: 'https://www.ecologie.gouv.fr/politiques-publiques/amiante-batiment', date: 'mis à jour le 15 octobre 2024' },
+  { titre: 'Santé.fr, ministère chargé de la santé, « Le repérage de l’amiante dans les bâtiments »', url: 'https://www.sante.fr/le-reperage-de-lamiante-dans-les-batiments', date: 'publié le 10 février 2023' },
+  { titre: 'Code de la santé publique, article R1334-15 (repérage dans une maison individuelle), texte reproduit par l’OPPBTP', url: 'https://content.preventionbtp.fr/pdf/droit_de_la_prevention/article-r1334-15-du-code-de-la-sante-publique-reperage-amiante-batiments.pdf', date: 'fiche mise à jour le 1er juin 2022' },
+  { titre: 'Code de la santé publique, annexe 13-9 (listes A, B et C des matériaux à repérer)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000024141044', date: 'version en vigueur depuis le 1er février 2012' },
+  { titre: 'Service-public.fr, fiche F742 « Diagnostic immobilier : état d’amiante »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F742', date: 'vérifiée le 16 octobre 2026' },
+  { titre: 'Ministères de la Transition écologique et de la Cohésion des territoires, brochure « Bricolage dans votre logement : attention à l’amiante ! »', url: 'https://www.notre-environnement.gouv.fr/IMG/pdf/dgaln_plaque8f26.pdf', date: 'mars 2016' },
+  { titre: 'INRS, « Liste des textes réglementaires parus sur l’amiante depuis 1945 »', url: 'https://www.inrs.fr/risques/amiante/liste-textes-reglementaires-amiante-depuis-1945.html', date: 'liste à jour au 28 février 2023' },
+  { titre: 'Code du travail, article L4412-2 (recherche d’amiante avant travaux)', url: 'https://code.travail.gouv.fr/code-du-travail/l4412-2', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-137', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Construires.fr, « Diagnostic amiante : quand est-il obligatoire ? »', url: 'https://www.construires.fr/diagnostic-amiante-obligation/', date: 'mis à jour le 17 mai 2026' },
+  { titre: 'ABC Travaux, « Prix du désamiantage au m² »', url: 'https://abctravaux.org/prix-desamiantage-m2/', date: 'publié le 21 octobre 2026' },
+]
+
+const faq = [
+  { question: 'Une maison construite après 1997 peut-elle contenir de l’amiante ?', reponse: 'C’est peu probable. L’amiante est interdit en France depuis le 1er janvier 1997, et aucun état amiante n’est exigé à la vente si le permis de construire a été délivré à partir du 1er juillet 1997 (service-public.fr). Une toiture posée juste après l’interdiction a toutefois pu l’être avec des plaques achetées avant. En cas de doute, seule une analyse tranche.' },
+  { question: 'Faut-il retirer l’amiante d’une maison ?', reponse: 'Non. Pour une maison individuelle, aucun texte n’impose le retrait, ni même un repérage en dehors de la vente, des travaux confiés à un pro et de la démolition (DREETS Pays de la Loire, ecologie.gouv.fr). Le retrait devient utile quand le matériau se dégrade, quand des travaux vont le toucher, ou pour régler la question avant de vendre.' },
+  { question: 'Combien coûte le désamiantage d’une maison ?', reponse: 'Il n’y a pas de prix pour une maison entière : tout dépend des matériaux, des surfaces et de l’accès. ABC Travaux compte par exemple 25 à 80 € par m² pour des dalles de sol et leur colle, déchets compris, et un minimum de 1 500 à 2 500 € pour les chantiers de moins de 30 m² (octobre 2026). Ajoutez le repérage avant travaux. Seul un devis après visite donne le prix de votre chantier.' },
+  { question: 'Peut-on retirer soi-même l’amiante de sa maison ?', reponse: 'C’est fortement déconseillé. Les ministères demandent que l’intervention directe d’un particulier sur un matériau amianté reste exceptionnelle et limitée, et l’ARS Auvergne-Rhône-Alpes conseille de confier ces travaux à des professionnels formés. Si vous intervenez malgré tout, portez une combinaison et des gants jetables et un masque FFP3, humidifiez le matériau, utilisez des outils manuels et déposez les déchets dans une filière qui les accepte.' },
+  { question: 'Le diagnostic amiante fait à l’achat suffit-il avant des travaux ?', reponse: 'Rarement. Il ne couvre que les matériaux des listes A et B visibles et accessibles le jour de la visite (service-public.fr). Avant de refaire une salle de bains, par exemple, il ne dit rien de la colle sous la faïence (DREETS Pays de la Loire). Dès qu’un pro intervient, un repérage avant travaux est obligatoire, sauf si un repérage précédent renseigne déjà sur la zone des travaux.' },
+]
+---
+<Guide
+  titre="Amiante dans une maison : où le trouver et que faire"
+  description="Maison d’avant 1997 : toiture, sols, cave, murs… Où chercher l’amiante, les 3 cas où le repérage est obligatoire, son prix (150 à 500 €) et que faire."
+  chemin="/amiante-maison"
+  rubrique="Maison"
+  h1="Amiante dans une maison : où le trouver, est-ce dangereux, que faire ?"
+  chapo="Une maison construite avant 1997 peut contenir de l’amiante, de la toiture à la cave : plaques de fibrociment, dalles de sol et leur colle, isolant autour des tuyaux, enduits, conduits. Le risque vient des fibres que le matériau libère quand il s’use ou qu’on le perce, le ponce ou le casse : s’il est en bon état et que personne n’y touche, rien ne vous oblige à le retirer. Seul un diagnostiqueur certifié peut confirmer sa présence, et ce repérage n’est obligatoire, pour une maison, qu’à la vente, avant des travaux confiés à un pro ou avant une démolition."
+  publie="2026-11-11"
+  misAJour="2026-11-11"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Ma maison peut-elle contenir de l’amiante ?</h2>
+  <p>Oui, si elle a été construite ou rénovée avant 1997. La fabrication, la vente et l’importation de l’amiante sont interdites en France depuis le 1er janvier 1997. Avant, il entrait dans la composition de nombreux matériaux, y compris ceux des maisons individuelles (DREETS Pays de la Loire, janvier 2023). Quatre dates vous situent :</p>
+  <ul>
+    <li><strong>1977 :</strong> le flocage à base d’amiante est interdit dans les logements (arrêté du 29 juin 1977, liste des textes de l’INRS).</li>
+    <li><strong>1er janvier 1997 :</strong> l’amiante est totalement interdit (décret n° 96-1133). C’est aussi la date qui déclenche le repérage avant travaux (ecologie.gouv.fr).</li>
+    <li><strong>1er juillet 1997 :</strong> si le permis de construire a été délivré avant cette date, un état amiante est obligatoire pour vendre (service-public.fr, fiche F742).</li>
+    <li><strong>1er septembre 2002 :</strong> si vous avez acheté après cette date, le diagnostic amiante remis à la vente peut déjà vous renseigner (brochure des ministères).</li>
+  </ul>
+  <p>La date reste un indice, pas une preuve : à l’œil nu, on ne distingue pas un matériau amianté d’un autre (DREETS Pays de la Loire).</p>
+
+  <h2>Où chercher l’amiante, de la toiture à la cave ?</h2>
+  <p>Le code de la santé publique fixe la liste des matériaux que le diagnostiqueur doit vérifier (annexe 13-9). Rapportée à une maison, elle donne ce parcours :</p>
+  <div class="tableau">
+    <table>
+      <caption>Où chercher l’amiante dans une maison, d’après l’annexe 13-9 du code de la santé publique (listes A, B et C), la brochure des ministères « Bricolage dans votre logement » (mars 2016) et la liste des textes de l’INRS (à jour au 28 février 2023).</caption>
+      <thead><tr><th scope="col">Zone</th><th scope="col">Matériaux à vérifier</th><th scope="col">Période</th><th scope="col">Guide détaillé</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Toiture de la maison, du garage ou de l’abri de jardin, façades</th><td>Plaques ondulées et ardoises en fibres-ciment, plaques sous tuiles, accessoires de couverture, bardeaux bitumineux, bardages</td><td>Fabriqués avant 1997</td><td><a href="/reconnaitre-toiture-amiante">Reconnaître une toiture en amiante</a></td></tr>
+        <tr><th scope="row">Sols de la cuisine, de la salle de bains et des toilettes, mais aussi du séjour et des chambres</th><td>Dalles vinyle, souvent de 30 cm de côté, unies ou marbrées ; colle bitumineuse, sous-couches et chapes</td><td>Posés avant 1997</td><td><a href="/retrait-dalles-sol-amiante">Dalles de sol en amiante</a></td></tr>
+        <tr><th scope="row">Cave, garage, chaufferie</th><td>Calorifugeage des tuyaux de chauffage et d’eau chaude (bourrelets, tresses, coquilles) ; flocage des plafonds et des parois</td><td>Calorifugeage : avant 1997. Flocage : interdit dans les logements depuis 1977</td><td><a href="/flocage-calorifugeage-amiante">Flocage et calorifugeage amiantés</a></td></tr>
+        <tr><th scope="row">Plafonds</th><td>Certains faux plafonds en plaques ou en dalles</td><td>Posés avant 1997</td><td><a href="/flocage-calorifugeage-amiante">Faux plafonds et autres matériaux de la liste A</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Les murs et les réseaux sont aussi concernés : enduits, plâtres, cloisons et colle de faïence, mais aussi descentes d’eaux pluviales, conduits de fumée et canalisations en amiante-ciment, ou un joint de chaudière (annexe 13-9 ; DREETS Pays de la Loire).</p>
+  <p>Le diagnostic de vente ne regarde que ce qui est visible et accessible le jour de la visite (service-public.fr). Une colle sous un carrelage, des dalles recouvertes d’un autre sol ou un tuyau dans une cloison peuvent donc lui échapper.</p>
+
+  <h2>Est-ce dangereux de vivre dans une maison avec de l’amiante ?</h2>
+  <p>Le risque ne vient pas de la présence du matériau, mais des fibres qu’il peut libérer dans l’air : l’ARS Auvergne-Rhône-Alpes rappelle que les risques sont uniquement dus à leur inhalation. Ces fibres se libèrent quand le matériau s’use anormalement ou qu’on le dégrade : perçage, ponçage, découpe, frottement (brochure des ministères). Tout dépend donc de son état et de ce que vous en faites.</p>
+  <ul>
+    <li><strong>Flocages, calorifugeages et faux plafonds</strong> (liste A) peuvent libérer des fibres du seul fait de leur vieillissement (ecologie.gouv.fr, Santé.fr). Ce sont eux qu’il faut faire vérifier en premier s’ils paraissent abîmés.</li>
+    <li><strong>Fibrociment, dalles de sol et conduits</strong> (liste B) sont susceptibles d’en libérer quand on les sollicite : frottement, perçage, ponçage, découpe (Santé.fr). Un toit sain ou un sol intact se surveille ; s’il se dégrade, il faut décider quoi en faire.</li>
+    <li><strong>Les travaux sont le moment sensible.</strong> Selon la DREETS Pays de la Loire, poncer, percer, découper ou démousser une toiture amiantée peut entraîner des expositions très importantes, pour celui qui travaille comme pour ses proches.</li>
+  </ul>
+
+  <h2>Quelles sont vos obligations de propriétaire ?</h2>
+  <p>Pour une maison individuelle, elles sont limitées et liées à un événement : la vente, des travaux ou une démolition. Le reste du temps, la loi ne vous demande rien.</p>
+  <div class="tableau">
+    <table>
+      <caption>Obligations du propriétaire d’une maison individuelle, d’après le code de la santé publique (art. R1334-15), le code du travail (art. L4412-2), service-public.fr, ecologie.gouv.fr, l’ARS Auvergne-Rhône-Alpes et la DREETS Pays de la Loire, relus le 11 novembre 2026.</caption>
+      <thead><tr><th scope="col">Situation</th><th scope="col">Ce que vous devez faire</th><th scope="col">Texte ou source</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Vous habitez la maison, sans travaux</th><td>Rien : aucun repérage obligatoire, aucun retrait imposé</td><td>DREETS Pays de la Loire, ecologie.gouv.fr, ARS</td></tr>
+        <tr><th scope="row">Vous vendez, permis de construire délivré avant le 1er juillet 1997</th><td>Fournir un état amiante, fondé sur le repérage des matériaux des listes A et B</td><td>Code de la santé publique, art. R1334-15 ; service-public.fr</td></tr>
+        <tr><th scope="row">Vous confiez des travaux à un pro, maison construite avant le 1er janvier 1997</th><td>Faire réaliser un repérage amiante avant travaux et le remettre aux pros consultés</td><td>Code du travail, art. L4412-2 ; ecologie.gouv.fr</td></tr>
+        <tr><th scope="row">Vous démolissez, permis délivré avant le 1er juillet 1997</th><td>Faire réaliser un repérage des matériaux de la liste C</td><td>ecologie.gouv.fr ; ARS</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Les obligations plus lourdes que vous lirez ailleurs, comme le dossier technique amiante ou les mesures d’air imposées, visent les immeubles collectifs et les autres bâtiments, pas la maison individuelle (ARS Auvergne-Rhône-Alpes).</p>
+  <p>Le repérage avant travaux s’impose dès qu’un pro intervient, même chez un particulier : c’est vous qui le commandez (code du travail, art. L4412-2 ; DREETS Pays de la Loire). Même si vous faites les travaux vous-même, la DREETS Pays de la Loire le recommande. Qui le réalise, ce qu’il contient et ce qu’il coûte : tout est dans notre guide du <a href="/diagnostic-amiante-avant-travaux">diagnostic amiante avant travaux</a>.</p>
+
+  <h2>Comment savoir si votre maison contient de l’amiante ?</h2>
+  <ol>
+    <li><strong>Rassemblez les documents.</strong> Le diagnostic amiante remis à l’achat et les documents établis lors de la construction peuvent déjà vous renseigner (brochure des ministères). Gardez à l’esprit que le diagnostic de vente ne couvre que ce qui était visible.</li>
+    <li><strong>Faites appel à un diagnostiqueur certifié.</strong> Seul un opérateur de repérage certifié par un organisme accrédité a les compétences pour ce travail (DREETS Pays de la Loire). Il examine les matériaux et, en cas de doute, fait analyser un échantillon par un laboratoire.</li>
+    <li><strong>Choisissez la bonne mission.</strong> Sans projet précis, un repérage des listes A et B, comme pour une vente, donne une première image. Si vous préparez des travaux, demandez directement un repérage avant travaux : lui seul recense l’amiante de façon exhaustive dans la zone des travaux (DREETS Pays de la Loire).</li>
+    <li><strong>Ne prélevez pas vous-même.</strong> Casser un morceau pour le faire analyser, c’est déjà intervenir sur le matériau, ce que les ministères déconseillent fortement.</li>
+  </ol>
+  <p>Nos pros retirent l’amiante : ils ne font pas les diagnostics. Le repérage est confié à un diagnostiqueur, que vous choisissez. Les guides de prix publiés en 2026 donnent ces repères :</p>
+  <ul>
+    <li><strong>diagnostic amiante de vente :</strong> 150 à 250 € pour une maison de 100 à 150 m², 250 à 350 € avec dépendances jusqu’à 250 m² (Construires.fr, tarifs constatés en 2025, page mise à jour le 17 mai 2026) ;</li>
+    <li><strong>repérage avant travaux d’une maison :</strong> 200 à 500 € (ABC Travaux, 21 octobre 2026), soit 30 à 50 % de plus qu’un diagnostic de vente selon Construires.fr ;</li>
+    <li><strong>analyse en laboratoire :</strong> 30 à 80 € par échantillon quand elle est facturée à part (Construires.fr ; ABC Travaux donne 40 à 80 €).</li>
+  </ul>
+  <p>Le prix n’est pas réglementé (service-public.fr) : faites préciser au devis si les analyses sont comprises.</p>
+
+  <h2>Vous avez trouvé de l’amiante : que faire ?</h2>
+  <p>Un résultat positif ne vous oblige pas à tout retirer. La bonne réponse dépend de votre situation.</p>
+  <h3>Vous achetez la maison</h3>
+  <p>L’état amiante fait partie du dossier de diagnostic remis au plus tard à la promesse de vente ou, à défaut, à l’acte. La présence d’amiante n’empêche pas la vente, mais en achetant en connaissance de cause, vous prenez à votre charge les frais qui y sont liés, désamiantage compris (service-public.fr). Si des travaux sont prévus, faites chiffrer le retrait avant votre offre. Notre guide pour <a href="/vendre-maison-toiture-amiante">vendre une maison avec une toiture en amiante</a> montre comment ce coût pèse dans la négociation.</p>
+  <h3>Vous y vivez, sans travaux prévus</h3>
+  <p>Si les matériaux sont en bon état, n’y touchez pas et surveillez-les. Gardez le rapport avec les papiers de la maison : il servira aux pros qui interviendront un jour. Pour une toiture saine, les options vont de la surveillance au retrait : voyez <a href="/toiture-amiante-que-faire">toiture en amiante : que faire ?</a></p>
+  <h3>Un matériau est abîmé ou cassé</h3>
+  <p>Plaques fendues après une tempête, dalles qui se décollent, isolant de tuyau qui s’effrite : tenez les autres personnes à distance, ne balayez pas, n’aspirez pas et essuyez la poussière au chiffon humide (brochure des ministères), puis faites intervenir un pro. En cas d’urgence liée à un sinistre, le pro peut transmettre son plan de retrait 8 jours avant le chantier au lieu de trente (code du travail, art. R4412-137).</p>
+  <h3>Vous préparez des travaux</h3>
+  <p>Faites d’abord le repérage avant travaux, puis remettez-le aux pros que vous consultez (art. L4412-2). S’il faut retirer ou encapsuler l’amiante, le chantier revient à un pro certifié (DREETS Pays de la Loire) : voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>.</p>
+  <h3>Vous voulez retirer l’amiante</h3>
+  <p>Le désamiantage d’une maison n’a pas de prix unique : il dépend des matériaux, des surfaces et de l’accès. Le pro certifié prépare un plan de retrait et le transmet à l’inspection du travail au moins trente jours avant le chantier (art. R4412-137) : comptez un bon mois. Les fourchettes par matériau sont sur notre page <a href="/prix-desamiantage">prix du désamiantage au m²</a>. Le pro se charge des déchets ; si vous apportez vous-même du fibrociment, toutes les déchèteries ne l’acceptent pas (brochure des ministères) : voyez <a href="/dechetterie-amiante">déposer de l’amiante en déchèterie</a>.</p>
+
+  <EncartDevis accroche="Amiante repéré dans votre maison : l’un de nos pros certifiés vient voir et chiffre le retrait." />
+
+  <h2>Ce qu’il ne faut pas faire</h2>
+  <ul>
+    <li><strong>Poncer, percer, découper ou casser</strong> un matériau suspect, surtout avec un outil électrique rapide (brochure des ministères).</li>
+    <li><strong>Démousser une toiture amiantée au jet haute pression :</strong> la DREETS Pays de la Loire juge cette technique « absolument à proscrire ».</li>
+    <li><strong>Balayer ou passer l’aspirateur domestique</strong> sur des débris : son filtre ne retient pas les fibres, qui repartent dans la pièce (brochure des ministères).</li>
+    <li><strong>Retirer l’amiante vous-même :</strong> l’intervention directe d’un particulier doit rester exceptionnelle et limitée, et vous seriez responsable des conséquences pour vous et votre voisinage (brochure des ministères).</li>
+    <li><strong>Embaucher quelqu’un pour le faire,</strong> même en chèque emploi service : vous devenez son employeur, responsable de sa formation et de ses protections, un choix que la DREETS Pays de la Loire demande d’écarter totalement.</li>
+    <li><strong>Laisser des déchets amiantés sur un terrain,</strong> même privé : c’est sanctionné (DREETS Pays de la Loire).</li>
+  </ul>
+</Guide>
