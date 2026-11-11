@@ -14,6 +14,7 @@ export const PAGES_GUIDE = [
   { chemin: '/prix-remplacement-toiture-amiante', titreCourt: 'Changer une toiture en amiante : prix' },
   { chemin: '/desamiantage-toiture-amiante', titreCourt: 'Désamiantage de toiture' },
   { chemin: '/amiante-maison', titreCourt: 'Amiante dans une maison' },
+  { chemin: '/amiante-murs-platre-enduit', titreCourt: 'Amiante dans les murs et enduits' },
   { chemin: '/reconnaitre-toiture-amiante', titreCourt: 'Reconnaître une toiture en amiante' },
   { chemin: '/toiture-amiante-que-faire', titreCourt: 'Toiture en amiante : que faire ?' },
   { chemin: '/vendre-maison-toiture-amiante', titreCourt: 'Vendre une maison avec un toit en amiante' },

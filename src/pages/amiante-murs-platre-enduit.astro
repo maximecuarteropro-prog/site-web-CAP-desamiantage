@@ -1,0 +1,119 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Écrit le 11 nov. 2026 par la tâche « Article SEO du jour ». Page 1 de Google mobile (OpenSEO) relue pour
+// « amiante dans les murs » et « plâtre amiante » : surtout des sites canadiens, suisses ou belges et des forums, peu de
+// sources françaises officielles, aucune qui dise s’il est permis de percer.
+// Relu le même jour : annexe 13-9 du code de la santé publique (Légifrance), FAQ amiante de l’INRS (6 oct. 2022),
+// rapport CARTO Amiante (OPPBTP, DGT, INRS, mise à jour du 1er avril 2021), brochure de la DREETS Pays de la Loire
+// (janv. 2023), brochure des ministères « Bricolage dans votre logement » (mars 2016, édition de déc. 2018),
+// page de l’ARS Auvergne-Rhône-Alpes (14 janv. 2026), ecologie.gouv.fr (15 oct. 2024), code du travail R4412-94,
+// R4412-129 et R4412-137 (code.travail.gouv.fr). Prix relus sur Construires.fr et ABC Travaux.
+// Écartés : la page du ministère de la Santé sur le bricolage (vérification anti-robot), le logigramme SS3/SS4 de la DGT
+// (même blocage), le « plâtre bleu » cité par des sites canadiens (aucune source française).
+// Point incertain : aucun guide de prix publié ne donne de fourchette pour le retrait d’un enduit ou d’une cloison
+// amiantés ; la page renvoie au devis et à /prix-desamiantage. Les niveaux CARTO sont des mesures faites par des pros
+// protégés : ils ne valent pas pour un particulier qui bricole.
+const sources = [
+  { titre: 'Code de la santé publique, annexe 13-9 (listes A, B et C des matériaux à repérer)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000024141044', date: 'version en vigueur depuis le 1er février 2012' },
+  { titre: 'INRS, « FAQ Amiante »', url: 'https://www.inrs.fr/risques/amiante/faq-amiante.html', date: 'mise à jour le 6 octobre 2022' },
+  { titre: 'ARS Auvergne-Rhône-Alpes, « Amiante : propriétaires, quelles sont vos obligations ? »', url: 'https://auvergne-rhone-alpes.ars.sante.fr/amiante-proprietaires-quelles-sont-vos-obligations', date: 'mis à jour le 14 janvier 2026' },
+  { titre: 'DREETS Pays de la Loire, « Amiante chez les particuliers : une affaire de professionnels ! »', url: 'https://pays-de-la-loire.dreets.gouv.fr/sites/pays-de-la-loire.dreets.gouv.fr/IMG/pdf/document_particuliers_version_janvier__2023-5.pdf', date: 'janvier 2023 (3e édition)' },
+  { titre: 'Ministères de la Transition écologique et de la Cohésion des territoires, brochure « Bricolage dans votre logement : attention à l’amiante ! »', url: 'https://www.notre-environnement.gouv.fr/IMG/pdf/dgaln_plaque8f26.pdf', date: 'mars 2016, édition de décembre 2018' },
+  { titre: 'OPPBTP, Direction générale du Travail et INRS, « Rapport CARTO Amiante »', url: 'https://inrs.fr/dam/jcr:da1069af-6f9a-497a-987a-4ac5dbe0b00a/Ouvrage-rapport-carto-amiante-2021.pdf', date: 'mise à jour du 1er avril 2021' },
+  { titre: 'Ministère de la Transition écologique, « Amiante dans le bâtiment »', url: 'https://www.ecologie.gouv.fr/politiques-publiques/amiante-batiment', date: 'mis à jour le 15 octobre 2024' },
+  { titre: 'DREETS Auvergne-Rhône-Alpes, « Foire aux questions sur le repérage avant travaux »', url: 'https://auvergne-rhone-alpes.dreets.gouv.fr/sites/dreets-auv-ra/files/files-spip/pdf/faq_conference_rat_-_05.11.2020.pdf', date: 'mise à jour au 5 novembre 2020' },
+  { titre: 'Code du travail, article R4412-94 (retrait, encapsulage et interventions)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-94', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-129', date: 'version en vigueur depuis le 1er juillet 2013' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-137', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Construires.fr, « Diagnostic amiante : quand est-il obligatoire ? »', url: 'https://www.construires.fr/diagnostic-amiante-obligation/', date: 'mis à jour le 17 mai 2026' },
+  { titre: 'ABC Travaux, « Prix du désamiantage au m² »', url: 'https://abctravaux.org/prix-desamiantage-m2/', date: 'publié le 21 octobre 2026' },
+]
+
+const faq = [
+  { question: 'Un vieux plâtre contient-il forcément de l’amiante ?', reponse: 'Non. L’amiante a été ajouté à certains plâtres, enduits, mortiers, colles et peintures, pas à tous (ARS Auvergne-Rhône-Alpes ; brochure des ministères « Bricolage dans votre logement »). Dans un bâtiment d’avant 1997, un plâtre est donc suspect, sans plus : seule l’analyse d’un échantillon prélevé par un diagnostiqueur certifié permet de conclure.' },
+  { question: 'Combien coûte l’analyse d’un enduit ou d’un plâtre ?', reponse: 'Comptez 30 à 80 € par échantillon analysé en laboratoire, facturés en supplément du repérage (Construires.fr, mai 2026 ; ABC Travaux, octobre 2026). Un repérage avant travaux complet coûte en général 200 à 500 € pour une maison (ABC Travaux).' },
+  { question: 'Puis-je peindre ou tapisser par-dessus un mur amianté ?', reponse: 'Recouvrir un enduit amianté sans le poncer ni le gratter fait partie des interventions les moins émettrices mesurées par la campagne CARTO Amiante (OPPBTP, DGT, INRS, avril 2021), à condition de travailler à l’humide. Pour un pro, c’est une intervention de sous-section 4, faite par du personnel formé. Le ponçage et le grattage qui précèdent souvent une peinture sont, eux, à éviter.' },
+  { question: 'Le diagnostic amiante de la vente a-t-il examiné mes murs ?', reponse: 'En partie. Il recherche les matériaux des listes A et B, dont les enduits projetés et les panneaux de cloisons, mais seulement ce qui est visible et accessible, sans sondage destructif. La colle sous une faïence, par exemple, lui échappe (DREETS Pays de la Loire). Avant des travaux, il faut un repérage avant travaux.' },
+  { question: 'Que faire des gravats d’un mur ou d’un enduit amianté ?', reponse: 'Ce sont des déchets dangereux, comme les gants, la combinaison et les chiffons utilisés. Ils se mettent dans des sacs étanches marqués « amiante » et suivent une filière adaptée (brochure des ministères). Les déchetteries acceptent surtout l’amiante-ciment, souvent sous conditions : renseignez-vous avant. Sur un chantier confié à un pro, c’est lui qui s’en charge et vous remet le bordereau de suivi.' },
+]
+---
+<Guide
+  titre="Amiante dans les murs : plâtre, enduit, cloison, que faire ?"
+  description="Enduits, plâtres, cloisons, colle de faïence d’avant 1997 : comment savoir s’il y a de l’amiante (analyse 30 à 80 €), percer ou non, et qui doit retirer."
+  chemin="/amiante-murs-platre-enduit"
+  rubrique="Murs et cloisons"
+  h1="Amiante dans les murs, plâtres et enduits : comment savoir, et que faire ?"
+  chapo="Dans un bâtiment construit avant 1997, un enduit, un plâtre, une cloison ou la colle d’une faïence peuvent contenir de l’amiante, et rien ne permet de le voir à l’œil nu : seule l’analyse d’un échantillon, prélevé par un diagnostiqueur certifié, tranche. Le risque vient des fibres libérées quand on perce, ponce ou gratte le mur, pas de sa simple présence : faites vérifier avant de percer. S’il est amianté, un perçage ponctuel se confie à un pro formé, et un retrait à un pro certifié sous-section 3."
+  publie="2026-11-11"
+  misAJour="2026-11-11"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Quels matériaux des murs peuvent contenir de l’amiante ?</h2>
+  <p>L’amiante a été mélangé à de nombreux produits de construction, dont le plâtre, la colle et la peinture, jusqu’à son interdiction en 1997 (brochure des ministères « Bricolage dans votre logement »). Dans les murs et les cloisons, les textes et les services de l’État citent :</p>
+  <ul>
+    <li><strong>les enduits :</strong> enduits projetés (code de la santé publique, annexe 13-9, listes B et C), et enduits lissés ou talochés ayant une fonction coupe-feu (liste C) ;</li>
+    <li><strong>les plâtres, mortiers et peintures,</strong> y compris les peintures dites intumescentes, qui gonflent au feu (ARS Auvergne-Rhône-Alpes ; annexe 13-9, liste C) ;</li>
+    <li><strong>les cloisons légères ou préfabriquées,</strong> leurs panneaux et leurs jonctions, ainsi que les gaines et coffres (annexe 13-9, listes B et C) ;</li>
+    <li><strong>la colle de faïence,</strong> cachée sous le carrelage mural d’une salle de bains ou d’une cuisine (DREETS Pays de la Loire) ;</li>
+    <li><strong>les plaques planes en fibres-ciment,</strong> par exemple les panneaux qui protègent de l’humidité les murs des sous-sols (brochure des ministères ; annexe 13-9, liste C) ;</li>
+    <li><strong>les entourages de poteaux,</strong> en carton, en fibres-ciment ou en carton et plâtre, et <strong>les joints de dilatation</strong> (annexe 13-9).</li>
+  </ul>
+  <p>Ces listes ne disent pas qu’un matériau en contient, mais qu’il faut le vérifier. Deux dates servent de repère : le 1er juillet 1997 (permis de construire) pour le diagnostic de vente, et le 1er janvier 1997 (construction) pour le repérage avant travaux. Pour faire le tour du reste de la maison, de la toiture à la cave, lisez notre guide <a href="/amiante-maison">l’amiante dans une maison</a>.</p>
+
+  <h2>Peut-on reconnaître un mur amianté à l’œil nu ?</h2>
+  <p>Non. L’INRS est clair : il est impossible de déterminer à l’œil nu si un matériau contient de l’amiante. Ni la couleur, ni la texture, ni la dureté d’un plâtre ne suffisent. Trois documents peuvent déjà vous renseigner :</p>
+  <ul>
+    <li><strong>le diagnostic amiante de la vente,</strong> si le logement a été acheté après le 1er septembre 2002 (brochure des ministères) ;</li>
+    <li><strong>le dossier technique amiante</strong> des parties communes, si vous êtes en copropriété : voyez notre page sur le <a href="/dossier-technique-amiante">dossier technique amiante (DTA)</a> ;</li>
+    <li><strong>les documents de construction,</strong> qui citent parfois les produits posés.</li>
+  </ul>
+  <p>Attention à leurs limites. Le diagnostic de vente recherche bien les enduits projetés et les panneaux de cloisons, mais sans sondage destructif : il ne voit pas la colle sous une faïence, ni ce qui est caché dans une cloison (DREETS Pays de la Loire). Pour savoir ce que contient le mur que vous allez toucher, il faut un repérage par un opérateur de repérage certifié, le seul compétent pour le faire (même source). Il prélève un échantillon, qui part en laboratoire.</p>
+  <p>Comptez 30 à 80 € par échantillon analysé (Construires.fr, mai 2026 ; ABC Travaux donne 40 à 80 €), et 200 à 500 € pour un repérage avant travaux complet dans une maison (ABC Travaux, octobre 2026). Le détail est dans notre guide du <a href="/diagnostic-amiante-avant-travaux">diagnostic amiante avant travaux</a>.</p>
+
+  <h2>Puis-je percer un mur qui contient peut-être de l’amiante ?</h2>
+  <p>Pas sans précaution. Selon l’INRS, percer un trou dans un enduit plâtre-amiante libère des fibres. Tout dépend donc de qui perce.</p>
+  <ul>
+    <li><strong>Vous faites appel à un artisan,</strong> même pour fixer une étagère : vous devenez donneur d’ordre, et un repérage avant travaux est obligatoire dans un bâtiment d’avant 1997, y compris quand c’est un locataire qui commande les travaux, sauf si les repérages existants renseignent déjà assez sur la zone (DREETS Pays de la Loire). Si le mur est amianté, le perçage est une <strong>intervention de sous-section 4</strong> : la DREETS cite justement l’exemple de la fixation d’étagères sur des murs en plâtre amianté. L’entreprise n’a pas besoin d’être certifiée, mais ses intervenants doivent être formés au risque amiante et détenir une attestation de compétence, et elle doit rédiger un mode opératoire. Demandez-en la copie.</li>
+    <li><strong>Vous percez vous-même :</strong> la brochure des ministères rappelle que l’intervention d’un particulier sur un matériau amianté doit rester exceptionnelle et limitée, et la DREETS Pays de la Loire conseille de confier à un pro formé tous les travaux sur ces matériaux. Le repérage est alors au moins vivement recommandé : le ministère de la Transition écologique le présente comme obligatoire, la DREETS Auvergne-Rhône-Alpes en dispense le particulier qui fait tout lui-même, sans aucun pro. Notre guide du <a href="/diagnostic-amiante-avant-travaux">repérage avant travaux pour un particulier</a> détaille les deux lectures.</li>
+  </ul>
+  <p>Si vous intervenez malgré tout, la brochure des ministères donne ces consignes : éloigner les autres personnes, porter une combinaison et des gants jetables et au minimum un masque FFP3 bien ajusté, humidifier le matériau, préférer des outils manuels ou une machine à vitesse lente, nettoyer au chiffon humide et jamais avec l’aspirateur de la maison, dont le filtre ne retient pas les fibres.</p>
+
+  <h2>Percer, recouvrir, gratter : quels gestes émettent le plus de fibres ?</h2>
+  <p>La campagne CARTO Amiante, menée par l’OPPBTP avec la direction générale du Travail et l’INRS, a mesuré les fibres dans l’air pendant des travaux courants sur des peintures et enduits amiantés. Ses résultats montrent qu’à protections égales, le geste compte beaucoup.</p>
+  <div class="tableau">
+    <table>
+      <caption>Niveaux d’empoussièrement mesurés par des pros sur peintures et enduits intérieurs amiantés, d’après le rapport CARTO Amiante (OPPBTP, DGT, INRS, mise à jour du 1er avril 2021). Niveau 1 : moins de 100 fibres par litre d’air ; niveau 2 : de 100 à 6 000 fibres par litre.</caption>
+      <thead><tr><th scope="col">Intervention</th><th scope="col">Protection mise en œuvre</th><th scope="col">Niveau mesuré</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Percer pour fixer un équipement</th><td>Poche de gel autour du foret</td><td>Niveau 1</td></tr>
+        <tr><th scope="row">Recouvrir d’une peinture ou d’un enduit</th><td>Travail à l’humide</td><td>Niveau 1</td></tr>
+        <tr><th scope="row">Poser une toile de verre ou un papier peint</th><td>Travail à l’humide</td><td>Niveau 1</td></tr>
+        <tr><th scope="row">Décoller un ancien papier peint</th><td>Travail à l’humide</td><td>Niveau 1</td></tr>
+        <tr><th scope="row">Gratter la peinture ou l’enduit à la main</th><td>Gel</td><td>Niveau 2</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Ces mesures ont été faites par des pros équipés, avec des méthodes précises : elles ne disent pas qu’un perçage à la perceuse, sans protection, serait sans risque. Elles montrent surtout que gratter ou poncer un enduit amianté pour le rénover émet bien plus de fibres que de le percer proprement ou de le recouvrir. La brochure des ministères range d’ailleurs le ponçage parmi les gestes qui peuvent conduire à des expositions importantes.</p>
+
+  <h2>Faut-il retirer un enduit ou une cloison amiantés ?</h2>
+  <p>Pas forcément. Aucun texte n’oblige le propriétaire d’une maison à faire repérer l’amiante pour l’usage courant (DREETS Pays de la Loire). Un enduit ou une cloison en bon état, que personne ne touche, peut rester en place. La question se pose au moment des travaux :</p>
+  <ul>
+    <li><strong>vous percez, fixez ou recouvrez sans enlever le matériau :</strong> intervention de sous-section 4, par un pro formé (code du travail, art. R4412-94) ;</li>
+    <li><strong>vous abattez une cloison, refaites une salle de bains ou décroûtez un mur :</strong> le matériau amianté est retiré, c’est un chantier de sous-section 3. La DREETS Pays de la Loire cite le changement d’un carrelage et de sa colle amiantée. Il faut alors faire appel à une entreprise certifiée (art. R4412-129) : voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>.</li>
+  </ul>
+  <p>Pour un retrait, le pro dépose un plan de retrait auprès de l’administration au moins trente jours avant le début du chantier, ou huit jours en cas d’urgence liée à un sinistre (art. R4412-137). Prévoyez donc ce délai dans votre planning de rénovation. Aucun guide de prix publié ne donne de fourchette fiable pour le retrait d’un enduit ou d’une cloison : le prix dépend de la surface, du matériau et de l’accès, et se fixe après visite. Les repères généraux sont sur notre page <a href="/prix-desamiantage">prix du désamiantage</a>. Pour les sols, voyez le <a href="/retrait-dalles-sol-amiante">retrait des dalles de sol amiantées</a> ; pour les isolants autour des tuyaux ou au plafond, le <a href="/flocage-calorifugeage-amiante">flocage et le calorifugeage amiantés</a>.</p>
+
+  <EncartDevis accroche="Une cloison à abattre ou un mur à décroûter dans un bâtiment d’avant 1997 ? Faites chiffrer le retrait par l’un de nos pros certifiés sous-section 3." />
+
+  <h2>Et pendant le chantier, qui fait quoi ?</h2>
+  <p>En confiant les travaux à un pro, vous restez donneur d’ordre (DREETS Pays de la Loire). Concrètement :</p>
+  <ul>
+    <li><strong>avant :</strong> vous transmettez le rapport de repérage aux pros consultés (ministère de la Transition écologique), pour qu’ils en tiennent compte dans leur devis ;</li>
+    <li><strong>pendant :</strong> vous organisez les lieux avec le pro et n’entrez pas dans la zone de travaux. Si vous devez rester dans le logement, cela se prépare très en amont avec lui ;</li>
+    <li><strong>après :</strong> le pro vous remet, selon l’opération, les résultats des mesures de l’air, les documents sur les déchets et, le cas échéant, le rapport de fin de travaux.</li>
+  </ul>
+  <p>Les déchets restent sous votre responsabilité : la personne pour qui les travaux sont faits doit veiller à leur bonne élimination (ministère de la Transition écologique). Gardez les bordereaux avec le rapport de repérage. Si vous déposez vous-même de petites quantités, lisez avant notre page <a href="/dechetterie-amiante">déposer de l’amiante en déchetterie</a>.</p>
+</Guide>
