@@ -1,0 +1,126 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Sources relues le 11 nov. 2026 : décret n° 96-1133 sur Légifrance, liste INRS ED 1475 (dates de fin
+// d’amiante par produit, Everite et Eternit), FAQ amiante de l’INRS, annexe 13-9 du code de la santé publique
+// (copie de la préfecture d’Île-de-France), certificat NF249 et document technique d’application du CSTB
+// (mention « NT », marquage gravé), rapport de l’agence danoise de l’environnement (2023), fiche MSA,
+// guides du ministère de la Santé, de la DREETS Pays de la Loire et de la DREAL Occitanie, service-public.fr
+// F742, prix Habitatpresto et Construires.fr, délai d’analyse Eurofins.
+// Point non tranché : aucune source française trouvée sur la date à partir de laquelle toutes les plaques
+// vendues en France portent la mention « NT ». Ne pas l’affirmer sans source.
+const sources = [
+  { titre: 'Décret n° 96-1133 du 24 décembre 1996 relatif à l’interdiction de l’amiante', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000734637', date: 'version en vigueur au 11 novembre 2026' },
+  { titre: 'INRS, ED 1475, « Amiante : les produits, les fournisseurs »', url: 'https://www.inrs.fr/media.html?refINRS=ED%201475', date: '4e édition, novembre 2014' },
+  { titre: 'INRS, « FAQ Amiante »', url: 'https://www.inrs.fr/accueil/risques/amiante/faq-amiante.html', date: 'mise à jour le 6 octobre 2022' },
+  { titre: 'Code de la santé publique, annexe 13-9 (listes A, B et C), copie de la préfecture de la région Île-de-France', url: 'https://www.prefectures-regions.gouv.fr/ile-de-france/content/download/12496/85985/file/listes%20A%20B%20et%20C.pdf', date: 'texte issu du décret n° 2011-629 du 3 juin 2011, copie d’avril 2012' },
+  { titre: 'CSTB et AFNOR Certification, certificat NF249 « Plaques profilées en fibres-ciment » n° 009-A1-V25 (Etex France Exteriors)', url: 'https://medias.bigmat.fr/data_medias/medias_finaux/documents/3309090002404-CWq5TH0AuZ.pdf', date: 'décision du 28 juin 2023' },
+  { titre: 'CSTB, Document technique d’application n° 5.1/14-2372_V2, Soutuile 230 FR (Etex France Exteriors)', url: 'https://medias.bigmat.fr/data_medias/medias_finaux/documents/8435422711531-NLD0aHFN07.pdf', date: 'examiné le 7 décembre 2020, valide jusqu’au 31 décembre 2027' },
+  { titre: 'Miljøstyrelsen (agence danoise de l’environnement), « Udvikling af teknologi til sikker identifikation af asbestfri eternitplader », rapport MUDP', url: 'https://www.teknologisk.dk/_/media/87659_Udvikling_af_teknologi_til_sikker_identifikation_af_asbestfri_eternitplader.pdf', date: 'mars 2023' },
+  { titre: 'MSA et Groupama, « Toitures de bâtiments agricoles : attention aux “fibro” qui se dégradent »', url: 'https://ssa.msa.fr/wp-content/uploads/2018/12/Toitures-de-batiments-agricoles-degradation-des-fibres-ciments.pdf', date: 'mai 2007' },
+  { titre: 'Ministère de la Santé, « Se protéger de l’amiante lors des travaux : guide pour les particuliers » (diffusé par l’ARS Bretagne)', url: 'https://bretagne.ars.sante.fr/media/136167/download', date: 'édition 2023, mise en ligne en décembre 2024' },
+  { titre: 'DREETS Pays de la Loire, « Amiante chez les particuliers : une affaire de professionnels ! »', url: 'https://pays-de-la-loire.dreets.gouv.fr/sites/pays-de-la-loire.dreets.gouv.fr/IMG/pdf/document_particuliers_version_janvier__2023-5.pdf', date: 'janvier 2023' },
+  { titre: 'DREAL Occitanie, fiche 602-2 « L’amiante »', url: 'https://www.occitanie.developpement-durable.gouv.fr/IMG/pdf/602-2-_amiante_-_fev_2025_ok.pdf', date: 'février 2025' },
+  { titre: 'Service-public.fr, fiche F742 « Diagnostic amiante » (vente)', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F742', date: 'vérifiée le 16 octobre 2026' },
+  { titre: 'Habitatpresto, « Quel prix pour remplacer une toiture en fibrociment amiante ? »', url: 'https://www.habitatpresto.com/mag/toiture/prix-remplacer-toiture-fibrociment-amiante', date: 'publié le 11 septembre 2026' },
+  { titre: 'Construires.fr, « Diagnostic amiante : obligations »', url: 'https://www.construires.fr/diagnostic-amiante-obligation/', date: 'mis à jour le 17 mai 2026' },
+  { titre: 'Eurofins, « L’analyse d’amiante dans les matériaux du bâtiment »', url: 'https://cdnmediaassets.eurofins.com/eurofins-european-west/media/huogpgje/eab_offre-amiante-mat%C3%A9riaux-b%C3%A2timent.pdf', date: 'version du 4 avril 2025' },
+]
+
+const faq = [
+  { question: 'Le diagnostic amiante fait à l’achat suffit-il avant des travaux de toiture ?', reponse: 'Pas toujours. L’état amiante de la vente porte sur les matériaux visibles et accessibles le jour du repérage (service-public.fr), et la DREETS des Pays de la Loire rappelle qu’il n’est pas exhaustif. Avant des travaux dans un bâtiment construit avant 1997, faites réaliser un repérage avant travaux et remettez au diagnostiqueur le diagnostic de la vente, même négatif : il le complétera (ministère de la Santé).' },
+  { question: 'Combien de temps un diagnostic amiante est-il valable ?', reponse: 'Pour la vente d’une maison, l’état amiante a une durée de validité illimitée. Service-public.fr recommande toutefois d’en refaire un avant de vendre si des travaux de rénovation ont eu lieu depuis.' },
+  { question: 'Où trouver un diagnostiqueur certifié pour l’amiante ?', reponse: 'Dans l’annuaire officiel des diagnostiqueurs certifiés, publié par l’État. Pour un repérage avant travaux, le ministère de la Santé conseille de cocher « amiante : missions spécifiques » dans la recherche.' },
+  { question: 'Mes plaques posées après 1997 se dégradent : est-ce de l’amiante ?', reponse: 'Pas forcément. Après l’interdiction, de nouvelles formulations sans amiante ont été mises sur le marché, et la MSA signalait en 2007 que les plaques dites CCA (calcium, cellulose, silice) connaissaient des problèmes de dégradation importants. Fissures et moisissures renseignent sur l’état des plaques, pas sur leur composition : la date de fabrication, le marquage ou une analyse tranchent.' },
+  { question: 'Une toiture en amiante est-elle dangereuse si on n’y touche pas ?', reponse: 'Le ministère de la Santé explique que les fibres se libèrent avec le vieillissement naturel du matériau et quand on le sollicite : ponçage, perçage, casse, découpe. D’où deux réflexes : ne pas travailler soi-même sur la toiture et suivre son état. Notre guide « Toiture en amiante : que faire ? » compare les options, du maintien au retrait.' },
+]
+---
+<Guide
+  titre="Reconnaître une toiture en amiante : indices et analyse"
+  description="Plaques ou ardoises en fibrociment d’avant 1997 : date, mention NT, matériau. Ce que vaut chaque indice, et l’analyse qui tranche pour 100 à 300 €."
+  chemin="/reconnaitre-toiture-amiante"
+  rubrique="Toiture"
+  h1="Comment reconnaître une toiture en amiante ?"
+  chapo="Une toiture en plaques ondulées ou en ardoises de fibrociment fabriquées avant 1997 peut contenir de l’amiante ; l’ardoise naturelle et la tuile en terre cuite, elles, ne sont pas en cause. À l’œil nu, impossible de trancher : une plaque gravée « NT » est sans amiante, mais pour les autres, seule l’analyse d’un prélèvement fait par un diagnostiqueur certifié donne la certitude. Comptez 100 à 300 € pour ce repérage."
+  publie="2026-11-11"
+  misAJour="2026-11-11"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Quels matériaux de toiture peuvent contenir de l’amiante ?</h2>
+  <p>En toiture, l’amiante se trouve dans les produits en fibres-ciment, qu’on appelle couramment « fibrociment » : plaques ondulées, ardoises dites artificielles, plaques sous tuiles et accessoires. La liste réglementaire des matériaux à repérer vise les plaques, ardoises et accessoires de couverture composites ou en fibres-ciment, les bardeaux bitumineux et les conduits en amiante-ciment (code de la santé publique, annexe 13-9, liste B). Le ministère de la Santé cite de son côté l’ardoise artificielle et la tôle ondulée parmi les matériaux amiantés les plus courants.</p>
+  <div class="tableau">
+    <table>
+      <caption>Matériaux de couverture et amiante, d’après les listes B et C de l’annexe 13-9 du code de la santé publique et la liste de l’INRS (ED 1475, 2014).</caption>
+      <thead><tr><th scope="col">Matériau</th><th scope="col">Peut-il contenir de l’amiante ?</th><th scope="col">Comment trancher</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Plaques ondulées en fibres-ciment</strong> (les « tôles » grises qui ressemblent à du ciment)</td><td>Oui, si elles ont été fabriquées avant 1997</td><td>Mention « NT » gravée : sans amiante. Sinon, analyse</td></tr>
+        <tr><td><strong>Ardoises en fibres-ciment</strong> (dites artificielles)</td><td>Oui, même règle</td><td>Factures de la couverture, sinon analyse</td></tr>
+        <tr><td><strong>Plaques sous tuiles</strong> en fibres-ciment</td><td>Oui : les Soutuile d’Eternit en ont contenu jusqu’en juin 1996</td><td>Regarder depuis les combles, sinon analyse</td></tr>
+        <tr><td><strong>Accessoires</strong> : faîtages, closoirs, descentes d’eaux pluviales, conduits de fumée</td><td>Oui : ce sont des pièces à part, à vérifier même si les plaques sont sans amiante</td><td>Analyse</td></tr>
+        <tr><td><strong>Bardeaux bitumineux</strong> (« shingle »)</td><td>Oui, ils figurent dans la liste B</td><td>Analyse</td></tr>
+        <tr><td><strong>Ardoise naturelle</strong></td><td>Non visée par la liste réglementaire</td><td>Factures ou avis du diagnostiqueur</td></tr>
+        <tr><td><strong>Tuile en terre cuite</strong></td><td>Non visée, mais regardez ce qu’il y a dessous</td><td>Plaques sous tuiles et accessoires à vérifier</td></tr>
+        <tr><td><strong>Bac acier</strong></td><td>Non visé ; l’INRS cite toutefois un ancien bardage en acier, le Galbestos de Robertson, qui en a contenu</td><td>Analyse en cas de doute sur une tôle ancienne</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Depuis quand le fibrociment est-il sans amiante ?</h2>
+  <p>Depuis le 1er janvier 1997. Le décret n° 96-1133 du 24 décembre 1996 interdit depuis cette date la fabrication, la vente et la mise sur le marché de toutes les fibres d’amiante, qu’elles soient ou non incorporées dans un matériau. Les plaques ont ensuite été fabriquées avec des fibres de substitution (MSA, 2007).</p>
+  <p>Pour plusieurs produits, l’amiante s’arrête un peu avant. Selon la liste établie par l’INRS avec les fabricants, la plaque ondulée et l’ardoise Thélème d’Everite ont contenu de l’amiante jusqu’en février 1996 ; les plaques ondulées TN, Coloronde et Coloragri et les plaques sous tuiles Soutuile d’Eternit, jusqu’en juin 1996. Pour la suite, la liste ne dit rien.</p>
+  <p>La date est donc un bon premier tri, avec trois limites :</p>
+  <ul>
+    <li><strong>La pose n’est pas la fabrication.</strong> Une toiture posée en 1997 a pu l’être avec des plaques achetées avant l’interdiction.</li>
+    <li><strong>Une toiture réparée peut mêler des plaques</strong> de provenances différentes, comme le signale la MSA.</li>
+    <li><strong>Le nom de gamme ne suffit pas.</strong> Les plaques Coloronde d’Eternit ont contenu de l’amiante jusqu’en juin 1996 (INRS) ; celles vendues aujourd’hui sous ce nom sont certifiées sans amiante (CSTB, 2023).</li>
+  </ul>
+  <p>Pour la vente d’une maison, l’état amiante est d’ailleurs exigé quand le permis de construire a été délivré avant le 1er juillet 1997 (service-public.fr).</p>
+
+  <h2>Ardoise naturelle ou ardoise en fibrociment : comment savoir ?</h2>
+  <p>L’ardoise naturelle est une pierre fendue. Elle ne fait pas partie des ardoises que la réglementation demande de repérer, qui sont les ardoises composites ou en fibres-ciment (annexe 13-9). Ce sont ces ardoises artificielles qui posent question : l’INRS en liste plusieurs qui ont contenu de l’amiante, comme l’ardoise Thélème (anciennement Armor) d’Everite, jusqu’en février 1996, ou l’ardoise TN noir d’Eternit.</p>
+  <p>Depuis le sol, les distinguer n’est pas toujours possible. Commencez par les papiers : la facture ou le devis de la couverture précise le matériau, et la MSA indique que les factures permettent d’identifier le fabricant des plaques. Si rien ne permet de conclure, le diagnostiqueur tranchera.</p>
+
+  <h2>Que signifie la mention « NT » sur une plaque ?</h2>
+  <p>« NT » veut dire sans amiante. La norme NF EN 494, qui encadre les plaques profilées en fibres-ciment, classe ainsi leur composition : le certificat NF délivré par le CSTB aux plaques ondulées d’Eternit l’écrit en toutes lettres, « NT = sans amiante » (2023). Sur les plaques qui portent la marque NF, ce « NT » fait partie du marquage gravé en creux à la fabrication, avec l’année de fabrication sur deux chiffres et le numéro de l’usine (CSTB, document technique d’application 5.1/14-2372_V2).</p>
+  <p>Ce que vaut cet indice :</p>
+  <ul>
+    <li><strong>Un « NT » lisible :</strong> la plaque est sans amiante. Elle ne prouve rien pour ses voisines, qui peuvent venir d’ailleurs (MSA), ni pour les faîtages et closoirs, qui sont des pièces à part.</li>
+    <li><strong>Pas de « NT » visible :</strong> cela ne prouve rien non plus. Le marquage peut être masqué, usé, ou absent sur des plaques plus anciennes. Nous n’avons pas trouvé de source française qui dise depuis quand toutes les plaques vendues en France le portent ; au Danemark, c’est le cas depuis début 2001 (agence danoise de l’environnement, 2023).</li>
+    <li><strong>« TN » n’est pas « NT » :</strong> TN est le nom de plaques ondulées Eternit qui ont contenu de l’amiante jusqu’en juin 1996 (INRS).</li>
+  </ul>
+  <p>Ne montez pas sur le toit pour chercher ce marquage : une plaque en fibres-ciment, quel que soit son âge, n’est pas conçue pour porter le poids d’une personne (MSA). Regardez depuis le sol ou, dans un garage ou un hangar sans isolation, depuis l’intérieur.</p>
+
+  <h2>Une toiture Everite contient-elle de l’amiante ?</h2>
+  <p>Everite est une marque historique de produits en fibres-ciment. La liste de l’INRS indique que la plaque ondulée Everite et l’ardoise Thélème ont contenu de l’amiante jusqu’en février 1996, sans renseignement pour la suite. La marque n’est pas un cas à part : la même liste indique juin 1996 pour les plaques ondulées d’Eternit.</p>
+  <p>Concrètement, une plaque ondulée Everite ou une ardoise Thélème fabriquée avant février 1996 contenait de l’amiante. Si la date de fabrication est inconnue ou plus tardive, seule une analyse tranche. Le fabricant se retrouve grâce au marquage des plaques ou aux factures (MSA).</p>
+
+  <h2>L’aspect ou les papiers de la maison suffisent-ils ?</h2>
+  <p>L’aspect, non. Pour l’INRS, on ne peut pas savoir à l’œil nu si un matériau contient de l’amiante : il faut une analyse par un organisme accrédité. Les plaques sans amiante ont le même aspect gris et ondulé, et un rapport de l’agence danoise de l’environnement note qu’en dehors du marquage, on ne peut pas les distinguer visuellement (2023). Mousses, lichens, surface qui s’effrite ou plaques fissurées renseignent sur l’état de la toiture, pas sur sa composition.</p>
+  <p>Les papiers, eux, font gagner du temps. Si vous avez acheté une maison dont le permis de construire date d’avant le 1er juillet 1997, vous avez normalement reçu un état amiante : il couvre les matériaux visibles et accessibles des listes A et B, dont la toiture (service-public.fr, annexe 13-9). Les factures de la couverture permettent d’identifier le fabricant et parfois l’année. Un diagnostic négatif ou une facture ancienne restent des indices : en cas de doute, c’est l’analyse qui compte.</p>
+
+  <h2>Comment en avoir la certitude ?</h2>
+  <p>En faisant appel à un diagnostiqueur certifié pour l’amiante. Il examine la toiture et ses accessoires, prélève si besoin un échantillon de chaque matériau douteux et le fait analyser par un laboratoire accrédité. Pour la DREETS des Pays de la Loire, seul un opérateur de repérage certifié par un organisme accrédité par le Cofrac a les compétences pour ce travail ; l’INRS rappelle que l’analyse doit être faite par un organisme accrédité.</p>
+  <p>Si vous prévoyez des travaux, demandez directement un repérage amiante avant travaux : dans un bâtiment construit avant 1997, le ministère de la Santé conseille de le faire réaliser dans tous les cas, que vous fassiez les travaux vous-même ou non. Les règles sont détaillées sur notre page <a href="/diagnostic-amiante-avant-travaux">diagnostic amiante avant travaux</a>.</p>
+
+  <h3>Pourquoi ne pas faire le prélèvement vous-même ?</h3>
+  <p>Parce que prélever, c’est casser un morceau de plaque ou d’ardoise, souvent en hauteur. Les services de l’État déconseillent fortement aux particuliers toute intervention directe sur un matériau amianté (DREAL Occitanie, 2025), et la MSA rappelle le risque de passer à travers une plaque. Ne grattez pas non plus un coin « pour voir ». Enfin, un résultat obtenu seul ne remplacerait ni l’état amiante d’une vente ni le repérage avant travaux, qui doivent être faits par un diagnostiqueur certifié (service-public.fr, ministère de la Santé).</p>
+
+  <h3>Combien coûte un repérage, et en combien de temps ?</h3>
+  <ul>
+    <li><strong>Repérage amiante avant travaux de toiture :</strong> 100 à 300 €, inspection, prélèvements éventuels et rapport compris (Habitatpresto, 11 septembre 2026).</li>
+    <li><strong>Diagnostic amiante d’une maison :</strong> 150 à 300 €, plus 30 à 80 € par échantillon quand le prélèvement est facturé à part (Construires.fr, 17 mai 2026).</li>
+  </ul>
+  <p>Faites préciser au devis si les analyses sont comprises. L’analyse elle-même est rapide : le laboratoire Eurofins annonce un résultat 2 jours après réception des échantillons, ou 12 h en express (fiche du 4 avril 2025). Il faut y ajouter le délai du rendez-vous et la rédaction du rapport.</p>
+
+  <h2>Et si l’amiante est confirmé ?</h2>
+  <p>Un résultat positif n’impose pas forcément de retirer la toiture. Notre guide <a href="/toiture-amiante-que-faire">toiture en amiante : que faire ?</a> explique quand on peut la garder, l’encapsuler, la recouvrir ou la retirer.</p>
+  <ul>
+    <li><strong>Vous retirez :</strong> les étapes, du plan de retrait aux déchets, sont dans notre guide du <a href="/desamiantage-toiture-amiante">désamiantage de toiture</a>, et le budget avec la couverture neuve dans <a href="/prix-remplacement-toiture-amiante">changer une toiture en amiante : prix</a>.</li>
+    <li><strong>Vous vendez :</strong> ce que le résultat change pour la vente est expliqué dans <a href="/vendre-maison-toiture-amiante">vendre une maison avec une toiture en amiante</a>.</li>
+    <li><strong>Dans tous les cas :</strong> gardez le rapport, ne touchez pas aux plaques vous-même et confiez le retrait à un <a href="/certification-sous-section-3">pro certifié sous-section 3</a>.</li>
+  </ul>
+
+  <EncartDevis accroche="Amiante confirmé ? Faites chiffrer le retrait par l’un de nos pros certifiés." />
+</Guide>

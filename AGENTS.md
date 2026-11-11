@@ -88,7 +88,11 @@ retirée exprès : ne la réintroduis pas.
       indépendantes (obligation d'information).
 12. **Hors périmètre de l'accueil, ne pas modifier sans le demander :**
     - `astro.config.mjs`, `public/robots.txt`, `src/lib/site.ts` ;
-    - `src/layouts/Guide.astro` et les cinq pages guides ;
+    - `src/layouts/Guide.astro` et les pages guides, listées dans `PAGES_GUIDE` (`src/lib/site.ts`). Cinq guides de la phase 2
+      ajoutés le 11 nov. 2026 à la demande de Maxime, chacun relu face à sa requête : `/reconnaitre-toiture-amiante`,
+      `/vendre-maison-toiture-amiante`, `/diagnostic-amiante-avant-travaux`, `/retrait-dalles-sol-amiante`,
+      `/flocage-calorifugeage-amiante`. Deux points à relire chaque trimestre : la validité d'un état amiante avec amiante
+      (service-public.fr dit illimitée, l'ANIL 3 ans) et l'obligation de repérage pour un particulier qui travaille seul ;
     - `mentions-legales.astro`, `confidentialite.astro`, `src/pages/api/demande.ts` ;
     - refait le 6 nov. 2026 à la demande de Maxime : `src/sections/Process.astro` (une seule vue : étapes courtes, photo, bouton ;
       le texte reste toujours lisible) ;

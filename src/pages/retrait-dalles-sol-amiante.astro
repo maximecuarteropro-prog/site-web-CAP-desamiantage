@@ -1,0 +1,118 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Règles relues le 11 nov. 2026 sur Légifrance, service-public.fr, Santé.fr et inrs.fr, avec la brochure des ministères
+// (2016), l’étude faite pour la Direction générale de la santé (2018) et la fiche de la Direction générale du travail
+// (4 déc. 2013). La version de 2015 de cette fiche, sur travail-emploi.gouv.fr, n’a pas pu être lue (page de vérification) :
+// la FFB (janv. 2024) confirme la même règle pour les dalles. Prix relus le même jour : à revoir chaque trimestre.
+const sources = [
+  { titre: 'INRS, fiche métier amiante ED 4279 « Poseur de revêtement de sol – Carreleur »', url: 'https://www.inrs.fr/media.html?refINRS=ED%204279', date: 'octobre 2016' },
+  { titre: 'Ministères de la Transition écologique et de la Cohésion des territoires, brochure « Bricolage dans votre logement : attention à l’amiante ! »', url: 'https://www.notre-environnement.gouv.fr/IMG/pdf/dgaln_plaque8f26.pdf', date: 'mars 2016' },
+  { titre: 'Code de la santé publique, annexe 13-9 (listes A, B et C des matériaux à repérer)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000024141044', date: 'version en vigueur depuis le 1er février 2012' },
+  { titre: 'INRS, CRAMIF et Ville de Paris pour la Direction générale de la santé, « Étude des expositions professionnelles et environnementales aux fibres d’amiante lors de la mise en œuvre de processus d’entretien de dalles de sol en vinyle amiante »', url: 'https://cramif.fr/sites/default/files/inline-files/rapport-etude-dalles-de-sol-vinyle-amiante-cramif.pdf', date: 'rapport 2016/A/25, décembre 2018' },
+  { titre: 'Arrêté du 12 décembre 2012 relatif aux critères d’évaluation de l’état de conservation des matériaux et produits de la liste B', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000026843927', date: 'version en vigueur au 11 novembre 2026' },
+  { titre: 'ABC Travaux, « Prix du désamiantage au m² »', url: 'https://abctravaux.org/prix-desamiantage-m2/', date: 'publié le 21 octobre 2026' },
+  { titre: 'Santé.fr, ministère chargé de la santé, « Le repérage de l’amiante dans les bâtiments »', url: 'https://www.sante.fr/le-reperage-de-lamiante-dans-les-batiments', date: 'publié le 10 février 2023' },
+  { titre: 'Direction générale du travail, « Distinction sous-section 3 / sous-section 4 pour les opérations sur des immeubles » (copie publiée par la DREAL Normandie)', url: 'https://www.normandie.developpement-durable.gouv.fr/IMG/pdf/logigramme_amiante_SS3_SS4_immeubles_DGT_04122013.pdf', date: '4 décembre 2013' },
+  { titre: 'CRAMIF, fiche d’information et de prévention FIP 9 « Dépose de revêtements de sols »', url: 'https://cramif.fr/sites/default/files/inline-files/fip9-depose-revetement-sols-cramif_0.pdf', date: 'version 5, juillet 2016' },
+  { titre: 'Code du travail, article R4412-94 (retrait et encapsulage)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025819070', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-96 (définition de l’encapsulage)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035725437', date: 'version en vigueur depuis le 1er juillet 2018' },
+  { titre: 'FFB, « Amiante : quels travaux relèvent des sous-sections 3 et 4 ? »', url: 'https://www.ffbatiment.fr/techniques-batiment/reglementation-construction/reglementation-amiante-plomb-silice/dossier/amiante-sous-section-3-ou-4', date: 'publié le 12 janvier 2024' },
+  { titre: 'Code du travail, article L4412-2 (repérage avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013763', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2013' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Arrêté du 21 décembre 2012 relatif aux recommandations générales de sécurité et au contenu de la fiche récapitulative du « dossier technique amiante », annexe I', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000026863286', date: 'annexe I en vigueur depuis le 1er avril 2021' },
+  { titre: 'INRS, « Déchets amiantés issus du BTP »', url: 'https://www.inrs.fr/metiers/environnement/filieres-dechets/dechet-amiante.html', date: 'mis à jour le 17 octobre 2022' },
+  { titre: 'Arrêté du 21 décembre 2021 relatif au bordereau de suivi des déchets d’amiante, article 3', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000044571414', date: 'en vigueur depuis le 1er janvier 2022' },
+  { titre: 'SMITOM du Nord Seine-et-Marne, « Collecte de l’amiante »', url: 'https://www.smitom-nord77.fr/les-decheteries/collecte-de-lamiante/', date: 'sessions 2026, consultée le 11 novembre 2026' },
+  { titre: 'Diagnostic Immobilier 13, « Désamiantage : coûts au m², réglementation et aides »', url: 'https://www.diagnostic-immobilier13.fr/desamiantage-couts-au-m%C2%B2-reglementation-et-aides/', date: 'publié le 3 avril 2026' },
+  { titre: 'Service-public.fr, fiche F742 « Diagnostic amiante » (vente)', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F742', date: 'vérifiée le 16 octobre 2026' },
+  { titre: 'Code de la santé publique, article R1334-16 (repérages dans les parties privatives)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000024140882', date: 'version en vigueur depuis le 1er février 2012' },
+]
+
+const faq = [
+  { question: 'Le diagnostic amiante de la vente recherche-t-il les dalles de sol ?', reponse: 'Oui. Pour un logement dont le permis de construire date d’avant le 1er juillet 1997, le diagnostiqueur repère les matériaux des listes A et B, et les dalles de sol font partie de la liste B. Il ne regarde que ce qui est visible et accessible le jour de sa visite : des dalles cachées sous un autre revêtement peuvent lui échapper.' },
+  { question: 'Mon appartement a un dossier amiante : mes dalles y figurent-elles ?', reponse: 'Pas forcément. Le dossier amiante des parties privatives ne recherche que les matériaux de la liste A : flocages, calorifugeages et faux plafonds. Les matériaux de la liste B, dont les dalles de sol, ne sont repérés dans un appartement qu’au moment de la vente (code de la santé publique, art. R1334-16).' },
+  { question: 'Dois-je prévenir l’artisan qui refait mon sol ?', reponse: 'Oui. Avant toute opération qui peut exposer des travailleurs à l’amiante, le propriétaire fait rechercher l’amiante et transmet le résultat aux entreprises qui vont intervenir (code du travail, art. L4412-2). Sans ce document, l’artisan ne sait pas si la dalle ou la colle qu’il va gratter en contient.' },
+  { question: 'Comment entretenir un sol en dalles vinyle-amiante ?', reponse: 'À l’humide, sans abrasif. L’étude menée pour la Direction générale de la santé en 2018 proscrit le décapage à sec et a relevé des fibres courtes d’amiante lors du lustrage et du décapage humide à la machine. Pas de ponceuse ni de disque abrasif sur ces sols.' },
+  { question: 'Une dalle se décolle : faut-il retirer tout le sol ?', reponse: 'Non. Pour la Direction générale du travail, la réparation ponctuelle d’une à cinq dalles décollées dans un appartement est une intervention de sous-section 4, à confier à un pro formé à l’amiante. La même réparation menée dans tout un immeuble devient un chantier de sous-section 3. En attendant, ne grattez pas la colle et ne balayez pas les débris.' },
+]
+---
+<Guide
+  titre="Dalle amiante : la reconnaître, la recouvrir ou la retirer"
+  description="Dalle vinyle de 30 cm posée avant 1997, colle noire : comment savoir, garder, recouvrir ou retirer, qui peut le faire, et 25 à 80 €/m² pour le retrait."
+  chemin="/retrait-dalles-sol-amiante"
+  rubrique="Intérieur"
+  h1="Dalle de sol amiantée : la reconnaître, la recouvrir ou la retirer"
+  chapo="Une dalle de sol posée avant 1997, souvent en vinyle de 30 cm de côté, peut contenir de l’amiante, tout comme la colle noire qui la tient : seule une analyse en laboratoire le confirme. Intacte, elle libère peu de fibres, et vous pouvez la garder ou la recouvrir, à condition de ne jamais la poncer. La retirer est un chantier de désamiantage, réservé à un pro certifié sous-section 3, déchets compris."
+  publie="2026-11-11"
+  misAJour="2026-11-11"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Comment savoir si une dalle contient de l’amiante ?</h2>
+  <p>La fabrication et la vente de matériaux amiantés sont interdites depuis le 1er janvier 1997 (INRS, fiche ED 4279). Un sol posé avant cette date peut donc en contenir. La brochure des ministères chargés de l’écologie et du logement décrit la dalle vinyle-amiante type : un revêtement de sol en dalles, généralement de 30 cm de côté, de toutes couleurs, unies ou marbrées. On la trouve dans les salles de bains, les toilettes et les cuisines, mais aussi dans les séjours, les chambres et les parties communes.</p>
+  <p>Regardez aussi ce qu’il y a dessous. L’INRS signale de l’amiante dans les colles, les chapes maigres, les ragréages et les sous-couches en carton de certains revêtements. Le code de la santé publique cite à part les colles bitumineuses parmi les éléments à vérifier avant une démolition (annexe 13-9, liste C). Et l’étude menée en 2018 pour la Direction générale de la santé note que la colle des dalles vinyle-amiante contient elle aussi bien souvent des fibres.</p>
+  <p><strong>À l’œil nu, rien ne permet de trancher.</strong> Le diagnostiqueur certifié conclut à partir d’un document ou, en cas de doute, d’un échantillon analysé par un laboratoire accrédité (arrêté du 12 décembre 2012, art. 4). Demandez-lui de vérifier la dalle et la colle. ABC Travaux compte 40 à 80 € par échantillon analysé et 200 à 500 € pour le repérage avant travaux d’une maison (octobre 2026).</p>
+  <p>Avant de payer, cherchez les documents qui existent déjà : le diagnostic amiante remis à l’achat, pour un logement acheté après le 1er septembre 2002 selon la brochure des ministères, ou le dossier technique amiante de la copropriété pour les parties communes.</p>
+
+  <h2>Est-ce dangereux de vivre sur des dalles amiantées ?</h2>
+  <p>Le risque dépend surtout de l’état des dalles et de ce qu’on leur fait subir. Les matériaux de la liste B, dont les dalles de sol en vinyle-amiante, libèrent des fibres quand on les sollicite : frottement, perçage, ponçage, découpe (ministère chargé de la santé, Santé.fr).</p>
+  <p>L’étude faite pour la Direction générale de la santé décrit un matériau peu émissif à l’origine, en général protégé par plusieurs couches de cire, qui peut le devenir en vieillissant ou lors d’interventions. Elle propose de distinguer trois états :</p>
+  <ul>
+    <li><strong>bon état :</strong> aucune trace de dégradation ;</li>
+    <li><strong>état moyen :</strong> dalles rayées, griffées, fissurées ou craquelées ;</li>
+    <li><strong>état dégradé :</strong> dalles trouées, cassées, fragmentées ou décollées, parfois jusqu’à laisser la colle apparente.</li>
+  </ul>
+  <p>L’état compte donc plus que la seule présence d’amiante : les mesures rassemblées par cette étude relèvent davantage de fibres dans l’air quand les dalles sont dégradées. Des dalles abîmées appellent une décision rapide ; des dalles saines, de la surveillance.</p>
+
+  <h2>Faut-il retirer les dalles ou peut-on les recouvrir ?</h2>
+  <p>Rien ne vous oblige à les retirer. La Direction générale du travail le rappelle : le code de la santé publique n’impose de traiter l’amiante que pour les matériaux dégradés de la liste A, c’est-à-dire les flocages, calorifugeages et faux plafonds. Pour les dalles, qui relèvent de la liste B, le diagnostiqueur émet des recommandations quand il évalue un immeuble : surveillance (EP), remplacement, recouvrement ou protection des seuls éléments dégradés (AC1), ou action sur toute la zone, jusqu’au retrait (AC2), selon l’arrêté du 12 décembre 2012.</p>
+  <p><strong>Recouvrir est souvent la solution la plus simple.</strong> C’est la première piste que l’INRS donne aux poseurs de sols lors d’une rénovation : laisser le revêtement amianté en place et poser un sol neuf par-dessus, de préférence sans colle (clipsable, emboîtable). La CRAMIF dit la même chose aux artisans : ne pas déposer le revêtement dangereux, mais le recouvrir.</p>
+  <p>La technique choisie change les règles. Pour la Direction générale du travail, un encapsulage doit être à la fois étanche, solide et durable : c’est le cas d’une chape de béton, pas d’une moquette ou d’un linoléum fixés au ruban adhésif double face sur des dalles vinyle. La chape est un encapsulage, réservé comme le retrait à un pro certifié sous-section 3 (code du travail, art. R4412-94 et R4412-96). La moquette est un simple recouvrement, qui relève de la sous-section 4 ; la FFB applique la même règle à la pose de dalles PVC sur des dalles vinyle-amiante.</p>
+  <div class="tableau">
+    <table>
+      <caption>Selon la Direction générale du travail (2013), l’INRS (fiche ED 4279) et le code du travail, relus le 11 novembre 2026.</caption>
+      <thead><tr><th scope="col">Option</th><th scope="col">Quand la choisir</th><th scope="col">Qui intervient</th><th scope="col">Ce qui reste</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Garder</strong></td><td>Dalles intactes, pas de travaux prévus sur le sol</td><td>Personne : on n’y touche pas</td><td>L’amiante, à surveiller</td></tr>
+        <tr><td><strong>Recouvrir</strong> (sol clipsable, moquette, lino)</td><td>Dalles saines, sol à rénover</td><td>Pro formé à l’amiante (sous-section 4), après repérage</td><td>L’amiante, sous le sol neuf</td></tr>
+        <tr><td><strong>Encapsuler</strong> (chape, certaines résines)</td><td>Sol à reprendre, dalles laissées en place</td><td>Pro certifié sous-section 3</td><td>L’amiante, scellé</td></tr>
+        <tr><td><strong>Retirer</strong> dalles et colle</td><td>Dalles dégradées, rénovation lourde, envie d’en finir</td><td>Pro certifié sous-section 3</td><td>Rien : la question est réglée</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Recouvrir ou encapsuler laisse l’amiante en place. Gardez le rapport de repérage avec les papiers du logement : il devra être remis aux entreprises qui interviendront un jour sur ce sol (code du travail, art. L4412-2).</p>
+
+  <h2>Qui a le droit de retirer des dalles amiantées ?</h2>
+  <p>Un pro certifié sous-section 3. Le retrait d’amiante relève de la sous-section 3 du code du travail (art. R4412-94), et le propriétaire qui le fait faire doit choisir un pro certifié (art. R4412-129). La CRAMIF le rappelle aux artisans du sol : enlever des dalles vinyle-amiante, ou poncer une colle amiantée, impose un plan de retrait (fiche FIP 9).</p>
+  <p>Ce plan est transmis à l’inspection du travail au moins trente jours avant le début du chantier, ou 8 jours en cas d’urgence liée à un sinistre (art. R4412-137). Comptez donc un bon mois entre la signature et les travaux. Pour vérifier un pro avant de signer, suivez notre méthode : <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>.</p>
+
+  <h2>Puis-je retirer les dalles moi-même ?</h2>
+  <p>C’est fortement déconseillé. La brochure des ministères juge que l’intervention directe d’un particulier sur un matériau amianté doit rester exceptionnelle et limitée, et l’arrêté du 21 décembre 2012 recommande aux particuliers de l’éviter autant que possible et de faire appel à des pros (annexe I). Si vous travaillez vous-même, vous êtes responsable des conséquences pour vous et pour vos voisins, rappelle la brochure. Or retirer les dalles et poncer leur colle sont justement les gestes pour lesquels un pro doit préparer un plan de retrait.</p>
+
+  <h2>Par où commencer ?</h2>
+  <ol>
+    <li><strong>Ne touchez pas au sol.</strong> Pas de ponçage, de perçage ni de décapage. Si de la poussière ou des éclats apparaissent, essuyez avec un chiffon humide, jamais au balai ni à l’aspirateur domestique, qui rejette les fibres dans la pièce (brochure des ministères).</li>
+    <li><strong>Rassemblez les documents</strong> : diagnostic de la vente, dossier technique amiante, anciens repérages.</li>
+    <li><strong>Faites analyser la dalle et la colle</strong> par un diagnostiqueur certifié. Si un artisan doit travailler sur le sol, ce repérage est de toute façon obligatoire : voyez notre guide du <a href="/diagnostic-amiante-avant-travaux">diagnostic amiante avant travaux</a>.</li>
+    <li><strong>Décidez</strong> entre garder, recouvrir ou retirer, selon l’état des dalles et votre projet.</li>
+    <li><strong>Pour un retrait</strong>, demandez un devis à un pro certifié sous-section 3 qui précise le plan de retrait, la filière des déchets et le bordereau de suivi.</li>
+  </ol>
+
+  <EncartDevis accroche="Dalles abîmées ou rénovation en vue : l’un de nos pros certifiés vient voir votre sol." />
+
+  <h2>Que deviennent les dalles retirées ?</h2>
+  <p>Tous les déchets d’amiante sont classés dangereux (INRS). Avant le chantier, le pro obtient un certificat d’acceptation préalable de l’installation qui les recevra. Chaque lot voyage ensuite avec un bordereau de suivi des déchets d’amiante (BSDA), dématérialisé sur la plateforme Trackdéchets. Quand le chantier est commandé par un particulier, c’est le pro qui émet ce bordereau (arrêté du 21 décembre 2021, art. 3) : demandez-en une copie à la fin des travaux.</p>
+  <p>Ne comptez pas d’office sur la déchèterie. La règle nationale ne l’ouvre qu’à l’amiante lié à des matériaux inertes et resté intact, comme le fibrociment, et y interdit tout autre déchet amianté (arrêté du 21 décembre 2012, annexe I). Quelques collectivités acceptent pourtant des dalles lors de collectes sur rendez-vous, comme le SMITOM du Nord Seine-et-Marne en 2026. Avant de vous déplacer, lisez notre page sur <a href="/dechetterie-amiante">les déchèteries qui acceptent l’amiante</a>.</p>
+
+  <h2>Combien coûte le retrait de dalles amiantées ?</h2>
+  <p>Les guides de prix publiés en 2026 donnent ces ordres de grandeur, évacuation des déchets comprise :</p>
+  <ul>
+    <li>dalles vinyle-amiante : 25 à 45 €/m² (Diagnostic Immobilier 13, avril 2026) ;</li>
+    <li>colles et enduits : 30 à 60 €/m² (même source) ;</li>
+    <li>dalles et colle bitumineuse, retrait en intérieur : 25 à 80 €/m² (ABC Travaux, octobre 2026).</li>
+  </ul>
+  <p>Sur une petite surface, le forfait pèse plus que le mètre carré : sous 30 m², beaucoup de pros appliquent un minimum de 1 500 à 2 500 €, selon ABC Travaux. Ajoutez le repérage et le sol neuf, que ces fourchettes ne comprennent pas. Notre page <a href="/prix-desamiantage">prix du désamiantage au m²</a> détaille les postes à comparer d’un devis à l’autre. Seul un devis après visite donne le prix de votre chantier.</p>
+</Guide>

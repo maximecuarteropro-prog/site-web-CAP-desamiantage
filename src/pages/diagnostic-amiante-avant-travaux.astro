@@ -1,0 +1,153 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Relu le 11 nov. 2026 : code du travail (L4412-2 et R4412-97 sur Légifrance ; R4412-94, R4412-97-1, R4412-97-3,
+// R4412-97-5, R4412-97-6, R4412-129, R4412-137, L4741-9 et L4754-1 sur code.travail.gouv.fr), arrêtés du 16 juillet 2019
+// et du 21 décembre 2021 (Légifrance), pages des ministères du Travail (18 sept. 2026), de la Santé (17 févr. 2026)
+// et de la Transition écologique (15 oct. 2024), plaquette DGT, fiches des DREETS Nouvelle-Aquitaine et
+// Auvergne-Rhône-Alpes, service-public.fr (F742), FAQ Trackdéchets. Prix relus le même jour.
+// Le particulier qui travaille seul : la DREETS Auvergne-Rhône-Alpes l’exclut de l’obligation, le ministère de la
+// Transition écologique écrit le contraire. La page donne les deux lectures : à revoir si un texte tranche.
+const sources = [
+  { titre: 'Code du travail, article L4412-2 (recherche d’amiante avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013763', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-97 (champ du repérage avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000038322515', date: 'version en vigueur depuis le 31 mars 2019' },
+  { titre: 'Code du travail, article R4412-97-1 (indépendance de l’opérateur de repérage)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-97-1', date: 'version en vigueur depuis le 31 mars 2019' },
+  { titre: 'Code du travail, article R4412-97-3 (cas d’exemption)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-97-3', date: 'version en vigueur depuis le 1er octobre 2018' },
+  { titre: 'Code du travail, article R4412-97-5 (contenu du rapport)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-97-5', date: 'version en vigueur depuis le 1er juillet 2021' },
+  { titre: 'Code du travail, article R4412-97-6 (conservation du rapport)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-97-6', date: 'version en vigueur depuis le 1er octobre 2018' },
+  { titre: 'Décret n° 2017-899 du 9 mai 2017 relatif au repérage de l’amiante avant certaines opérations', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000034637164', date: 'modifié par le décret n° 2019-251 du 27 mars 2019' },
+  { titre: 'Arrêté du 16 juillet 2019 relatif au repérage de l’amiante avant certaines opérations réalisées dans les immeubles bâtis', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000038777498', date: 'en vigueur depuis le 19 juillet 2019, modifié le 23 janvier 2020' },
+  { titre: 'Ministère du Travail, « La prévention des risques liés à l’amiante »', url: 'https://travail-emploi.gouv.fr/la-prevention-des-risques-lies-lamiante', date: 'mis à jour le 18 septembre 2026' },
+  { titre: 'Direction générale du Travail, plaquette « Les obligations de repérage avant travaux amiante : les cas d’exemption et de dispenses »', url: 'https://pays-de-la-loire.dreets.gouv.fr/sites/pays-de-la-loire.dreets.gouv.fr/IMG/pdf/annexe_3b-plaquette2_obligation_rat_immeubles_batis.pdf', date: 'édition de mars 2021' },
+  { titre: 'Ministère de la Santé, « Amiante : travaux et bricolage : le repérage : une étape essentielle ! »', url: 'https://sante.gouv.fr/sante-et-environnement/batiments/article/amiante-travaux-et-bricolage-le-reperage-une-etape-essentielle', date: 'mis à jour le 17 février 2026' },
+  { titre: 'Ministère de la Transition écologique, « Amiante dans le bâtiment »', url: 'https://www.ecologie.gouv.fr/politiques-publiques/amiante-batiment', date: 'mis à jour le 15 octobre 2024' },
+  { titre: 'DREETS Auvergne-Rhône-Alpes, « Foire aux questions sur le repérage avant travaux »', url: 'https://auvergne-rhone-alpes.dreets.gouv.fr/sites/dreets-auv-ra/files/files-spip/pdf/faq_conference_rat_-_05.11.2020.pdf', date: 'mise à jour au 5 novembre 2020' },
+  { titre: 'DREETS Nouvelle-Aquitaine, « Les points clefs pour un RAAT réussi »', url: 'https://nouvelle-aquitaine.dreets.gouv.fr/sites/nouvelle-aquitaine.dreets.gouv.fr/IMG/pdf/plaquetteraat-2.pdf', date: 'non datée, consultée le 11 novembre 2026' },
+  { titre: 'Service-public.fr, fiche F742 « Diagnostic immobilier : état d’amiante »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F742', date: 'vérifiée le 16 octobre 2026' },
+  { titre: 'Code du travail, article L4754-1 (amende administrative)', url: 'https://code.travail.gouv.fr/code-du-travail/l4754-1', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article L4741-9 (amende pénale)', url: 'https://code.travail.gouv.fr/code-du-travail/l4741-9', date: 'version en vigueur depuis le 11 mars 2023' },
+  { titre: 'Code du travail, article R4412-94 (retrait, encapsulage et interventions)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-94', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-129', date: 'version en vigueur depuis le 1er juillet 2013' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-137', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Arrêté du 21 décembre 2021 définissant le contenu des déclarations au système de gestion électronique des bordereaux de suivi de déchets pour les déchets contenant de l’amiante, article 3', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000044571414', date: 'en vigueur depuis le 1er janvier 2022' },
+  { titre: 'Trackdéchets (service de l’État), « Particuliers »', url: 'https://faq.trackdechets.fr/amiante/page-a-venir-avec-plus-dinformations/particuliers', date: 'non datée, consultée le 11 novembre 2026' },
+  { titre: 'Habitatpresto, « Prix d’un désamiantage de toiture »', url: 'https://www.habitatpresto.com/mag/toiture/prix-desamiantage-toiture', date: 'publié le 9 octobre 2026' },
+  { titre: 'ABC Travaux, « Prix du désamiantage au m² »', url: 'https://abctravaux.org/prix-desamiantage-m2/', date: 'publié le 21 octobre 2026' },
+  { titre: 'Construires.fr, « Diagnostic amiante : quand est-il obligatoire ? »', url: 'https://www.construires.fr/diagnostic-amiante-obligation/', date: 'mis à jour le 17 mai 2026' },
+]
+
+const faq = [
+  { question: 'Combien de temps un repérage amiante avant travaux reste-t-il valable ?', reponse: 'Le code du travail ne fixe pas de durée. Un repérage fait dans les règles vaut pour les travaux suivants sur la même zone, sauf si un fait nouveau ou une nouvelle règle impose de le refaire (art. R4412-97). Un rapport qui ne suit pas la norme NF X 46-020 d’août 2017 doit en revanche être réexaminé par un opérateur de repérage, qui peut demander des investigations complémentaires, voire un nouveau repérage (arrêté du 16 juillet 2019, art. 13 ; direction générale du Travail).' },
+  { question: 'L’artisan qui fera les travaux peut-il réaliser le repérage ?', reponse: 'Non. L’opérateur de repérage travaille en toute indépendance et ne peut avoir aucun lien d’intérêts avec une personne qui intervient sur la même opération (code du travail, art. R4412-97-1). Nos pros, qui retirent l’amiante, ne font donc pas le repérage de leur propre chantier : il est confié à un diagnostiqueur certifié avec mention.' },
+  { question: 'Faut-il un repérage avant des travaux sur une toiture en fibrociment ?', reponse: 'Oui, dès qu’un pro intervient sur un bâtiment construit avant 1997, que ce soit pour une réparation, une isolation ou un remplacement, sauf urgence après un sinistre. Un marquage sur la plaque, comme un poinçon qui l’identifie comme amiantée, peut suffire à l’opérateur pour conclure ; sinon, il prélève un échantillon pour analyse (direction générale du Travail).' },
+  { question: 'Que faire du rapport une fois les travaux terminés ?', reponse: 'Gardez-le. Le code du travail demande de le tenir à la disposition de tout nouveau donneur d’ordre pour les travaux suivants sur la même zone (art. R4412-97-6). Joignez-y le bordereau de suivi des déchets si de l’amiante a été retiré.' },
+  { question: 'Le repérage avant démolition est-il différent ?', reponse: 'Avant une démolition, le repérage avant travaux du code du travail s’applique aussi. Le code de la santé publique y ajoute un repérage des matériaux de la liste C pour tout bâtiment dont le permis de construire date d’avant le 1er juillet 1997, maisons individuelles comprises, avec des sondages destructifs si besoin. Sauf impossibilité technique, l’amiante est retiré avant la démolition (ministère de la Transition écologique).' },
+]
+---
+<Guide
+  titre="Diagnostic amiante avant travaux : obligation, prix, rapport"
+  description="Diagnostic amiante avant travaux : obligatoire dès qu’un pro intervient sur un bâtiment d’avant 1997, même chez un particulier. Prix 2026, rapport et BSDA."
+  chemin="/diagnostic-amiante-avant-travaux"
+  rubrique="Avant travaux"
+  h1="Diagnostic amiante avant travaux : est-il obligatoire, et à quel prix ?"
+  chapo="Oui : avant tous travaux confiés à un pro dans un bâtiment construit avant le 1er janvier 1997, celui qui commande les travaux doit faire réaliser un repérage amiante avant travaux, même s’il est un particulier. Le diagnostic fait pour la vente ne suffit pas, car il ne couvre que ce qui est visible et accessible. Comptez 100 à 500 € selon la surface et le nombre d’analyses, d’après les guides de prix publiés en 2026."
+  publie="2026-11-11"
+  misAJour="2026-11-11"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Le diagnostic amiante avant travaux est-il obligatoire ?</h2>
+  <p>Oui. Le code du travail impose au donneur d’ordre, au maître d’ouvrage ou au propriétaire de faire rechercher l’amiante avant toute opération qui peut exposer des travailleurs (art. L4412-2). Le résultat tient dans un rapport, remis aux pros consultés pour les travaux. Son nom officiel est le <strong>repérage amiante avant travaux</strong>, ou RAT : c’est ce que l’on appelle couramment le diagnostic amiante avant travaux.</p>
+  <ul>
+    <li><strong>Les bâtiments visés :</strong> en particulier ceux construits avant le 1er janvier 1997, date d’entrée en vigueur de l’interdiction de l’amiante (art. R4412-97).</li>
+    <li><strong>Les travaux visés :</strong> tout type de travaux confiés à un pro, de la rénovation intérieure à la toiture (ministère de la Santé, février 2026), démolition comprise (ministère de la Transition écologique).</li>
+    <li><strong>Les textes :</strong> le décret n° 2017-899 du 9 mai 2017 a fixé le cadre, dans les articles R4412-97 à R4412-97-6 du code du travail. Pour les bâtiments, l’arrêté du 16 juillet 2019 en précise les modalités : publié au Journal officiel du 18 juillet 2019, il s’applique depuis le 19 juillet 2019. Un repérage conforme à la norme NF X 46-020 d’août 2017 est réputé le respecter (ministère du Travail).</li>
+  </ul>
+
+  <h2>Je suis un particulier : suis-je concerné ?</h2>
+  <p>Oui, dès que vous confiez tout ou partie des travaux à un pro. Vous devenez alors maître d’ouvrage et donneur d’ordre, avec les mêmes obligations qu’une entreprise : le ministère du Travail a publié sa plaquette sur le repérage pour les donneurs d’ordre « qu’ils soient professionnels ou particuliers ».</p>
+  <ul>
+    <li><strong>Vous faites appel à un artisan ou à un pro :</strong> le repérage est obligatoire avant tout type de travaux (ministère de la Santé). Vous le commandez, et donc vous le réglez.</li>
+    <li><strong>Vous faites tout vous-même :</strong> selon la DREETS Auvergne-Rhône-Alpes, le particulier qui intervient dans sa maison individuelle, sans qu’aucun pro ni travailleur indépendant n’intervienne à aucun moment, n’est pas soumis à l’obligation. Mais si un pro prend en charge une partie du chantier, le repérage devient obligatoire pour tous les travaux, y compris ceux que vous faites vous-même.</li>
+  </ul>
+  <p>Même seul, la prudence s’impose. Le ministère de la Santé conseille fortement un repérage, déconseille fortement toute intervention sur un matériau amianté et recommande de faire appel à des pros formés. Le ministère de la Transition écologique va plus loin : il présente le repérage comme obligatoire aussi pour les travaux faits par un particulier. Si vous intervenez malgré tout, le ministère de la Santé recommande une combinaison et des gants jetables, un masque FFP3, un matériau humidifié et des outils manuels plutôt qu’électriques. Pour les déchets, lisez notre page <a href="/dechetterie-amiante">déposer de l’amiante en déchetterie</a>.</p>
+
+  <h2>Le diagnostic amiante fait pour la vente suffit-il ?</h2>
+  <p>En général, non. Les deux documents n’ont ni le même but, ni la même profondeur.</p>
+  <div class="tableau">
+    <table>
+      <caption>Diagnostic avant vente et repérage avant travaux, d’après service-public.fr (fiche F742, vérifiée le 16 octobre 2026), le code du travail et le ministère de la Santé.</caption>
+      <thead><tr><th scope="col"></th><th scope="col">Diagnostic avant vente</th><th scope="col">Repérage avant travaux</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Texte</th><td>Code de la santé publique</td><td>Code du travail (art. L4412-2 et R4412-97)</td></tr>
+        <tr><th scope="row">Quand</th><td>Vente d’un logement dont le permis de construire date d’avant le 1er juillet 1997</td><td>Travaux sur un bâtiment construit avant le 1er janvier 1997</td></tr>
+        <tr><th scope="row">But</th><td>Informer l’acheteur</td><td>Protéger ceux qui font les travaux, les occupants et le voisinage</td></tr>
+        <tr><th scope="row">Ce qui est examiné</th><td>Matériaux des listes A et B, visibles et accessibles</td><td>Matériaux touchés par les travaux, y compris cachés, avec sondages si besoin</td></tr>
+        <tr><th scope="row">Qui paie</th><td>Le vendeur</td><td>Le donneur d’ordre</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Le ministère de la Santé l’explique ainsi : les repérages du code de la santé publique, surtout visuels, ne voient pas l’amiante caché, par exemple dans une cloison ou dans des dalles vinyle recouvertes d’un autre revêtement de sol (voir notre guide sur le <a href="/retrait-dalles-sol-amiante">retrait des dalles de sol amiantées</a>). Avec un diagnostic de vente en main, la direction générale du Travail demande, selon le programme des travaux, de le faire compléter ou de faire réaliser un repérage avant travaux.</p>
+
+  <h2>Qui réalise le repérage, et comment se passe-t-il ?</h2>
+  <p>Un opérateur de repérage titulaire d’une certification <strong>« avec mention »</strong>, obligatoire pour ces missions depuis la fin de la période transitoire, le 30 juin 2020 (arrêté du 16 juillet 2019 modifié, selon le ministère du Travail). La liste des diagnostiqueurs certifiés est publiée par le ministère chargé du logement (ministère de la Santé).</p>
+  <ol>
+    <li><strong>Vous préparez le dossier :</strong> liste des bâtiments, date du permis de construire si vous la connaissez, programme détaillé des travaux, plans ou croquis (DREETS Nouvelle-Aquitaine).</li>
+    <li><strong>L’opérateur fixe sa méthode.</strong> Vous ne pouvez imposer ni la méthode ni un nombre maximum de sondages ou de prélèvements.</li>
+    <li><strong>Vous donnez accès à tous les locaux concernés,</strong> et à la toiture par un moyen sûr si l’opérateur le demande.</li>
+    <li><strong>Il inspecte et prélève.</strong> C’est lui qui choisit le laboratoire accrédité chargé des analyses (direction générale du Travail).</li>
+  </ol>
+  <p>Sur place, comptez 1 à 3 h selon la surface (Construires.fr, mai 2026), puis le temps des analyses. Si votre projet change entre-temps, prévenez l’opérateur : passer du changement des seuls battants de fenêtre au remplacement des fenêtres entières modifie sa mission (DREETS Nouvelle-Aquitaine).</p>
+
+  <h2>Que contient le rapport ?</h2>
+  <p>Il conclut à la présence ou à l’absence d’amiante. S’il en trouve, il précise la nature des matériaux, leur localisation et leur quantité estimée (art. R4412-97-5). L’arrêté du 16 juillet 2019 y ajoute notamment des conclusions en tête de rapport, les plans ou croquis, les points de prélèvement, les résultats d’analyse et le certificat de l’opérateur. Le document peut prendre trois formes (DREETS Nouvelle-Aquitaine) :</p>
+  <ul>
+    <li><strong>le rapport de repérage,</strong> quand la mission est allée à son terme ;</li>
+    <li><strong>le rapport avec investigations complémentaires,</strong> quand certains matériaux ne seront accessibles qu’en cours de travaux, comme une canalisation sous une dalle : un opérateur certifié revient alors au bon moment ;</li>
+    <li><strong>le pré-rapport,</strong> quand l’opérateur n’a pas pu tout voir du fait du donneur d’ordre (pièce fermée, toiture sans accès sûr). Il ne suffit pas : il faut le faire compléter.</li>
+  </ul>
+  <p>Transmettez le rapport aux pros que vous consultez, avant leur devis (art. L4412-2) : ils en ont besoin pour évaluer le risque et l’intégrer à leur prix (DREETS Nouvelle-Aquitaine). La quantité estimée sert aussi à comparer les <a href="/prix-desamiantage">devis de désamiantage</a> poste par poste.</p>
+
+  <h2>Combien coûte un diagnostic amiante avant travaux ?</h2>
+  <p>Les guides de prix publiés en 2026 donnent ces repères :</p>
+  <ul>
+    <li><strong>100 à 300 € par intervention</strong> pour le repérage d’une toiture, selon Habitatpresto (9 octobre 2026), qui cite 360 € TTC pour un garage de 40 m².</li>
+    <li><strong>200 à 500 € pour une maison</strong>, davantage pour un grand bâtiment (ABC Travaux, 21 octobre 2026).</li>
+    <li><strong>30 à 80 € par échantillon</strong> analysé en laboratoire, facturés en supplément (Construires.fr, 17 mai 2026 ; ABC Travaux donne 40 à 80 €).</li>
+  </ul>
+  <p>Selon Construires.fr, un repérage avant travaux coûte 30 à 50 % de plus qu’un diagnostic de vente, parce qu’il est plus complet. Le prix dépend surtout du périmètre et du nombre de prélèvements : un programme de travaux précis évite de payer un repérage mal calibré.</p>
+
+  <h2>Peut-on s’en passer ?</h2>
+  <p>Seulement dans quatre cas d’exemption (art. R4412-97-3), illustrés par la direction générale du Travail :</p>
+  <ul>
+    <li>une urgence liée à un sinistre qui présente un risque grave pour la sécurité, la salubrité publique ou l’environnement, par exemple après une inondation ;</li>
+    <li>une urgence liée à un sinistre qui menace des personnes ou des biens, quand on ne peut pas attendre le repérage, comme une toiture à remplacer après une tempête de grêle ;</li>
+    <li>un repérage qui exposerait l’opérateur à un risque excessif, par exemple dans un bâtiment frappé d’un arrêté de péril ;</li>
+    <li>une petite réparation peu émettrice de fibres, qui ne retire pas l’amiante, comme le remplacement d’une vitre cassée tenue par un mastic. Remplacer des fenêtres par des doubles fenêtres, en revanche, n’en fait pas partie.</li>
+  </ul>
+  <p>Dans ces cas, les travaux se font comme si l’amiante était présent, avec les protections correspondantes. Des raisons économiques ne suffisent pas à justifier l’urgence (DREETS Auvergne-Rhône-Alpes). Vous êtes aussi dispensé si vous avez déjà l’information sur la zone des travaux, par exemple grâce à un précédent repérage avant travaux (art. R4412-97). Dites-le alors aux pros consultés (direction générale du Travail).</p>
+
+  <h2>Que risque-t-on sans repérage ?</h2>
+  <p>Le donneur d’ordre qui ne fait pas réaliser le repérage, ou ne le transmet pas, encourt une amende administrative pouvant aller jusqu’à 9 000 € (art. L4754-1). L’inspection du travail peut aussi dresser un procès-verbal, avec une amende pénale de 3 750 € (art. L4741-9 ; DREETS Nouvelle-Aquitaine). Selon la DREETS Auvergne-Rhône-Alpes, ces sanctions s’appliquent aussi au particulier.</p>
+  <p>S’y ajoute un risque de retard : sans repérage, les pros ne devraient pas maintenir leur intervention (DREETS Auvergne-Rhône-Alpes), et un repérage absent ou incomplet peut retarder fortement le chantier (DREETS Nouvelle-Aquitaine).</p>
+
+  <h2>Que faire si le repérage trouve de l’amiante ?</h2>
+  <p>Tout dépend de ce que les travaux font au matériau (ministère de la Santé ; code du travail, art. R4412-94) :</p>
+  <ul>
+    <li><strong>Il faut le retirer ou l’encapsuler :</strong> l’opération relève de la sous-section 3 du code du travail, et vous devez faire appel à un pro certifié (art. R4412-129). Voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>.</li>
+    <li><strong>Les travaux le touchent sans le retirer</strong> (perçage, découpe ponctuelle) : on est en sous-section 4. Le ministère de la Santé conseille un pro dont le personnel est formé et qui présente un mode opératoire.</li>
+  </ul>
+  <p>Pour un retrait, le pro dépose un plan de retrait sur la plateforme DEMAT@MIANTE au moins trente jours avant le début des travaux, ou 8 jours en cas d’urgence liée à un sinistre (art. R4412-137). Les étapes sont détaillées dans notre guide du <a href="/desamiantage-toiture-amiante">désamiantage de toiture</a>. Pour une toiture saine, le retrait n’est pas la seule option : lisez <a href="/toiture-amiante-que-faire">toiture en amiante : que faire ?</a> À l’intérieur, voyez aussi notre guide sur le <a href="/flocage-calorifugeage-amiante">flocage et le calorifugeage amiantés</a>.</p>
+
+  <EncartDevis accroche="Rapport de repérage en main, faites chiffrer le retrait par l’un de nos pros certifiés sous-section 3." />
+
+  <h2>Qu’est-ce que le BSDA, et qui le remplit ?</h2>
+  <p>Le bordereau de suivi des déchets d’amiante (BSDA) accompagne les déchets amiantés du chantier jusqu’à l’installation qui les élimine. Depuis le 1er janvier 2022, chaque acteur valide ses informations par signature électronique, dans le système national de suivi des bordereaux (arrêté du 21 décembre 2021) : la plateforme Trackdéchets.</p>
+  <ul>
+    <li><strong>Vous êtes un particulier et un pro fait les travaux :</strong> c’est lui qui émet le bordereau (arrêté du 21 décembre 2021, art. 3). Vous n’avez ni compte à créer ni bordereau à signer (Trackdéchets).</li>
+    <li><strong>Le maître d’ouvrage est une personne morale,</strong> comme une entreprise ou une collectivité : c’est lui qui l’émet.</li>
+    <li><strong>Vous apportez vous-même des déchets en déchetterie :</strong> c’est la déchetterie qui l’émet.</li>
+  </ul>
+  <p>Le maître d’ouvrage, en règle générale le propriétaire, reste responsable de la bonne élimination des déchets (ministère de la Transition écologique). Demandez une copie du bordereau en fin de chantier et gardez-la avec le rapport de repérage.</p>
+</Guide>
