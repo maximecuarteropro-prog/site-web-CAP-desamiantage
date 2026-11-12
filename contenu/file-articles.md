@@ -16,7 +16,6 @@ Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026.
 
 | Ordre | Chemin | Requête principale | Requêtes secondaires | Question du lecteur | Statut |
 |---|---|---|---|---|---|
-| 2 | `/tuyau-conduit-amiante` | amiante tuyau (320) | conduit fibrociment amiante (110), conduit amiante (90), canalisation amiante (70), conduit de cheminée amiante (20) | Ce tuyau, ce conduit ou cette descente d'eaux pluviales est-il en amiante-ciment ? Est-ce dangereux, et qui peut le retirer ? | à faire |
 | 3 | `/sous-section-4-amiante` | sous section 4 amiante (480) | sous section 3 et 4 amiante (20) | Qu'est-ce que la sous-section 4, en quoi diffère-t-elle de la sous-section 3, et quel pro faut-il pour mes travaux ? (renvoyer vers `/certification-sous-section-3`) | à faire |
 | 4 | `/aides-desamiantage` | aide désamiantage particulier (110) | aide désamiantage (90), aide désamiantage toiture (70), anah désamiantage (30), tva désamiantage (10) | Quelles aides existent vraiment pour retirer de l'amiante, et lesquelles n'existent pas ? Chaque dispositif relu à sa source du jour ; ne rien affirmer sans texte. | à faire |
 | 5 | `/carrelage-colle-amiante` | colle carrelage amiante (210) | carrelage amiante (170), lino amiante (140) | Mon carrelage, sa colle ou mon lino contiennent-ils de l'amiante ? Puis-je les recouvrir ou les casser ? (renvoyer vers `/retrait-dalles-sol-amiante` pour les dalles vinyle) | à faire |
@@ -46,6 +45,7 @@ Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026.
 | `/amiante-maison` | amiante dans une maison (2 400) | 11 nov. 2026 |
 | `/dossier-technique-amiante` | dta amiante (1 000) | 11 nov. 2026 |
 | `/amiante-murs-platre-enduit` | amiante dans les murs (720) | 12 nov. 2026 |
+| `/tuyau-conduit-amiante` | amiante tuyau (320) | 12 nov. 2026 |
 
 ## Écartés
 

@@ -23,6 +23,7 @@ export const PAGES_GUIDE = [
   { chemin: '/dossier-technique-amiante', titreCourt: 'Dossier technique amiante (DTA)' },
   { chemin: '/retrait-dalles-sol-amiante', titreCourt: 'Dalles de sol en amiante' },
   { chemin: '/flocage-calorifugeage-amiante', titreCourt: 'Flocage et calorifugeage amiante' },
+  { chemin: '/tuyau-conduit-amiante', titreCourt: 'Tuyau et conduit en amiante' },
   { chemin: '/dechetterie-amiante', titreCourt: 'Déchetterie et amiante' },
 ] as const
 

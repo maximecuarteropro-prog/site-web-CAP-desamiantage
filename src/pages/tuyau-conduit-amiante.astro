@@ -1,0 +1,118 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Écrit le 12 nov. 2026 par la tâche « Article SEO du jour ». Relu le même jour : annexe 13-9 du code de la santé
+// publique (Légifrance), articles R4412-94, R4412-137 et R4412-145 du code du travail, brochure « Bricolage dans votre
+// logement » (édition de décembre 2018), page FFB sur les sous-sections 3 et 4, guide de prix ABC Travaux.
+// Relecture indépendante le même jour : sources rouvertes, date de fabrication plutôt que de pose, « doit » adouci
+// en « mieux vaut », L4412-2 cité sans seuil de date, tableau réduit à ce que disent l’annexe et la brochure.
+// Points incertains :
+// - un seul guide de prix publié donne un tarif au mètre linéaire pour les conduits (ABC Travaux, 30 à 90 €/ml) ;
+// - la frontière entre sous-section 3 et 4 pour un tronçon de tuyau remplacé dépend du chantier : la page renvoie au
+//   pro et à la page certification, sans trancher les cas limites ;
+// - les repères pour distinguer fonte, PVC, grès et amiante-ciment sont des indices d'aspect, pas une règle : seule
+//   l'analyse tranche, comme le disent les autres guides.
+const sources = [
+  { titre: 'Code de la santé publique, annexe 13-9 (listes A, B et C des matériaux à repérer)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000024141044', date: 'version en vigueur depuis le 1er février 2012, consultée le 12 novembre 2026' },
+  { titre: 'Ministères de la Transition écologique et de la Cohésion des territoires, brochure « Bricolage dans votre logement : attention à l’amiante ! »', url: 'https://www.ecologie.gouv.fr/sites/default/files/documents/dgaln_plaquette_bricolage_amiante_decembre_2018_0.pdf', date: 'édition de décembre 2018' },
+  { titre: 'Décret n° 96-1133 du 24 décembre 1996 relatif à l’interdiction de l’amiante', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000734637', date: 'version en vigueur au 12 novembre 2026' },
+  { titre: 'Service-public.fr, fiche F742 « Diagnostic immobilier : état d’amiante »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F742', date: 'vérifiée le 16 octobre 2026' },
+  { titre: 'Code du travail, article L4412-2 (recherche d’amiante avant travaux)', url: 'https://code.travail.gouv.fr/code-du-travail/l4412-2', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-94 (retrait, encapsulage et interventions)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-94', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-137', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Code du travail, article R4412-145 (mode opératoire des interventions)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-145', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'FFB, « Amiante : quels travaux relèvent des sous-sections 3 et 4 ? »', url: 'https://www.ffbatiment.fr/techniques-batiment/reglementation-construction/reglementation-amiante-plomb-silice/dossier/amiante-sous-section-3-ou-4', date: 'publié le 12 janvier 2024' },
+  { titre: 'ABC Travaux, « Prix du désamiantage au m² »', url: 'https://abctravaux.org/prix-desamiantage-m2/', date: 'publié le 21 octobre 2026' },
+]
+
+const faq = [
+  { question: 'Comment savoir si un tuyau est en amiante ?', reponse: 'Un tuyau gris, d’aspect rugueux comme du ciment, posé avant 1997, peut être en amiante-ciment. Regardez d’abord vos documents : état amiante remis à l’achat, dossier technique amiante de la copropriété. À défaut, seule l’analyse d’un prélèvement fait par un diagnostiqueur certifié permet de trancher.' },
+  { question: 'Une descente d’eaux pluviales en fibrociment est-elle dangereuse ?', reponse: 'Intacte et laissée en place, elle libère peu de fibres. Les fibres s’échappent quand le matériau s’use anormalement ou qu’on le perce, le scie, le ponce ou le casse (brochure des ministères, 2018). Une descente fendue ou cassée mieux vaut la faire traiter sans tarder, par un pro.' },
+  { question: 'Un plombier peut-il couper un tuyau en amiante ?', reponse: 'Il peut faire une intervention ponctuelle ou un entretien, en appliquant un mode opératoire propre à l’amiante (code du travail, art. R4412-145). Retirer le tuyau ou la descente entière est en revanche un travail de retrait, réservé à un pro certifié sous-section 3.' },
+  { question: 'Combien coûte le retrait d’un conduit en amiante ?', reponse: 'ABC Travaux compte 30 à 90 € par mètre linéaire pour la dépose et l’évacuation d’un conduit en amiante-ciment, hors diagnostic et hors remplacement (octobre 2026). Sur un petit chantier, beaucoup de pros appliquent un forfait minimum de 1 500 à 2 500 €. Seul un devis après visite donne le vrai prix.' },
+  { question: 'Peut-on apporter un tuyau en amiante-ciment à la déchèterie ?', reponse: 'Parfois. Certaines déchèteries acceptent l’amiante-ciment, généralement sous conditions de quantité ou de période, emballé dans des sacs étanches marqués « amiante ». Renseignez-vous auprès de votre mairie avant de vous déplacer. Quand un pro retire le conduit, il se charge des déchets.' },
+]
+---
+<Guide
+  titre="Tuyau et conduit en amiante : le reconnaître, le retirer"
+  description="Descente d’eaux pluviales, évacuation ou conduit de fumée en amiante-ciment : comment le reconnaître, quand agir, qui peut le retirer. Repère : 30 à 90 €/ml."
+  chemin="/tuyau-conduit-amiante"
+  rubrique="Réseaux"
+  h1="Tuyau ou conduit en amiante : le reconnaître, et qui peut le retirer"
+  chapo="Un tuyau gris et rugueux, fabriqué avant 1997, peut être en amiante-ciment : descente d’eaux pluviales, évacuation d’eaux usées, conduit de fumée ou de ventilation. Seule une analyse le confirme. Les fibres s’échappent quand le matériau s’use anormalement ou qu’on le perce, le scie ou le casse : intact et laissé tranquille, il peut rester en place. Le retirer relève du retrait d’amiante : il faut un pro certifié sous-section 3."
+  publie="2026-11-12"
+  misAJour="2026-11-12"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Où trouve-t-on des tuyaux et des conduits en amiante ?</h2>
+  <p>L’amiante est interdit en France depuis le 1er janvier 1997 (décret n° 96-1133). Avant cette date, on l’a beaucoup mélangé au ciment pour fabriquer des tuyaux solides et bon marché : c’est l’amiante-ciment, qu’on appelle aussi fibrociment ou fibres-ciment. La brochure des ministères sur le bricolage le range parmi les matériaux les plus rencontrés dans les logements, sous la forme de « tuyaux d’aspect rugueux gris ».</p>
+  <p>La liste réglementaire des matériaux à repérer dans les bâtiments (annexe 13-9 du code de la santé publique, liste B) cite nommément les « conduits en amiante-ciment : eaux pluviales, eaux usées, conduits de fumée », ainsi que les conduits de fluides intérieurs.</p>
+  <div class="tableau">
+    <table>
+      <caption>Où chercher, d’après l’annexe 13-9 du code de la santé publique (liste B) et la brochure des ministères (édition de décembre 2018). Aspect commun : tube gris, d’aspect rugueux.</caption>
+      <thead><tr><th scope="col">Élément</th><th scope="col">Où le trouver</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Descente d’eaux pluviales</th><td>En façade, sous la gouttière</td></tr>
+        <tr><th scope="row">Évacuation d’eaux usées</th><td>Dans le logement, la cave ou les gaines d’immeuble</td></tr>
+        <tr><th scope="row">Conduit de fumée</th><td>Raccordé à une chaudière ou à un appareil de chauffage, jusqu’en toiture</td></tr>
+        <tr><th scope="row">Gaine de ventilation, vide-ordures</th><td>Surtout dans les immeubles collectifs</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Attention à ne pas confondre avec le calorifugeage : l’isolant fibreux enroulé autour des tuyaux de chauffage (bourrelets, tresses, coquilles) est un autre matériau, plus fragile, de la liste A. Il a son propre guide : <a href="/flocage-calorifugeage-amiante">flocage et calorifugeage amiante</a>.</p>
+
+  <h2>Comment savoir si votre tuyau est en amiante-ciment ?</h2>
+  <p>Trois questions vous mettent sur la piste, mais aucune ne suffit seule.</p>
+  <ul>
+    <li><strong>Quand a-t-il été posé ?</strong> Avant 1997, l’amiante-ciment est possible. L’amiante est interdit depuis le 1er janvier 1997, mais un tuyau posé juste après a pu être fabriqué avant : la date de pose ne suffit pas.</li>
+    <li><strong>De quoi a-t-il l’air ?</strong> L’amiante-ciment ressemble à du ciment : gris et rugueux. La fonte est lourde, sonne comme du métal et rouille ; le PVC est un plastique lisse et léger ; le grès est une céramique brune et vernissée. Mais les tuyaux en fibres-ciment fabriqués sans amiante après 1997 ont le même aspect.</li>
+    <li><strong>Que disent vos papiers ?</strong> Si vous avez acheté un logement dont le permis de construire date d’avant le 1er juillet 1997, le vendeur vous a remis un état mentionnant la présence ou l’absence d’amiante (service-public.fr, fiche F742). Les conduits de la liste B y figurent s’ils étaient visibles et accessibles. En copropriété, le dossier technique amiante les recense aussi.</li>
+  </ul>
+  <p><strong>Seule l’analyse en laboratoire d’un prélèvement permet de trancher.</strong> Ne cassez pas un morceau vous-même pour le faire analyser : c’est déjà intervenir sur le matériau. Faites appel à un diagnostiqueur certifié. Si des travaux sont prévus, c’est le rôle du <a href="/diagnostic-amiante-avant-travaux">diagnostic amiante avant travaux</a>. Pour les accessoires de toiture (faîtages, closoirs, conduits en toiture), voyez aussi comment <a href="/reconnaitre-toiture-amiante">reconnaître une toiture en amiante</a>.</p>
+
+  <h2>Est-ce dangereux d’avoir un tuyau en amiante ?</h2>
+  <p>Pas tant qu’on le laisse tranquille. Les matériaux amiantés peuvent libérer des fibres, dit la brochure des ministères, « en cas d’usure anormale ou lors d’interventions dégradant le matériau » : perçage, ponçage, découpe, friction.</p>
+  <p>Concrètement :</p>
+  <ul>
+    <li><strong>un tuyau intact, que personne ne touche,</strong> peut rester en place : rien n’impose de le retirer tant que personne n’y touche (voir notre guide <a href="/amiante-maison">amiante dans une maison</a>) ;</li>
+    <li><strong>un tuyau fendu, cassé, écaillé ou effrité,</strong> notamment une descente extérieure exposée aux chocs et aux intempéries, mieux vaut le faire traiter : réparation ou retrait, par un pro ;</li>
+    <li><strong>des travaux prévus autour</strong> (salle de bains, chaudière, ravalement, isolation par l’extérieur) obligent à décider avant le début du chantier.</li>
+  </ul>
+
+  <h2>Ce qu’il ne faut pas faire</h2>
+  <p>La brochure des ministères demande que l’intervention directe d’un particulier sur un matériau amianté reste « exceptionnelle et limitée ». Sur un tuyau ou un conduit, évitez en particulier de :</p>
+  <ul>
+    <li>le scier, le meuler ou le percer avec un outil électrique rapide : ces outils produisent beaucoup de poussière ;</li>
+    <li>le casser pour le démonter, ou laisser tomber les tronçons au sol : la brochure conseille de dévisser plutôt que de casser ;</li>
+    <li>le mouiller ou le nettoyer au jet sous pression, que la brochure déconseille car il provoque une forte libération de fibres ;</li>
+    <li>balayer ou aspirer les débris avec un aspirateur domestique : son filtre ne retient pas les fibres.</li>
+  </ul>
+  <p>Si vous intervenez malgré tout, vous êtes responsable des conséquences pour vous et pour votre voisinage. La brochure détaille les précautions minimales : combinaison et gants jetables, masque FFP3, matériau humidifié, nettoyage au chiffon humide.</p>
+
+  <h2>Qui peut intervenir : un plombier ou un désamianteur ?</h2>
+  <p>Le code du travail distingue deux situations pour les pros (art. R4412-94).</p>
+  <div class="tableau">
+    <table>
+      <caption>Sous-section 3 et sous-section 4, d’après le code du travail (art. R4412-94, R4412-137 et R4412-145).</caption>
+      <thead><tr><th scope="col"></th><th scope="col">Retrait (sous-section 3)</th><th scope="col">Intervention ponctuelle (sous-section 4)</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Exemples</th><td>Dépose d’une descente, d’une colonne d’évacuation ou d’un conduit de fumée</td><td>Entretien d’un conduit en place, intervention ponctuelle limitée</td></tr>
+        <tr><th scope="row">Qui</th><td>Un pro certifié amiante sous-section 3</td><td>Plombier, chauffagiste ou ramoneur qui applique les règles de la sous-section 4</td></tr>
+        <tr><th scope="row">Démarche</th><td>Plan de retrait transmis à l’administration au moins 30 jours avant le chantier</td><td>Mode opératoire propre à l’amiante, établi par l’employeur</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Dès que l’objectif est d’enlever le tuyau, ou toute une colonne, on parle de retrait : il faut un pro certifié. Vous pouvez <a href="/certification-sous-section-3">vérifier une certification sous-section 3</a> sur les listes publiques des organismes certificateurs. La FFB range au contraire l’entretien des canalisations, gaines et conduits de fumée ou de ventilation en amiante-ciment parmi les interventions de sous-section 4, sans dire où s’arrête l’entretien et où commence le retrait : c’est au pro de qualifier son chantier, et de l’écrire sur son devis. Dans les deux cas, le propriétaire doit faire rechercher l’amiante avant que le pro intervienne (code du travail, art. L4412-2) : c’est le repérage avant travaux.</p>
+
+  <EncartDevis accroche="Une descente abîmée ou un conduit à retirer avant vos travaux ? Faites-le voir à l’un de nos pros." />
+
+  <h2>Combien coûte le retrait d’un conduit en amiante ?</h2>
+  <p>Peu de guides de prix chiffrent les conduits à part. ABC Travaux, dans son guide publié le 21 octobre 2026, compte <strong>30 à 90 € par mètre linéaire</strong> (le guide ne précise pas HT ou TTC) pour la dépose et l’évacuation de conduits et canalisations en amiante-ciment. Ce prix comprend la main-d’œuvre, les protections, l’emballage et l’évacuation des déchets, mais pas le diagnostic ni le remplacement du tuyau.</p>
+  <p>Sur un petit chantier, ce sont surtout les frais fixes qui comptent : plan de retrait, installation, mesures, transport. Le même guide indique que beaucoup de pros appliquent un <strong>forfait minimum de 1 500 à 2 500 €</strong> aux chantiers de moins de 30 m², un seuil pensé pour les toitures et les sols : le devis d’une seule descente peut s’en écarter. Mieux vaut donc grouper : si vous refaites la toiture, la façade ou la salle de bains, faites retirer les conduits dans le même chantier. Les autres fourchettes sont sur notre page <a href="/prix-desamiantage">prix du désamiantage au m²</a>.</p>
+
+  <h2>Que deviennent les déchets ?</h2>
+  <p>Les tuyaux en amiante-ciment, les protections jetables et les chiffons de nettoyage sont des déchets dangereux (brochure des ministères). Ils s’emballent dans des sacs étanches marqués « amiante » et suivent une filière adaptée. Quand un pro retire le conduit, il s’en charge.</p>
+  <p>Si vous avez quelques tronçons intacts à évacuer vous-même, certaines déchèteries acceptent l’amiante-ciment, généralement sous conditions de quantité ou de période. Transportez-les bâchés, et appelez avant de vous déplacer : tout est expliqué dans notre guide <a href="/dechetterie-amiante">déchetterie et amiante</a>.</p>
+</Guide>
