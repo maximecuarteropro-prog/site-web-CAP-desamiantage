@@ -1,0 +1,174 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Écrit le 12 nov. 2026 en parallèle d’un autre rédacteur (étapes 0 à 4 de contenu/consigne-redaction.md ; l’étape 5,
+// ajout à PAGES_GUIDE, build et file-articles.md, reste à faire). Maxime absent : choix notés ci-dessous.
+// Page 1 de Google mobile (OpenSEO, 12 nov. 2026) relue pour « sous section 4 amiante », « sous section 3 et 4 amiante » et
+// « différence sous-section 3 et 4 » : organismes de formation, diagnostiqueurs, FFB, OPPBTP, Carsat, Légifrance. Tous
+// s’adressent aux entreprises ; aucun ne classe les travaux courants d’une maison ni ne dit au particulier quoi demander au pro.
+// Relu le même jour : code du travail sur code.travail.gouv.fr (L4412-2, L4731-1, L4741-9, L4754-1, R4412-87, R4412-94,
+// R4412-96, R4412-97, R4412-97-3, R4412-98, R4412-117, R4412-125, R4412-129, R4412-137, R4412-141, R4412-144 à R4412-148,
+// R4535-10, D4154-1) ; arrêté du 23 février 2012, articles 2 à 8, dans le texte repris par l’OPPBTP, et son annexe V dans le
+// document de référence SS4 de l’INRS (version 2024), qui donne aussi les durées de formation ; page « Réglementation » de
+// l’INRS (6 oct. 2022) ; logigramme « immeubles » de la DGT du 4 déc. 2013 (copie de la DREAL Normandie) ; deux pages FFB du
+// 12 janv. 2024 ; brochure DREETS Pays de la Loire « Amiante chez les particuliers » (janv. 2023).
+// Écartés, sans contournement : Légifrance (vérification anti-robot), logigramme DGT de mars 2015 sur travail-emploi.gouv.fr
+// (requête rejetée), page sante.gouv.fr sur le repérage (vérification anti-robot), guide « donneur d’ordre » de la DREETS
+// Pays de la Loire (requête rejetée). L’arrêté du 8 avril 2013 n’est pas cité : texte non lu ; la page s’en tient à R4412-98.
+// Choix faits sans Maxime :
+// - pas de prix : aucun guide de prix publié ne chiffre une intervention de sous-section 4 ;
+// - la page ne dit pas si nos pros font aussi des interventions de sous-section 4 (non vérifié) : l’encart vise le cas où
+//   les travaux sont un retrait ; la certification et sa vérification restent sur /certification-sous-section-3 ;
+// - une section courte pour les artisans, qui tapent aussi la requête (page 1 dominée par les organismes de formation).
+// Points incertains :
+// - la version de mars 2015 du logigramme DGT n’a pas pu être lue ; les exemples tirés de celle de 2013 sont confirmés par la
+//   FFB (2024) pour les fenêtres, les sols et les toitures, pas pour les faïences et les gouttières ;
+// - qui classe le chantier : la FFB dit le donneur d’ordre, /tuyau-conduit-amiante dit le pro. La page donne la FFB et
+//   conseille de faire écrire la sous-section au devis, ce qui reste compatible : à harmoniser à l’étape 5 ;
+// - aucun texte lu ne fixe de sanction propre à un mauvais classement SS3/SS4 : la page n’en invente pas et s’en tient à
+//   R4412-129, L4412-2, L4731-1 et à ce qu’écrit la DREETS Pays de la Loire.
+const sources = [
+  { titre: 'Code du travail, article R4412-94 (retrait, encapsulage et interventions)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-94', date: 'version en vigueur depuis le 1er juillet 2012, consultée le 12 novembre 2026' },
+  { titre: 'Code du travail, article R4412-96 (définitions)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-96', date: 'version en vigueur depuis le 1er juillet 2018' },
+  { titre: 'Code du travail, article R4412-125 (champ de la sous-section 3)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-125', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-129', date: 'version en vigueur depuis le 1er juillet 2013' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-137', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Code du travail, article R4412-141 (formation par un organisme certifié en sous-section 3)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-141', date: 'version en vigueur depuis le 8 juillet 2013' },
+  { titre: 'Code du travail, article R4412-144 (champ de la sous-section 4)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-144', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-145 (mode opératoire)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-145', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-146 (avis sur le mode opératoire)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-146', date: 'version en vigueur depuis le 1er janvier 2018' },
+  { titre: 'Code du travail, article R4412-147 (transmission du mode opératoire)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-147', date: 'version en vigueur depuis le 13 février 2021' },
+  { titre: 'Code du travail, article R4412-148 (interventions de plus de cinq jours)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-148', date: 'version en vigueur depuis le 13 février 2021' },
+  { titre: 'Code du travail, article R4412-98 (niveaux d’empoussièrement)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-98', date: 'version en vigueur depuis le 2 juillet 2015' },
+  { titre: 'Code du travail, article R4412-117 (formation et attestation de compétence)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-117', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-97-3 (cas d’exemption du repérage)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-97-3', date: 'version en vigueur depuis le 1er octobre 2018' },
+  { titre: 'Code du travail, article R4535-10 (travailleurs indépendants)', url: 'https://code.travail.gouv.fr/code-du-travail/r4535-10', date: 'version en vigueur depuis le 8 juillet 2013' },
+  { titre: 'Code du travail, article D4154-1 (travaux interdits aux salariés en CDD et intérimaires)', url: 'https://code.travail.gouv.fr/code-du-travail/d4154-1', date: 'version en vigueur depuis le 1er juillet 2018' },
+  { titre: 'Code du travail, article L4412-2 (recherche d’amiante avant travaux)', url: 'https://code.travail.gouv.fr/code-du-travail/l4412-2', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article L4731-1 (arrêt temporaire des travaux)', url: 'https://code.travail.gouv.fr/code-du-travail/l4731-1', date: 'version en vigueur depuis le 1er juillet 2016' },
+  { titre: 'Code du travail, article L4754-1 (amende administrative)', url: 'https://code.travail.gouv.fr/code-du-travail/l4754-1', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article L4741-9 (amende pénale)', url: 'https://code.travail.gouv.fr/code-du-travail/l4741-9', date: 'version en vigueur depuis le 11 mars 2023' },
+  { titre: 'Arrêté du 23 février 2012 définissant les modalités de la formation des travailleurs à la prévention des risques liés à l’amiante, article 2 (catégories de travailleurs, texte repris par l’OPPBTP)', url: 'https://content.preventionbtp.fr/pdf/droit_de_la_prevention/article-2-de-l-arrete-du-23-fevrier-2012-definissant-les-modalites-de-la-formation-des-travailleurs-a-la-prevention-des-risques-lies-a-l-amiante.pdf', date: 'fiche mise à jour le 1er juin 2022, consultée le 12 novembre 2026' },
+  { titre: 'Arrêté du 23 février 2012, article 3 (aptitude médicale, texte repris par l’OPPBTP)', url: 'https://content.preventionbtp.fr/pdf/droit_de_la_prevention/article-3-de-l-arrete-du-23-fevrier-2012-definissant-les-modalites-de-la-formation-des-travailleurs-a-la-prevention-des-risques-lies-a-l-amiante.pdf', date: 'fiche mise à jour le 19 janvier 2023, consultée le 12 novembre 2026' },
+  { titre: 'Arrêté du 23 février 2012, article 5 (durée et recyclage, texte repris par l’OPPBTP)', url: 'https://content.preventionbtp.fr/pdf/droit_de_la_prevention/article-5-de-l-arrete-du-23-fevrier-2012-definissant-les-modalites-de-la-formation-des-travailleurs-a-la-prevention-des-risques-lies-a-l-amiante.pdf', date: 'fiche mise à jour le 19 janvier 2023, consultée le 12 novembre 2026' },
+  { titre: 'Arrêté du 23 février 2012, article 6 (attestation de compétence, texte repris par l’OPPBTP)', url: 'https://content.preventionbtp.fr/pdf/droit_de_la_prevention/article-6-de-l-arrete-du-23-fevrier-2012-definissant-les-modalites-de-la-formation-des-travailleurs-a-la-prevention-des-risques-lies-a-l-amiante.pdf', date: 'fiche mise à jour le 19 janvier 2023, consultée le 12 novembre 2026' },
+  { titre: 'INRS, « Document de référence : dispositif de formation à la prévention des risques liés à l’amiante sous-section 4 »', url: 'https://www.inrs.fr/dam/inrs/PDF/document-reference-amiante-ss4.pdf', date: 'version 2024' },
+  { titre: 'INRS, « Amiante : réglementation »', url: 'https://www.inrs.fr/risques/amiante/reglementation.html', date: 'mise à jour le 6 octobre 2022' },
+  { titre: 'Direction générale du travail, « Distinction sous-section 3 / sous-section 4 pour les opérations sur des immeubles » (copie publiée par la DREAL Normandie)', url: 'https://www.normandie.developpement-durable.gouv.fr/IMG/pdf/logigramme_amiante_SS3_SS4_immeubles_DGT_04122013.pdf', date: '4 décembre 2013' },
+  { titre: 'FFB, « Amiante : quels travaux relèvent des sous-sections 3 et 4 ? »', url: 'https://www.ffbatiment.fr/techniques-batiment/reglementation-construction/reglementation-amiante-plomb-silice/dossier/amiante-sous-section-3-ou-4', date: 'publié le 12 janvier 2024' },
+  { titre: 'FFB, « Travaux d’amiante en sous-section 4 : l’essentiel à savoir »', url: 'https://www.ffbatiment.fr/techniques-batiment/reglementation-construction/reglementation-amiante-plomb-silice/dossier/travaux-d-amiante-sous-section-4', date: 'publié le 12 janvier 2024' },
+  { titre: 'DREETS Pays de la Loire, « Amiante chez les particuliers : une affaire de professionnels ! »', url: 'https://pays-de-la-loire.dreets.gouv.fr/sites/pays-de-la-loire.dreets.gouv.fr/IMG/pdf/document_particuliers_version_janvier__2023-5.pdf', date: 'janvier 2023' },
+]
+
+const faq = [
+  { question: 'Faut-il une certification pour travailler en sous-section 4 ?', reponse: 'Non. La certification obligatoire concerne les pros qui retirent ou encapsulent l’amiante : c’est la sous-section 3 (code du travail, art. R4412-129). En sous-section 4, le pro n’a pas besoin d’être certifié, mais chaque intervenant doit être formé au risque amiante et détenir une attestation de compétence, et l’employeur doit établir un mode opératoire (art. R4412-145).' },
+  { question: 'Combien de temps dure la formation amiante sous-section 4 ?', reponse: 'Au moins 2 jours pour un opérateur, et 5 jours pour l’encadrement technique, l’encadrement de chantier ou celui qui cumule les fonctions, selon le document de référence de l’INRS (2024). Un recyclage d’au moins 1 jour doit avoir lieu au plus tard trois ans après la formation préalable ou le dernier recyclage (arrêté du 23 février 2012, art. 5).' },
+  { question: 'Faut-il un repérage amiante avant des travaux de sous-section 4 ?', reponse: 'En règle générale, oui : le donneur d’ordre fait rechercher l’amiante avant toute opération qui peut exposer des travailleurs (code du travail, art. L4412-2). Le code prévoit une exemption pour une réparation ou une maintenance corrective de sous-section 4 qui reste au premier niveau d’empoussièrement, sous 100 fibres par litre (art. R4412-97-3 et R4412-98) : le pro travaille alors comme si l’amiante était présent.' },
+  { question: 'Existe-t-il une liste des pros formés à la sous-section 4 ?', reponse: 'Non. Les listes publiques ne recensent que les pros certifiés sous-section 3. Pour la sous-section 4, il n’existe pas de liste nationale : la DREETS des Pays de la Loire conseille de demander au pro la copie des attestations de compétence de ses intervenants.' },
+  { question: 'Un particulier peut-il faire lui-même des travaux de sous-section 4 ?', reponse: 'Les règles de la sous-section 4 s’adressent aux pros, salariés ou indépendants. La DREETS des Pays de la Loire déconseille fortement à un particulier de travailler lui-même sur un matériau amianté. Elle exclut aussi d’embaucher directement quelqu’un pour le faire, même en CESU : le particulier deviendrait son employeur, responsable de sa formation, de ses équipements et de l’organisation du chantier.' },
+]
+---
+<Guide
+  titre="Sous-section 4 amiante : différence avec la sous-section 3"
+  description="Percer, découper, réparer sans retirer l’amiante : c’est la sous-section 4. Pas de certification, mais des pros formés. 15 travaux classés SS3 ou SS4."
+  chemin="/sous-section-4-amiante"
+  rubrique="Choisir un pro"
+  h1="Sous-section 4 amiante : quels travaux, et quelle différence avec la sous-section 3 ?"
+  chapo="La sous-section 4 du code du travail encadre les interventions qui touchent un matériau amianté sans le retirer : percer, découper, réparer, entretenir. Retirer ou encapsuler l’amiante relève au contraire de la sous-section 3, réservée aux pros certifiés. En sous-section 4, aucune certification n’est exigée, mais les intervenants doivent être formés et l’employeur doit établir un mode opératoire : voici comment classer vos travaux et quoi demander au pro."
+  publie="2026-11-12"
+  misAJour="2026-11-12"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Qu’est-ce que la sous-section 4 amiante ?</h2>
+  <p>C’est une partie du code du travail, issue du décret du 4 mai 2012 (FFB). Les règles sur l’amiante y visent deux sortes d’opérations (art. R4412-94) : d’un côté le retrait et l’encapsulage, démolition comprise ; de l’autre, les « interventions sur des matériaux, des équipements, des matériels ou des articles susceptibles de provoquer l’émission de fibres d’amiante ». Les règles propres à chacune sont rangées dans deux sous-sections : la 3 pour le retrait et l’encapsulage (art. R4412-125), la 4 pour les interventions (art. R4412-144). D’où les sigles des pros : SS3 et SS4.</p>
+  <p>Concrètement, la sous-section 4 couvre les travaux qui touchent un matériau amianté sans chercher à s’en débarrasser : percer, découper, réparer, entretenir, recouvrir. La FFB parle d’opérations « limitées dans le temps et l’espace ».</p>
+
+  <h2>Quelle différence entre la sous-section 3 et la sous-section 4 ?</h2>
+  <p>Ce qui compte, c’est le but des travaux : traiter l’amiante, c’est-à-dire le retirer ou l’enfermer durablement, relève de la sous-section 3 ; intervenir dessus pour autre chose relève de la sous-section 4 (Direction générale du travail). Les obligations du pro changent.</p>
+  <div class="tableau">
+    <table>
+      <caption>D’après le code du travail (art. R4412-94, R4412-129, R4412-137, R4412-141 et R4412-145 à R4412-148) et l’arrêté du 23 février 2012 (art. 5 et 6), relus le 12 novembre 2026.</caption>
+      <thead><tr><th scope="col"></th><th scope="col">Sous-section 3</th><th scope="col">Sous-section 4</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">But des travaux</th><td>Retirer ou encapsuler l’amiante, y compris en démolition</td><td>Intervenir sur un matériau amianté sans le traiter : réparer, entretenir, percer</td></tr>
+        <tr><th scope="row">Certification du pro</th><td>Obligatoire</td><td>Non exigée</td></tr>
+        <tr><th scope="row">Formation des intervenants</th><td>Par un organisme de formation certifié</td><td>Par un organisme de formation ou par l’employeur</td></tr>
+        <tr><th scope="row">Recyclage</th><td>Premier recyclage dans les 6 mois, puis au plus tard tous les 3 ans</td><td>Au plus tard tous les 3 ans</td></tr>
+        <tr><th scope="row">Document du pro</th><td>Plan de retrait, de démolition ou d’encapsulage pour chaque opération</td><td>Mode opératoire pour chaque processus de travail</td></tr>
+        <tr><th scope="row">Avant le chantier</th><td>Plan transmis par DEMAT@MIANTE au moins 30 jours avant, ou 8 jours en cas d’urgence liée à un sinistre</td><td>Mode opératoire transmis à l’inspection du travail avant sa première mise en œuvre, informations en plus au-delà de 5 jours d’intervention</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Pour tout ce qui touche à la certification sous-section 3, ses organismes et ses listes, lisez notre guide <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>.</p>
+
+  <h2>Mes travaux relèvent-ils de la sous-section 3 ou de la sous-section 4 ?</h2>
+  <p>La Direction générale du travail (DGT) a publié un logigramme pour trancher. Il pose les questions dans cet ordre :</p>
+  <ol>
+    <li><strong>Les travaux peuvent-ils libérer des fibres ?</strong> Si vous ignorez s’il y a de l’amiante, commencez par le repérage. Si le matériau amianté reste inaccessible et que la méthode évite tout contact, la réglementation amiante ne s’applique pas (DGT, FFB).</li>
+    <li><strong>Le but est-il de traiter l’amiante ?</strong> Le retirer, ou l’encapsuler de façon étanche, solide et durable comme sous une chape de béton : sous-section 3 (DGT ; art. R4412-96). Le recouvrir sans ces trois qualités, par exemple d’une moquette ou d’un sol neuf, reste de la sous-section 4.</li>
+    <li><strong>Sinon, s’agit-il d’une réparation ou d’un entretien courant ?</strong> Réparer une conduite d’eau éclatée ou un tronçon de vide-ordures qui fuit : sous-section 4, même si un peu d’amiante est enlevé pour la réparation.</li>
+    <li><strong>Faut-il enlever un peu d’amiante pour travailler sur autre chose ?</strong> Quelques carreaux de faïence pour déposer une baignoire, la dernière rangée d’ardoises pour changer une gouttière : sous-section 4, tant que l’opération reste limitée. Si elle s’inscrit dans une réhabilitation globale, comme toutes les salles de bains d’un immeuble en même temps, elle passe en sous-section 3.</li>
+  </ol>
+  <p>La DGT y ajoute une notion de proportion, appréciée au cas par cas. Six plaques d’amiante-ciment retirées pour poser un lanterneau dans une grande toiture, ou les six plaques qui forment toute la couverture d’un appentis : le nombre est le même, pas la proportion. La FFB l’applique à un sol : retirer toute la colle amiantée d’une pièce de 12 m² est un retrait (sous-section 3), même si le reste du bâtiment n’en contient pas.</p>
+  <div class="tableau">
+    <table>
+      <caption>Exemples classés par la DGT (logigramme du 4 décembre 2013), la FFB (janvier 2024) et la DREETS des Pays de la Loire (janvier 2023).</caption>
+      <thead><tr><th scope="col">Travaux</th><th scope="col">Sous-section</th><th scope="col">Selon</th></tr></thead>
+      <tbody>
+        <tr><td>Percer un mur en plâtre amianté pour fixer des étagères</td><td>4</td><td>DREETS</td></tr>
+        <tr><td>Changer le joint amianté d’une conduite de chaudière</td><td>4</td><td>DREETS</td></tr>
+        <tr><td>Remplacer l’isolant sous une couverture amiantée, même s’il est seulement pollué par elle</td><td>4</td><td>DREETS</td></tr>
+        <tr><td>Réparer une conduite d’eau éclatée</td><td>4</td><td>DGT</td></tr>
+        <tr><td>Entretenir une canalisation ou un conduit de fumée en amiante-ciment</td><td>4</td><td>FFB</td></tr>
+        <tr><td>Poser une fenêtre de toit dans une toiture amiantée en bon état</td><td>4</td><td>FFB</td></tr>
+        <tr><td>Remplacer quelques tuiles posées sur des plaques amiantées</td><td>4</td><td>FFB</td></tr>
+        <tr><td>Recouvrir une cloison amiantée de plaques de plâtre</td><td>4</td><td>FFB</td></tr>
+        <tr><td>Poser un sol neuf (dalles PVC, moquette) sur des dalles vinyle-amiante</td><td>4</td><td>DGT, FFB</td></tr>
+        <tr><td>Déposer des fenêtres à joints amiantés, envoyées entières dans une installation fixe de désamiantage</td><td>4, mais 3 si elles sont nombreuses dans une réhabilitation globale</td><td>DGT, FFB</td></tr>
+        <tr><td>Déposer ces fenêtres sans les envoyer dans une telle installation</td><td>3</td><td>FFB</td></tr>
+        <tr><td>Couler une chape de béton sur des dalles amiantées</td><td>3 (encapsulage)</td><td>DGT</td></tr>
+        <tr><td>Changer un carrelage et sa colle amiantée</td><td>3</td><td>DREETS</td></tr>
+        <tr><td>Retirer toute une toiture amiantée, des dalles vinyle-amiante, un flocage ou des faux plafonds</td><td>3</td><td>FFB</td></tr>
+        <tr><td>Poser une cloison devant une faïence collée à la colle amiantée, sans y toucher</td><td>Hors réglementation amiante</td><td>DGT, FFB</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><strong>Qui tranche ?</strong> Pour la FFB, c’est au donneur d’ordre de classer les travaux quand il consulte les pros ; le particulier qui commande des travaux chez lui en est un (DREETS des Pays de la Loire). Demandez à chaque pro d’écrire sur son devis la sous-section retenue, et de la justifier si deux devis divergent. Les cas propres à chaque matériau sont dans nos guides <a href="/tuyau-conduit-amiante">tuyau et conduit en amiante</a>, <a href="/retrait-dalles-sol-amiante">dalles de sol amiantées</a>, <a href="/amiante-murs-platre-enduit">amiante dans les murs et les enduits</a> et <a href="/toiture-amiante-que-faire">toiture en amiante : que faire ?</a></p>
+
+  <EncartDevis accroche="Vos travaux retirent ou encapsulent l’amiante ? C’est un chantier de sous-section 3, que l’un de nos pros certifiés peut venir voir." />
+
+  <h2>Quel pro faire venir pour des travaux de sous-section 4 ?</h2>
+  <p>Un pro de votre corps de métier, plombier, électricien, menuisier ou couvreur, à condition qu’il soit formé au risque amiante. Il n’a pas besoin d’être certifié (DREETS des Pays de la Loire, FFB) : la certification obligatoire ne vise que la sous-section 3 (art. R4412-129).</p>
+  <p>La règle vaut aussi pour l’artisan qui travaille seul : les travailleurs indépendants sur un chantier sont soumis à l’essentiel des règles amiante (art. R4535-10), et la DREETS précise que la formation et l’attestation de compétence valent aussi pour les auto-entrepreneurs. Aucune liste nationale ne recense ces pros (même source) : vérifiez vous-même, avec les documents qui suivent.</p>
+
+  <h2>Que doit vous fournir un pro en sous-section 4 ?</h2>
+  <p>Avant les travaux, vous avez un document à donner, et trois à demander.</p>
+  <ul>
+    <li><strong>À donner : le repérage amiante avant travaux.</strong> Le donneur d’ordre fait rechercher l’amiante avant l’intervention et joint le rapport aux documents remis aux pros consultés (art. L4412-2). Voyez notre guide du <a href="/diagnostic-amiante-avant-travaux">diagnostic amiante avant travaux</a>.</li>
+    <li><strong>À demander : les attestations de compétence.</strong> La DREETS des Pays de la Loire conseille d’en demander la copie pour chaque intervenant. L’attestation indique la catégorie du travailleur (opérateur, encadrement), sa date de délivrance et sa durée de validité (arrêté du 23 février 2012, annexe V, reprise par l’INRS). La dernière doit dater de moins de trois ans (art. 5 du même arrêté).</li>
+    <li><strong>À demander : le mode opératoire.</strong> Établi pour chaque processus de travail (art. R4412-145), il décrit notamment l’intervention, les matériaux, les méthodes, les protections des intervenants et des personnes à proximité, la décontamination et les déchets. Il est transmis à l’inspection du travail (art. R4412-147). Demandez à le voir : il montre que votre type d’intervention a été préparé.</li>
+    <li><strong>À demander : un devis détaillé.</strong> Selon la DREETS, il règle notamment les zones à traiter, le planning, la protection des personnes présentes, la fermeture des ouvertures et de la ventilation, les déchets et les mesures prévues.</li>
+  </ul>
+  <p>Au-delà de cinq jours d’intervention, le pro envoie aussi à l’inspection du travail les dates, la zone, le rapport de repérage et la liste des intervenants (art. R4412-148). À la fin, il vous remet les documents sur le traitement des déchets (DREETS) ; la FFB rappelle qu’en sous-section 4 aussi, le pro remplit un bordereau de suivi des déchets d’amiante (BSDA).</p>
+
+  <h2>Je suis artisan : que faut-il pour intervenir en sous-section 4 ?</h2>
+  <ul>
+    <li><strong>Une formation préalable</strong> avant la première intervention, selon le rôle de chacun (arrêté du 23 février 2012, art. 2) : au moins 2 jours pour un opérateur, 5 jours pour l’encadrement ou pour qui cumule les fonctions, puis 1 jour de recyclage au plus tard tous les 3 ans (INRS, 2024). Il faut d’abord une aptitude médicale au poste (arrêté, art. 3).</li>
+    <li><strong>Pas d’organisme certifié imposé.</strong> L’attestation de compétence est délivrée par l’organisme de formation ou par l’employeur qui a formé (art. R4412-117 ; arrêté, art. 6). L’INRS conseille un organisme habilité par l’INRS et l’Assurance maladie.</li>
+    <li><strong>Un mode opératoire par processus</strong>, selon le niveau d’empoussièrement estimé (trois niveaux, art. R4412-98), annexé au document unique d’évaluation des risques (art. R4412-145), soumis à l’avis du médecin du travail et du comité social et économique (art. R4412-146), transmis avant sa première mise en œuvre puis à chaque mise à jour (art. R4412-147).</li>
+    <li><strong>Des limites.</strong> Les salariés en CDD et les intérimaires ne peuvent pas faire l’entretien ou la maintenance de flocages et de calorifugeages (art. D4154-1). Les jeunes de moins de 18 ans ne peuvent pas être affectés à ces opérations, sauf dérogation (INRS).</li>
+  </ul>
+  <p>Dès que le chantier devient un retrait ou un encapsulage, la formation sous-section 4 ne suffit plus : il faut être certifié sous-section 3.</p>
+
+  <h2>Que risquez-vous si les travaux sont mal classés ?</h2>
+  <p>La DREETS des Pays de la Loire le rappelle : le particulier donneur d’ordre doit choisir des intervenants qualifiés et compétents, et il peut être mis en cause pénalement s’il manque aux règles de santé et de sécurité au travail. Concrètement :</p>
+  <ul>
+    <li><strong>Confier un retrait à un pro non certifié</strong>, en le présentant comme une simple intervention, c’est manquer à l’obligation du donneur d’ordre de faire appel à un pro certifié (art. R4412-129).</li>
+    <li><strong>Des travaux sans repérage</strong> exposent le donneur d’ordre à une amende administrative pouvant aller jusqu’à 9 000 € (art. L4754-1), ou à une amende pénale de 3 750 € (art. L4741-9).</li>
+    <li><strong>Un chantier arrêté :</strong> quand l’absence de protections contre l’amiante met des intervenants en danger grave et imminent, l’inspection du travail peut arrêter temporairement les travaux, retrait comme intervention (art. L4731-1), avec pour vous le risque d’un retard important (DREETS).</li>
+    <li><strong>Des voisins exposés aux fibres :</strong> le préfet peut ordonner des mesures pour faire cesser l’exposition, et les faire réaliser aux frais du particulier qui ne s’en charge pas (DREETS).</li>
+  </ul>
+  <p>L’erreur inverse coûte surtout du temps : une opération de sous-section 3 impose un plan de retrait transmis au moins trente jours avant le démarrage (art. R4412-137). D’où l’intérêt de classer le chantier dès le devis.</p>
+</Guide>

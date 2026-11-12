@@ -16,8 +16,6 @@ Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026.
 
 | Ordre | Chemin | Requête principale | Requêtes secondaires | Question du lecteur | Statut |
 |---|---|---|---|---|---|
-| 3 | `/sous-section-4-amiante` | sous section 4 amiante (480) | sous section 3 et 4 amiante (20) | Qu'est-ce que la sous-section 4, en quoi diffère-t-elle de la sous-section 3, et quel pro faut-il pour mes travaux ? (renvoyer vers `/certification-sous-section-3`) | à faire |
-| 4 | `/aides-desamiantage` | aide désamiantage particulier (110) | aide désamiantage (90), aide désamiantage toiture (70), anah désamiantage (30), tva désamiantage (10) | Quelles aides existent vraiment pour retirer de l'amiante, et lesquelles n'existent pas ? Chaque dispositif relu à sa source du jour ; ne rien affirmer sans texte. | à faire |
 | 5 | `/carrelage-colle-amiante` | colle carrelage amiante (210) | carrelage amiante (170), lino amiante (140) | Mon carrelage, sa colle ou mon lino contiennent-ils de l'amiante ? Puis-je les recouvrir ou les casser ? (renvoyer vers `/retrait-dalles-sol-amiante` pour les dalles vinyle) | à faire |
 | 6 | `/plan-de-retrait-amiante` | plan de retrait amiante (320) | durée chantier désamiantage | Qu'est-ce que le plan de retrait, qui le rédige, pourquoi faut-il attendre 30 jours, et que doit-il contenir ? | à faire |
 | 7 | `/amiante-location` | amiante location (110) | dapp amiante (90), locataire amiante, propriétaire bailleur amiante | Que doit faire un propriétaire bailleur, et que peut demander un locataire, quand le logement contient de l'amiante ? | à faire |
@@ -46,6 +44,8 @@ Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026.
 | `/dossier-technique-amiante` | dta amiante (1 000) | 11 nov. 2026 |
 | `/amiante-murs-platre-enduit` | amiante dans les murs (720) | 12 nov. 2026 |
 | `/tuyau-conduit-amiante` | amiante tuyau (320) | 12 nov. 2026 |
+| `/sous-section-4-amiante` | sous section 4 amiante (480) | 12 nov. 2026 |
+| `/aides-desamiantage` | aide désamiantage particulier (110) | 12 nov. 2026 |
 
 ## Écartés
 

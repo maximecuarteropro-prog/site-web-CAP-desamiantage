@@ -1,0 +1,163 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Relu le 12 nov. 2026, chaque aide à sa source officielle du jour (page 1 de Google lue sur mobile le même jour) :
+// - Assemblée nationale, question écrite n° 8575, réponse au JO du 30 juin 2026 : pas de financement spécifique de
+//   l’amiante ; l’Anah peut prendre en charge le retrait si une rénovation globale est réalisée.
+// - Anah, guide « Les aides financières en 2026 » (édition de septembre 2026) et guide « Travaux éligibles et induits,
+//   devis et factures » (juillet 2025, toujours cité par le guide 2026) : le désamiantage et les dépenses propres à
+//   l’amiante ne sont pas des travaux induits de la rénovation énergétique.
+// - France Rénov’ (Ma Prime Logement Décent, MaPrimeRénov’, rénovation d’ampleur, aides des collectivités), pages non
+//   datées, consultées le 12 nov. 2026 ; service-public.fr F35083 et F19905 (vérifiées le 1er sept. 2026), F1328
+//   (1er janv. 2026), F1991 (15 avril 2026) ; ecologie.gouv.fr « Amiante dans le bâtiment » (15 oct. 2024).
+// - BOFiP : TVA 90-30 (22 oct. 2025), 90-10 (9 sept. 2026), 95 (9 sept. 2026) ; revenus fonciers RFPI-BASE-20-30-20
+//   (30 mai 2016, version en vigueur). Question écrite n° 1346 (2018) pour la TVA des bâtiments agricoles.
+// - ANIL, éco-PTZ (à jour au 2 sept. 2026). Aides locales lues : Grand Annecy (2 mars 2026), Région Sud (19 janv. 2026).
+// Écartés faute de lecture possible ce jour : Région Auvergne-Rhône-Alpes (vérification anti-robot), Région Bretagne
+// et economie.gouv.fr (accès refusé), Légifrance (accès refusé : articles cités tels que les reprennent le BOFiP et l’ANIL).
+// Choix et points incertains (Maxime absent, aucune question posée) :
+// - La réponse du 30 juin 2026 ne nomme pas l’aide de l’Anah ; ecologie.gouv.fr la rattache à Ma Prime Logement Décent.
+//   Comme le guide de l’Anah exclut l’amiante des travaux induits de MaPrimeRénov’, la page ne dit pas que MaPrimeRénov’
+//   paie le retrait.
+// - TVA à 5,5 % : le BOFiP rattache les dépenses induites à l’annexe 3 de l’arrêté du 17 nov. 2020, que nous n’avons pas
+//   pu lire ; le guide de l’Anah exclut les dépenses propres à l’amiante. Lecture retenue : la ligne amiante reste à 10 %.
+// - Éco-PTZ : le texte (repris par l’ANIL et l’Anah) ne cite pas l’amiante ; la page dit que la banque tranche.
+// - Faux démarcheurs : aucune source officielle sur des arnaques « aide amiante » ; seul l’avertissement général de
+//   service-public.fr est repris. MSA : aucune aide à l’amiante trouvée, la page n’affirme rien sur elle.
+// - Question écrite n° 4760 (2023) : seule source officielle sur l’extension des aides de l’Anah aux professionnels ;
+//   ancienne, citée avec sa date. Pas de numéro de téléphone (règle 13), même ceux de France Rénov’.
+// - Relire cette page à chaque loi de finances et à chaque changement de MaPrimeRénov’ (dernier : 1er sept. 2026).
+const sources = [
+  { titre: 'Assemblée nationale, question écrite n° 8575 « Coût du retrait de matériaux amiantés pour les particuliers »', url: 'https://www.assemblee-nationale.fr/dyn/17/questions/QANR5L17QE8575', date: 'réponse publiée au Journal officiel le 30 juin 2026' },
+  { titre: 'Ministère de la Transition écologique, « Amiante dans le bâtiment » (aides financières)', url: 'https://www.ecologie.gouv.fr/politiques-publiques/amiante-batiment', date: 'mis à jour le 15 octobre 2024' },
+  { titre: 'Anah, « Les aides financières en 2026 »', url: 'https://www.anah.gouv.fr/anatheque/le-guide-des-aides-financieres-2026', date: 'édition de septembre 2026, publiée le 31 août 2026' },
+  { titre: 'Anah, « Travaux éligibles et induits, devis et factures », guide de la rénovation énergétique à destination des professionnels', url: 'https://www.anah.gouv.fr/document/guide-travaux-eligibles-devis-factures', date: 'édition de juillet 2025, consultée le 12 novembre 2026' },
+  { titre: 'France Rénov’, « Ma Prime Logement Décent »', url: 'https://france-renov.gouv.fr/aides/ma-prime-logement-decent', date: 'consultée le 12 novembre 2026' },
+  { titre: 'France Rénov’, « MaPrimeRénov’ pour une rénovation d’ampleur »', url: 'https://france-renov.gouv.fr/aides/maprimerenov-renovation-ampleur', date: 'consultée le 12 novembre 2026' },
+  { titre: 'Service-public.fr, fiche F35083 « MaPrimeRénov’ (MPR) »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F35083', date: 'vérifiée le 1er septembre 2026' },
+  { titre: 'Service-public.fr, fiche F1328 « Aides financières de l’Anah pour réaliser des travaux dans son logement »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F1328', date: 'vérifiée le 1er janvier 2026' },
+  { titre: 'BOFiP, BOI-TVA-LIQ-30-20-90-30 (taux de 10 % : opérations particulières, § 200)', url: 'https://bofip.impots.gouv.fr/bofip/1733-PGP.html/identifiant=BOI-TVA-LIQ-30-20-90-30-20251022', date: 'publié le 22 octobre 2025' },
+  { titre: 'BOFiP, BOI-TVA-LIQ-30-20-90-10 (taux de 10 % : locaux concernés et dépendances)', url: 'https://bofip.impots.gouv.fr/bofip/1642-PGP.html/identifiant=BOI-TVA-LIQ-30-20-90-10-20260909', date: 'publié le 9 septembre 2026' },
+  { titre: 'BOFiP, BOI-TVA-LIQ-30-20-95 (taux de 5,5 % : rénovation énergétique)', url: 'https://bofip.impots.gouv.fr/bofip/9417-PGP.html/identifiant=BOI-TVA-LIQ-30-20-95-20260909', date: 'publié le 9 septembre 2026' },
+  { titre: 'Assemblée nationale, question écrite n° 1346 « TVA travaux désamiantage »', url: 'https://www.assemblee-nationale.fr/dyn/15/questions/QANR5L15QE1346', date: 'réponse publiée au Journal officiel le 27 février 2018' },
+  { titre: 'Service-public.fr, fiche F19905 « Éco-prêt à taux zéro (éco-PTZ) »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F19905', date: 'vérifiée le 1er septembre 2026' },
+  { titre: 'ANIL, analyse juridique n° 2024-13 « Éco-prêt à taux zéro »', url: 'https://www.anil.org/aj-eco-pret-a-taux-zero/', date: 'à jour au 2 septembre 2026' },
+  { titre: 'BOFiP, BOI-RFPI-BASE-20-30-20 (revenus fonciers : caractère déductible des dépenses de travaux)', url: 'https://bofip.impots.gouv.fr/bofip/4050-PGP.html/identifiant=BOI-RFPI-BASE-20-30-20-20160530', date: 'publié le 30 mai 2016, version en vigueur' },
+  { titre: 'Service-public.fr, fiche F1991 « Revenus locatifs (location non meublée) »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F1991', date: 'vérifiée le 15 avril 2026' },
+  { titre: 'Grand Annecy, « L’aide au désamiantage de toiture »', url: 'https://www.grandannecy.fr/mon-quotidien/preserve-mon-environnement/lenvironnement/energie/laide-au-desamiantage', date: 'mise à jour le 2 mars 2026' },
+  { titre: 'Région Sud, dispositif « Paré pour le solaire »', url: 'https://www.maregionsud.fr/vos-aides/detail/plan-solaire-dispositif-pare-pour-le-solaire', date: 'mis à jour le 19 janvier 2026' },
+  { titre: 'France Rénov’, « Les aides des collectivités locales »', url: 'https://france-renov.gouv.fr/aides/collectivites-locales', date: 'consultée le 12 novembre 2026' },
+  { titre: 'ANIL, « Aides locales aux travaux »', url: 'https://www.anil.org/aides-locales-travaux/', date: 'consultée le 12 novembre 2026' },
+  { titre: 'Assemblée nationale, question écrite n° 4760 « Vers un désamiantage de toutes les toitures en fibrociment »', url: 'https://www.assemblee-nationale.fr/dyn/16/questions/QANR5L16QE4760', date: 'réponse publiée au Journal officiel le 15 août 2023' },
+  { titre: 'L’Assurance retraite, « Être bien chez soi »', url: 'https://www.lassuranceretraite.fr/portail-info/home/retraite/vie-retraite-bien-vieillir/bien-chez-soi.html', date: 'consultée le 12 novembre 2026' },
+  { titre: 'Ameli.fr, « Amiante : une subvention pour réduire l’exposition des salariés aux fibres d’amiante »', url: 'https://www.ameli.fr/entreprise/sante-travail/aides-financieres/subventions-nationales/stop-amiante', date: 'mise à jour le 11 février 2026' },
+]
+
+const faq = [
+  { question: 'MaPrimeRénov’ peut-elle payer le retrait d’une toiture en fibrociment ?', reponse: 'Non. MaPrimeRénov’ par geste ne finance plus l’isolation et se limite pour l’essentiel aux pompes à chaleur (service-public.fr). Dans une rénovation d’ampleur, la dépose de la couverture peut compter parmi les travaux induits d’une isolation de la toiture par l’extérieur, mais l’Anah exclut le désamiantage et les dépenses propres à l’amiante : protection du chantier, mise en décharge et traitement des déchets.' },
+  { question: 'Quel taux de TVA pour désamianter le toit d’un garage ?', reponse: 'Le taux de 10 %, si le garage est une dépendance d’une habitation achevée depuis plus de deux ans. Un bâtiment agricole, comme une grange ou une écurie, relève du taux normal de 20 %, sauf s’il sert effectivement de garage (BOFiP, septembre 2026).' },
+  { question: 'Le diagnostic amiante est-il aidé ?', reponse: 'Il est facturé au taux normal de TVA, car le diagnostiqueur doit être indépendant du pro qui fait les travaux. L’Anah peut le financer, sous conditions de ressources, s’il est suivi des travaux préconisés et s’intègre dans le projet global de rénovation d’un logement non décent ou insalubre (ministère de la Transition écologique).' },
+  { question: 'Le désamiantage gratuit en échange de panneaux solaires est-il une aide ?', reponse: 'Non. Ce n’est pas une aide publique mais un contrat privé avec une société qui installe des panneaux sur votre toit. Faites-le relire avant de signer. Les aides publiques liées au solaire que nous avons lues, celles du Grand Annecy et de la Région Sud, visent des entreprises, des collectivités ou des associations.' },
+  { question: 'Peut-on cumuler plusieurs aides ?', reponse: 'Oui, dans certaines limites. Les aides de l’Anah se cumulent avec celles des collectivités et des caisses de retraite, mais le total est plafonné : avec Ma Prime Logement Décent, l’ensemble des aides ne peut pas dépasser 100 % du coût TTC des travaux pour les revenus très modestes et 90 % pour les revenus modestes (Anah, guide 2026). La TVA à 10 % s’applique en plus, directement sur la facture.' },
+]
+---
+<Guide
+  titre="Aide désamiantage particulier : ce qui existe en 2026"
+  description="Aide au désamiantage : pas d’aide nationale dédiée en 2026, mais TVA à 10 %, Anah si logement très dégradé, aides locales. Chaque aide relue à sa source."
+  chemin="/aides-desamiantage"
+  rubrique="Prix 2026"
+  h1="Aide au désamiantage pour un particulier : ce qui existe vraiment en 2026"
+  chapo="Non, il n’existe pas d’aide nationale pour le seul retrait de l’amiante d’une maison : le Gouvernement l’a redit le 30 juin 2026, et MaPrimeRénov’ exclut les dépenses propres à l’amiante. Restent la TVA à 10 % sur le désamiantage d’un logement, Ma Prime Logement Décent de l’Anah si le retrait entre dans la rénovation globale d’un logement très dégradé, la déduction des revenus fonciers pour un bailleur et quelques aides locales, surtout liées au solaire."
+  publie="2026-11-12"
+  misAJour="2026-11-12"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Existe-t-il une aide pour le seul désamiantage d’une maison ?</h2>
+  <p>Non. Interrogé par une députée sur le coût du retrait de l’amiante pour les particuliers, le Gouvernement a répondu le 30 juin 2026 qu’il ne prévoit « ni de relâcher les contraintes sur les matériaux amiantés ni un financement spécifique ». La même réponse ajoute que l’Anah peut prendre en charge le retrait, mais à la condition qu’une rénovation globale du logement soit réalisée (question écrite n° 8575).</p>
+  <p>Retirer seule une toiture en fibrociment, sur une maison ou un garage, ne donne donc droit à aucune subvention nationale. D’autres leviers réduisent la facture :</p>
+  <div class="tableau">
+    <table>
+      <caption>Ce que chaque dispositif prend en charge pour l’amiante, d’après l’Anah, France Rénov’, le BOFiP et service-public.fr, relus le 12 novembre 2026.</caption>
+      <thead><tr><th scope="col">Dispositif</th><th scope="col">Ce qu’il apporte pour l’amiante</th><th scope="col">Pour qui</th></tr></thead>
+      <tbody>
+        <tr><td><strong>MaPrimeRénov’</strong></td><td>Rien : les dépenses propres à l’amiante sont exclues des travaux induits</td><td>Propriétaires de logements, pour des travaux énergétiques</td></tr>
+        <tr><td><strong>Ma Prime Logement Décent</strong> (Anah)</td><td>Une subvention, dans la rénovation globale d’un logement très dégradé</td><td>Propriétaires occupants modestes ou très modestes, bailleurs qui conventionnent</td></tr>
+        <tr><td><strong>TVA à 10 %</strong></td><td>Un taux réduit sur le désamiantage d’un logement achevé depuis plus de deux ans et de ses dépendances</td><td>Propriétaires, bailleurs, locataires, copropriétés</td></tr>
+        <tr><td><strong>Éco-prêt à taux zéro</strong></td><td>Rien pour un désamiantage seul ; le texte ne cite pas l’amiante</td><td>Travaux d’économies d’énergie en résidence principale</td></tr>
+        <tr><td><strong>Revenus fonciers</strong></td><td>Une déduction des revenus fonciers imposables</td><td>Bailleurs au régime réel</td></tr>
+        <tr><td><strong>Aides locales</strong></td><td>Parfois une subvention, surtout si la toiture reçoit ensuite du solaire</td><td>Le plus souvent entreprises, collectivités, associations</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Si le retrait n’est pas finançable tout de suite, rien n’oblige à retirer une toiture saine : notre page <a href="/toiture-amiante-que-faire">toiture en amiante : que faire ?</a> compare les options, et la vente reste possible, comme l’explique <a href="/vendre-maison-toiture-amiante">vendre une maison avec un toit en amiante</a>.</p>
+
+  <h2>MaPrimeRénov’ finance-t-elle le désamiantage d’une toiture ?</h2>
+  <p>Non, ni seul, ni en complément d’une isolation. MaPrimeRénov’ par geste ne finance plus l’isolation : en métropole, sa liste se limite aux pompes à chaleur, au raccordement à un réseau de chaleur, à la dépose d’une cuve à fioul et à l’audit énergétique (service-public.fr, fiche vérifiée le 1er septembre 2026 ; Anah, guide des aides 2026). La rénovation d’ampleur, elle, finance un ensemble de travaux énergétiques dans un logement classé E, F ou G, avec un gain d’au moins deux classes, deux gestes d’isolation, un professionnel RGE et un Accompagnateur Rénov’ obligatoire (France Rénov’).</p>
+  <p>Dans ce parcours, certains travaux induits sont pris en charge avec l’isolation. L’Anah en publie la liste pour les professionnels (guide « Travaux éligibles et induits, devis et factures », juillet 2025) :</p>
+  <ul>
+    <li><strong>Pris en charge :</strong> la dépose et la repose de la couverture quand on isole la toiture par l’extérieur, ou la pose d’un panneau sandwich en bac acier isolé.</li>
+    <li><strong>Exclus :</strong> les travaux de désamiantage qui résultent d’obligations réglementaires et, en cas d’intervention sur des matériaux amiantés, les dépenses propres à la protection du chantier, à la mise en décharge et au traitement des déchets amiantés.</li>
+  </ul>
+  <p>Dans une rénovation d’ampleur qui remplace une couverture en fibrociment, la couverture isolée peut donc entrer dans le projet, mais le surcoût lié à l’amiante reste à votre charge.</p>
+
+  <h2>Ma Prime Logement Décent : qui peut être aidé pour retirer l’amiante ?</h2>
+  <p>C’est la seule aide nationale que nous ayons trouvée pour le retrait. Le ministère de la Transition écologique la cite pour « les travaux d’élimination ou d’isolation des matériaux contenant de l’amiante », et pour le diagnostic s’il est suivi des travaux, dans le projet global de rénovation d’un logement non décent ou insalubre, sous plafonds de ressources.</p>
+  <p>Pour un propriétaire occupant, d’après France Rénov’ et le guide de l’Anah de septembre 2026, il faut :</p>
+  <ul>
+    <li>des revenus modestes ou très modestes : pour une personne seule hors Île-de-France, jusqu’à 22 259 € de revenu fiscal de référence pour la catégorie modeste (barème au 1er janvier 2026) ;</li>
+    <li>un logement construit depuis plus de 15 ans, occupé en résidence principale jusqu’à 3 ans après les travaux ;</li>
+    <li>une dégradation ou une insalubrité attestée par un professionnel qualifié avec une grille d’évaluation, ou un arrêté de mise en sécurité ou de traitement de l’insalubrité ;</li>
+    <li>un assistant à maîtrise d’ouvrage habilité par l’Anah, un audit énergétique, et au moins la classe E après travaux.</li>
+  </ul>
+  <p>L’aide couvre 80 % (revenus très modestes) ou 60 % (revenus modestes) d’un plafond de 70 000 € HT de travaux. Si la classe E n’est pas atteinte, elle finance jusqu’à 50 % d’un plafond de 50 000 € HT. Un bailleur peut aussi en bénéficier s’il conventionne son logement avec l’Anah (Loc’Avantages) : 25 à 35 % d’un plafond de travaux fixé au m², avec au moins la classe D après travaux.</p>
+  <p>Ce dispositif vise des logements très dégradés : une maison en bon état dont seule la toiture contient de l’amiante n’en remplit en principe pas les conditions.</p>
+
+  <h2>Quelle TVA sur un chantier de désamiantage ?</h2>
+  <p>Le désamiantage d’un logement achevé depuis plus de deux ans relève du taux réduit de 10 %. Le BOFiP le précise : les travaux « proprement dits de désamiantage » peuvent en bénéficier (BOI-TVA-LIQ-30-20-90-30). Ce taux vient de l’article 279-0 bis du code général des impôts, qui vise les travaux d’amélioration et d’entretien des locaux d’habitation.</p>
+  <ul>
+    <li><strong>Un garage, une cave, un grenier :</strong> les dépendances usuelles d’une habitation suivent son régime, donc 10 % (BOFiP, BOI-TVA-LIQ-30-20-90-10, septembre 2026).</li>
+    <li><strong>Une grange, une écurie, un hangar agricole :</strong> ce ne sont pas des dépendances usuelles. Le désamiantage relève du taux normal de 20 %, sauf si le bâtiment sert effectivement de garage (même BOFiP ; question écrite n° 1346).</li>
+    <li><strong>Le diagnostic amiante :</strong> taux normal, car il doit être réalisé par une personne indépendante du pro qui fait les travaux (BOFiP).</li>
+    <li><strong>Le taux de 5,5 % :</strong> il vise l’isolation, le chauffage et la ventilation, avec leurs travaux induits (BOFiP, BOI-TVA-LIQ-30-20-95). L’Anah ne range pas les dépenses propres à l’amiante parmi ces travaux induits : la ligne désamiantage reste à 10 %.</li>
+  </ul>
+  <p>Pour en bénéficier, vous certifiez sur le devis ou la facture que le logement est achevé depuis plus de deux ans et que les travaux sont éligibles. Gardez une copie jusqu’au 31 décembre de la cinquième année qui suit les travaux (BOFiP).</p>
+
+  <h2>L’éco-prêt à taux zéro peut-il financer le désamiantage ?</h2>
+  <p>Pas seul. L’éco-PTZ finance des travaux d’économies d’énergie (isolation de la toiture ou des murs, fenêtres, chauffage) dans une résidence principale achevée depuis plus de deux ans, réalisés par un professionnel RGE, jusqu’à 50 000 € selon les travaux et sans condition de ressources (service-public.fr). Il prend aussi en compte la dépose et la mise en décharge des ouvrages existants, et les travaux indissociablement liés aux travaux énergétiques (ANIL ; Anah, guide 2026).</p>
+  <p>L’amiante n’y est pas cité. Si le retrait d’une couverture en fibrociment est nécessaire pour isoler votre toit, faites-le inscrire au descriptif des travaux et demandez à votre banque s’il entre dans le prêt : c’est elle qui accorde l’éco-PTZ. Un désamiantage sans travaux d’économies d’énergie n’y ouvre pas droit.</p>
+
+  <h2>Propriétaire bailleur : le désamiantage est-il déductible ?</h2>
+  <p>Oui, si vous déclarez vos loyers au régime réel. Pour un logement loué, les dépenses d’amélioration se déduisent des revenus fonciers, sauf si elles font partie de travaux de construction, de reconstruction ou d’agrandissement (BOFiP). Pour des locaux professionnels ou commerciaux loués, le code général des impôts prévoit une exception expresse pour les dépenses qui protègent les locaux de l’amiante : enlèvement des matériaux amiantés, ou confinement par fixation ou encoffrement (art. 31, I-1°-b bis, repris par le BOFiP).</p>
+  <p>Si les charges dépassent les loyers, le déficit s’impute sur votre revenu global dans la limite de 10 700 € par an. Au régime micro-foncier, vous ne déduisez pas les travaux : un abattement forfaitaire de 30 % s’applique (service-public.fr, fiche F1991).</p>
+
+  <h2>Votre région ou votre commune peut-elle vous aider ?</h2>
+  <p>Parfois, mais rarement pour un particulier. Les aides locales que nous avons lues financent le désamiantage d’une toiture qui doit ensuite recevoir des panneaux solaires, et elles visent des personnes morales :</p>
+  <ul>
+    <li><strong>Grand Annecy (Haute-Savoie) :</strong> jusqu’à 50 % des travaux de toiture HT, désamiantage compris, dans la limite de 200 000 € par bénéficiaire, pour les entreprises, collectivités et associations de ses 34 communes, si les panneaux couvrent au moins 35 % de la surface désamiantée (page mise à jour le 2 mars 2026).</li>
+    <li><strong>Région Sud :</strong> le dispositif « Paré pour le solaire » finance le désamiantage de la toiture, diagnostic compris, pour les personnes morales qui préparent une installation solaire. L’aide va jusqu’à 40 % de l’assiette (50 % avec une isolation performante), dans la limite de 40 €/m² et de 200 000 € par site (mise à jour du 19 janvier 2026). Le détail est sur notre page du <a href="/desamiantage-paca">désamiantage en PACA</a>.</li>
+  </ul>
+  <p>Les aides locales changent d’une collectivité à l’autre (France Rénov’) : avant de signer, cherchez celles de votre commune dans la base des aides locales aux travaux de l’ANIL, ou demandez à un conseiller France Rénov’ ou à l’ADIL de votre département.</p>
+
+  <h2>Un hangar ou un bâtiment agricole a-t-il droit à une aide ?</h2>
+  <p>Pas aux aides de l’Anah, qui portent sur les logements : en 2023, le Gouvernement a écrit qu’il n’est pas prévu de les étendre aux professionnels (question écrite n° 4760). La TVA y est de 20 %. Les pistes sont locales et souvent liées au solaire, comme au Grand Annecy ou en Région Sud : interrogez votre Région et votre chambre d’agriculture avant de lancer le chantier.</p>
+
+  <h2>Votre caisse de retraite ou l’Assurance maladie peuvent-elles vous aider ?</h2>
+  <p>Pas pour l’amiante.</p>
+  <ul>
+    <li><strong>Les caisses de retraite</strong> aident à adapter le logement au vieillissement (prévention des chutes, aides techniques). La page de l’Assurance retraite sur le logement ne mentionne pas l’amiante.</li>
+    <li><strong>La subvention Prévention Amiante de l’Assurance maladie</strong> s’adresse aux entreprises de 1 à 49 salariés qui équipent leurs salariés, et exclut les entreprises certifiées sous-section 3 (ameli.fr, février 2026). Elle ne finance pas votre chantier.</li>
+  </ul>
+
+  <h2>Comment monter votre dossier sans perdre l’aide ?</h2>
+  <ul>
+    <li><strong>Ne commencez pas les travaux avant la décision.</strong> Pour les aides de l’Anah, la demande se dépose avant les travaux, et l’Anah recommande vivement d’attendre la décision d’octroi : la subvention n’est pas de droit (guide des aides 2026).</li>
+    <li><strong>Prenez rendez-vous avec France Rénov’.</strong> Ce rendez-vous est gratuit, et obligatoire pour une rénovation d’ampleur. Méfiez-vous d’un appel ou d’un courriel qui vous promet une aide : le service public n’effectue jamais de démarchage commercial (service-public.fr).</li>
+    <li><strong>Faites détailler la part amiante.</strong> Protection du chantier, retrait, emballage, transport et traitement des déchets sur des lignes à part : c’est ce qui montre ce qui est aidé, et à quel taux de TVA.</li>
+    <li><strong>Vérifiez la certification.</strong> Le retrait est réservé aux pros certifiés, comme nos pros : voyez comment vérifier une <a href="/certification-sous-section-3">certification sous-section 3</a>. Pour les travaux énergétiques aidés, le pro doit aussi être RGE.</li>
+  </ul>
+  <p>Pour le budget, nos guides donnent les fourchettes relevées en 2026 : le <a href="/prix-desamiantage">prix du désamiantage au m²</a> et le <a href="/prix-remplacement-toiture-amiante">prix pour changer une toiture en amiante</a>. Le déroulé du chantier, du repérage au plan de retrait, est dans notre guide du <a href="/desamiantage-toiture-amiante">désamiantage de toiture</a>.</p>
+
+  <EncartDevis accroche="Pour un devis qui sépare la part amiante, ligne par ligne, faites venir l’un de nos pros." />
+</Guide>
