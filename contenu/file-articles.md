@@ -16,7 +16,7 @@ Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026.
 
 | Ordre | Chemin | Requête principale | Requêtes secondaires | Question du lecteur | Statut |
 |---|---|---|---|---|---|
-| 5 | `/carrelage-colle-amiante` | colle carrelage amiante (210) | carrelage amiante (170), lino amiante (140) | Mon carrelage, sa colle ou mon lino contiennent-ils de l'amiante ? Puis-je les recouvrir ou les casser ? (renvoyer vers `/retrait-dalles-sol-amiante` pour les dalles vinyle) | à faire |
+| 5 | `/carrelage-colle-amiante` | colle carrelage amiante (210) | carrelage amiante (170), lino amiante (140) | Mon carrelage, sa colle ou mon lino contiennent-ils de l'amiante ? Puis-je les recouvrir ou les casser ? (renvoyer vers `/retrait-dalles-sol-amiante` pour les dalles vinyle) | brouillon (13 nov. 2026) |
 | 6 | `/plan-de-retrait-amiante` | plan de retrait amiante (320) | durée chantier désamiantage | Qu'est-ce que le plan de retrait, qui le rédige, pourquoi faut-il attendre 30 jours, et que doit-il contenir ? | à faire |
 | 7 | `/amiante-location` | amiante location (110) | dapp amiante (90), locataire amiante, propriétaire bailleur amiante | Que doit faire un propriétaire bailleur, et que peut demander un locataire, quand le logement contient de l'amiante ? | à faire |
 | 8 | `/demolition-amiante` | démolition amiante (40) | diagnostic amiante avant démolition (70), repérage amiante avant démolition (20), démolition maison amiante (10) | Je démolis une maison ou une annexe : quel repérage, quel retrait avant démolition, quels délais ? | à faire |

@@ -1,0 +1,123 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Écrit le 13 nov. 2026 par la tâche « Article SEO du jour ». Relu le même jour : Légifrance (annexe 13-9 du code de la
+// santé publique, code du travail), fiche INRS ED 4279, rapport Carto Amiante (OPPBTP, DGT, INRS, mise à jour du
+// 1er avril 2021), deux pages de la FFB (12 janv. 2024 et 10 sept. 2026), guides de prix ABC Travaux et Diagnostic
+// Immobilier 13.
+// Points incertains :
+// - aucun texte officiel lu ne dit qu'un carreau de céramique ne contient pas d'amiante : la page dit seulement que les
+//   textes visent la colle, les sous-couches et les revêtements plastiques ;
+// - aucun guide de prix lu ne chiffre le retrait d'un carrelage sur colle amiantée : la page donne la dépose simple et le
+//   retrait des colles, sans les additionner ;
+// - le classement en sous-section 3 du retrait de tout le carrelage d'une pièce vient de la FFB (exemple d'une pièce de
+//   12 m² aux colles amiantées), pas d'un texte de la Direction générale du travail lu directement (page bloquée).
+// Relu par un second rédacteur le 13 nov. 2026 : chapo resserré, ponçage de la colle aligné sur le guide des dalles
+// (plan de retrait, CRAMIF FIP 9), classement des petites réparations de faïence laissé au devis.
+// Prix à revoir chaque trimestre.
+const sources = [
+  { titre: 'Code de la santé publique, annexe 13-9 (listes A, B et C des matériaux à repérer)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000024141044', date: 'version en vigueur depuis le 1er février 2012' },
+  { titre: 'INRS, fiche métier amiante ED 4279 « Poseur de revêtement de sol – Carreleur »', url: 'https://www.inrs.fr/media.html?refINRS=ED%204279', date: '2e édition, octobre 2016' },
+  { titre: 'FFB, « Où risque-t-on de trouver de l’amiante lors de travaux de rénovation ? »', url: 'https://www.ffbatiment.fr/gestion-entreprise/organiser-mon-chantier/prevention-des-risques-chantier/dossier/renovation-amiante', date: 'page datée du 10 septembre 2026' },
+  { titre: 'FFB, « Amiante : quels travaux relèvent des sous-sections 3 et 4 ? »', url: 'https://www.ffbatiment.fr/techniques-batiment/reglementation-construction/reglementation-amiante-plomb-silice/dossier/amiante-sous-section-3-ou-4', date: 'publié le 12 janvier 2024' },
+  { titre: 'OPPBTP, Direction générale du travail et INRS, rapport Carto Amiante (fiches 13 et 14 : perçage de colle de faïence, décollement de quelques carreaux de faïence collés avec de la colle amiantée)', url: 'https://inrs.fr/dam/jcr:da1069af-6f9a-497a-987a-4ac5dbe0b00a/Ouvrage-rapport-carto-amiante-2021.pdf', date: 'mise à jour du 1er avril 2021' },
+  { titre: 'Service-public.fr, fiche F742 « Diagnostic amiante » (vente)', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F742', date: 'vérifiée le 16 octobre 2026' },
+  { titre: 'Arrêté du 12 décembre 2012 relatif aux critères d’évaluation de l’état de conservation des matériaux et produits de la liste B', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000026843927', date: 'version en vigueur au 13 novembre 2026' },
+  { titre: 'CRAMIF, fiche d’information et de prévention FIP 9 « Dépose de revêtements de sols »', url: 'https://cramif.fr/sites/default/files/inline-files/fip9-depose-revetement-sols-cramif_0.pdf', date: 'version 5, juillet 2016' },
+  { titre: 'Code du travail, article L4412-2 (repérage avant travaux)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033013763', date: 'version en vigueur depuis le 10 août 2016' },
+  { titre: 'Code du travail, article R4412-94 (retrait et encapsulage)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025819070', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2013' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000046882710', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Arrêté du 21 décembre 2012 relatif aux recommandations générales de sécurité et au contenu de la fiche récapitulative du « dossier technique amiante », annexe I', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000026863286', date: 'annexe I en vigueur depuis le 1er avril 2021' },
+  { titre: 'Arrêté du 21 décembre 2021 relatif au bordereau de suivi des déchets d’amiante, article 3', url: 'https://www.legifrance.gouv.fr/loda/id/JORFTEXT000044571414', date: 'en vigueur depuis le 1er janvier 2022' },
+  { titre: 'Ministères de la Transition écologique et de la Cohésion des territoires, brochure « Bricolage dans votre logement : attention à l’amiante ! »', url: 'https://www.notre-environnement.gouv.fr/IMG/pdf/dgaln_plaque8f26.pdf', date: 'mars 2016' },
+  { titre: 'ABC Travaux, « Prix dépose carrelage au m² en 2026 »', url: 'https://abctravaux.org/prix-depose-carrelage-au-m2/', date: 'publié le 8 novembre 2026' },
+  { titre: 'ABC Travaux, « Prix du désamiantage au m² »', url: 'https://abctravaux.org/prix-desamiantage-m2/', date: 'publié le 21 octobre 2026' },
+  { titre: 'Diagnostic Immobilier 13, « Désamiantage : coûts au m², réglementation et aides »', url: 'https://www.diagnostic-immobilier13.fr/desamiantage-couts-au-m%C2%B2-reglementation-et-aides/', date: 'publié le 3 avril 2026' },
+]
+
+const faq = [
+  { question: 'Le carreau lui-même peut-il contenir de l’amiante ?', reponse: 'Les textes officiels visent surtout ce qu’il y a autour : le code de la santé publique cite les colles des carrelages, et l’INRS les colles, les chapes maigres et les ragréages. Seule une analyse en laboratoire dit si un matériau précis contient de l’amiante : demandez au diagnostiqueur de prélever la colle et, en cas de doute, le carreau.' },
+  { question: 'Le diagnostic amiante de la vente a-t-il vérifié ma colle de carrelage ?', reponse: 'En général, non. Le diagnostic de vente repère les matériaux des listes A et B, où figurent les dalles de sol mais pas les colles de carrelage. Les colles des carrelages apparaissent dans la liste C, celle des repérages avant démolition. Avant des travaux, c’est le repérage avant travaux qui les recherche.' },
+  { question: 'Puis-je poser du carrelage neuf sur un ancien carrelage collé à l’amiante ?', reponse: 'Seulement si la préparation ne touche ni l’ancien carrelage ni sa colle. Poncer ou piquer l’ancien sol attaque la colle, et une chape peut être un encapsulage, réservé à un pro certifié sous-section 3 : le classement dépend de la technique. Faites faire le repérage avant travaux et faites préciser la méthode dans le devis.' },
+  { question: 'Quelques carreaux de faïence se décollent : faut-il tout refaire ?', reponse: 'Non. Décoller quelques carreaux pour une réparation est une intervention ponctuelle, que l’OPPBTP, la Direction générale du travail et l’INRS ont étudiée dans le rapport Carto Amiante. Elle se confie à un pro formé à l’amiante, qui travaille au gel sans gratter la colle et précise dans son devis le classement de l’opération. En attendant, ne grattez rien et essuyez les débris avec un chiffon humide.' },
+  { question: 'Qui peut retirer un carrelage ou un lino sur colle amiantée ?', reponse: 'Un pro certifié sous-section 3. Retirer tout le revêtement amianté d’une pièce est un retrait d’amiante (code du travail, art. R4412-94), qui suppose un plan de retrait transmis à l’inspection du travail au moins 30 jours avant le chantier (art. R4412-137).' },
+]
+---
+<Guide
+  titre="Colle carrelage amiante : vérifier, recouvrir ou retirer"
+  description="Colle de carrelage, faïence ou lino posés avant 1997 : comment savoir s’ils contiennent de l’amiante, ce qu’on peut recouvrir, et pourquoi ne jamais les casser."
+  chemin="/carrelage-colle-amiante"
+  rubrique="Intérieur"
+  h1="Carrelage, colle et lino amiantés : les reconnaître, les recouvrir ou les retirer"
+  chapo="Posés avant 1997, la colle d’un carrelage ou d’une faïence et la sous-couche d’un vieux lino peuvent contenir de l’amiante : seule une analyse en laboratoire le dit. Tant que vous n’y touchez pas, vous pouvez les garder ou les recouvrir. Les casser, les poncer ou gratter leur colle libère des fibres : retirer tout le revêtement d’une pièce est un retrait d’amiante, réservé à un pro certifié sous-section 3."
+  publie="2026-11-13"
+  misAJour="2026-11-13"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Mon carrelage, sa colle ou mon lino contiennent-ils de l’amiante ?</h2>
+  <p>Ils peuvent en contenir s’ils ont été posés avant le 1er janvier 1997, date depuis laquelle la fabrication et la vente de matériaux amiantés sont interdites (INRS, fiche ED 4279). La FFB range la « colle de carrelage ou de revêtement de sol » parmi les produits où l’amiante servait à la résistance mécanique, à côté des dalles vinyle-amiante (septembre 2026).</p>
+  <p>Ce qui est visé, c’est surtout ce qu’il y a sous le carreau. Le code de la santé publique cite les « colles des carrelages » parmi les éléments à vérifier avant une démolition (annexe 13-9, liste C). La fiche de l’INRS pour les carreleurs et poseurs de sols y ajoute les chapes maigres, les ragréages et les cartons d’amiante en sous-face de certains revêtements. La colle de faïence, au mur, est concernée elle aussi : le rapport Carto Amiante lui consacre deux fiches de mesures.</p>
+  <div class="tableau">
+    <table>
+      <caption>D’après le code de la santé publique (annexe 13-9), l’INRS (fiche ED 4279) et le rapport Carto Amiante (2021), relus le 13 novembre 2026.</caption>
+      <thead><tr><th scope="col">Matériau</th><th scope="col">Où chercher l’amiante</th><th scope="col">Ce que disent les textes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Carrelage de sol</strong></td><td>Colle, chape maigre, ragréage</td><td>« Colles des carrelages » à analyser avant démolition (liste C)</td></tr>
+        <tr><td><strong>Faïence murale</strong></td><td>Colle</td><td>Perçage et décollement étudiés par Carto Amiante</td></tr>
+        <tr><td><strong>Lino ou sol plastique en rouleau</strong></td><td>Sous-couche en carton ou feutre, colle</td><td>Chaque couche du revêtement doit être analysée (liste C)</td></tr>
+        <tr><td><strong>Dalles vinyle</strong></td><td>Dalle et colle noire</td><td>Repérées au diagnostic de vente (liste B)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Le carreau lui-même est rarement nommé : les textes officiels lus visent la colle, la chape et les sous-couches. Seule l’analyse tranche, et rien n’empêche de faire prélever aussi le carreau en cas de doute.</p>
+
+  <h2>Mon lino contient-il de l’amiante ?</h2>
+  <p>Un vieux lino peut en contenir, surtout dans ce qu’on ne voit pas. L’INRS signale des cartons d’amiante en sous-face de certains revêtements de sol, et la colle peut en contenir aussi. Le code de la santé publique cite les plastiques avec sous-couche et demande que l’analyse porte sur « chacune des couches du revêtement » (annexe 13-9, liste C) : un prélèvement de la seule surface ne suffit pas.</p>
+  <p>Les règles sont les mêmes que pour le carrelage : intact, il peut rester en place ou être recouvert par un sol neuf posé sans colle ; l’arracher en raclant sa sous-couche et sa colle est un retrait. Si votre sol est fait de dalles carrées plutôt que d’un rouleau, lisez plutôt notre guide sur les <a href="/retrait-dalles-sol-amiante">dalles de sol en amiante</a>.</p>
+
+  <h2>Comment en être sûr ?</h2>
+  <p><strong>À l’œil nu, personne ne peut trancher.</strong> Le diagnostiqueur certifié conclut sur un document ou, en cas de doute, sur un échantillon analysé par un laboratoire accrédité (arrêté du 12 décembre 2012, art. 4). ABC Travaux compte 40 à 80 € par échantillon analysé et 200 à 500 € pour le repérage avant travaux d’une maison (octobre 2026).</p>
+  <p>Ne comptez pas sur le diagnostic remis à l’achat pour répondre. Pour un logement dont le permis de construire date d’avant le 1er juillet 1997, il repère les matériaux des listes A et B (service-public.fr). Les dalles de sol sont dans la liste B, mais les colles de carrelage n’y sont pas : elles relèvent de la liste C, celle de la démolition.</p>
+  <p>Avant des travaux, le repérage est de toute façon obligatoire. Le propriétaire fait rechercher l’amiante dans ce que les travaux vont toucher et transmet le résultat aux entreprises qui interviennent (code du travail, art. L4412-2). Demandez au diagnostiqueur de prélever la colle et chaque couche du revêtement, pas seulement la surface. Notre guide du <a href="/diagnostic-amiante-avant-travaux">diagnostic amiante avant travaux</a> détaille ce repérage.</p>
+
+  <h2>Puis-je recouvrir mon carrelage ou mon lino ?</h2>
+  <p>Oui, et c’est souvent le plus simple. Pour une rénovation partielle d’un sol amianté, la première piste que l’INRS donne aux poseurs est de laisser l’ancien revêtement en place et de le recouvrir d’un revêtement neuf, de préférence sans colle (clipsable, emboîtable). Au mur, la FFB cite un cas qui sort même du champ de la réglementation amiante : monter une cloison devant une faïence collée à la colle amiantée, sans toucher à celle-ci (janvier 2024).</p>
+  <p>La règle est la même partout : <strong>le nouveau revêtement ne doit pas obliger à attaquer l’ancien.</strong> Poncer, piquer ou percer l’ancien carrelage pour préparer la pose, c’est attaquer la colle : la CRAMIF range le ponçage d’une colle amiantée parmi les travaux qui imposent un plan de retrait, comme nous l’expliquons dans le guide des <a href="/retrait-dalles-sol-amiante">dalles de sol en amiante</a>. Poser un revêtement par-dessus sans toucher à l’ancien relève du recouvrement : la FFB classe en sous-section 4 la pose de dalles PVC sur des dalles vinyle-amiante. Une chape coulée sur l’ancien sol peut, elle, être un encapsulage, réservé à un pro certifié sous-section 3. Faites préciser la méthode et son classement dans le devis.</p>
+  <p>Recouvrir laisse l’amiante en place. L’INRS demande d’en garder la trace : rangez le rapport de repérage avec les papiers du logement, il servira à tous ceux qui travailleront un jour sur ce sol ou ce mur.</p>
+
+  <h2>Puis-je casser ou décoller mon carrelage ?</h2>
+  <p>Pas sans précaution, et pas seul. Le rapport Carto Amiante, mené par l’OPPBTP, la Direction générale du travail et l’INRS, a mesuré les poussières lors du décollement de quelques carreaux de faïence collés à la colle amiantée. Il relève des empoussièrements en fibres d’amiante « non négligeables » et beaucoup de poussières minérales. Le procédé qui donne les meilleurs résultats consiste à couvrir de gel la zone, puis à racler pour décoller le carreau sans gratter la colle. À l’opposé, l’INRS réserve la découpe à sec avec des outils rapides aux chantiers confinés, avec douches de décontamination et mise en dépression.</p>
+  <p>Tout dépend ensuite de l’ampleur des travaux :</p>
+  <ul>
+    <li><strong>Quelques carreaux à recoller ou à remplacer :</strong> une intervention ponctuelle, à confier à un pro formé à l’amiante, qui précise dans son devis le classement de l’opération.</li>
+    <li><strong>Tout le carrelage d’une pièce, avec sa colle :</strong> un retrait d’amiante. La FFB l’illustre par une pièce de 12 m² dont seules les colles contiennent de l’amiante : retirer son sol relève de la sous-section 3, même au milieu d’un chantier de 500 m².</li>
+  </ul>
+  <p>Un retrait est réservé à un pro certifié sous-section 3 (code du travail, art. R4412-94 et R4412-129). Il prépare un plan de retrait, transmis à l’inspection du travail au moins 30 jours avant le chantier (art. R4412-137) : comptez un bon mois entre la signature et les travaux. Pour vérifier un pro avant de signer, suivez notre méthode : <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>.</p>
+  <p>Faire le travail vous-même est fortement déconseillé. L’arrêté du 21 décembre 2012 recommande aux particuliers d’éviter autant que possible d’intervenir sur un matériau amianté et de faire appel à des pros (annexe I). La brochure des ministères rappelle que le particulier qui travaille seul répond des conséquences pour lui et pour ses voisins.</p>
+
+  <h2>Par où commencer ?</h2>
+  <ol>
+    <li><strong>Ne touchez à rien.</strong> Pas de burin, de ponceuse ni de perceuse. Si des éclats ou de la poussière apparaissent, essuyez avec un chiffon humide, jamais au balai ni à l’aspirateur domestique (brochure des ministères).</li>
+    <li><strong>Datez la pose</strong> et rassemblez les documents : diagnostic de la vente, dossier technique amiante de la copropriété, anciens repérages.</li>
+    <li><strong>Faites analyser la colle</strong> et chaque couche du revêtement par un diagnostiqueur certifié, avant tout devis de travaux.</li>
+    <li><strong>Choisissez</strong> entre garder, recouvrir ou retirer, selon votre projet.</li>
+    <li><strong>Pour un retrait</strong>, demandez un devis à un pro certifié sous-section 3 qui précise le plan de retrait, la filière des déchets et le bordereau de suivi.</li>
+  </ol>
+
+  <EncartDevis accroche="Salle de bains ou cuisine à refaire sur une colle amiantée : demandez un devis à l’un de nos pros certifiés." />
+
+  <h2>Combien coûte le retrait d’un carrelage sur colle amiantée ?</h2>
+  <p>Aucun guide de prix que nous avons lu ne donne de tarif propre au carrelage amianté. Les ordres de grandeur publiés permettent tout de même de situer un devis :</p>
+  <ul>
+    <li>dépose simple d’un carrelage collé, avant tout repérage amiante : 15 à 30 €/m² au sol, jusqu’à 40 €/m² au mur (ABC Travaux, novembre 2026) ;</li>
+    <li>retrait de colles et d’enduits amiantés : 30 à 60 €/m² (Diagnostic Immobilier 13, avril 2026) ;</li>
+    <li>forfait minimum fréquent sous 30 m² : 1 500 à 2 500 € (ABC Travaux, octobre 2026).</li>
+  </ul>
+  <p>ABC Travaux le résume dans son guide de la dépose de carrelage (novembre 2026) : quand le repérage est positif, l’opération sort du cadre d’une simple dépose et le budget change complètement. Une salle de bains de quelques mètres carrés tombe souvent sous le forfait minimum. Ajoutez le repérage et le revêtement neuf, que ces fourchettes ne comprennent pas. Notre page <a href="/prix-desamiantage">prix du désamiantage au m²</a> détaille les postes à comparer, et seul un devis après visite donne le prix de votre chantier.</p>
+
+  <h2>Que deviennent les carreaux et la colle retirés ?</h2>
+  <p>Ce sont des déchets dangereux : l’INRS demande de les emballer dans un double emballage fermé et étiqueté. Le pro qui fait le retrait les envoie vers une installation autorisée, avec un bordereau de suivi des déchets d’amiante qu’il émet lui-même pour un particulier (arrêté du 21 décembre 2021, art. 3) : demandez-en une copie à la fin du chantier. La déchèterie n’accepte en principe que l’amiante lié resté intact, comme le fibrociment (arrêté du 21 décembre 2012, annexe I) : avant de vous déplacer avec des gravats, lisez notre page sur <a href="/dechetterie-amiante">les déchèteries qui acceptent l’amiante</a>.</p>
+</Guide>
