@@ -1,0 +1,111 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Écrit le 16 nov. 2026 par la tâche « Article SEO du jour ». Relu le même jour sur code.travail.gouv.fr et Légifrance :
+// code du travail, art. R4412-129, R4412-133 (20 mentions, création sur DEMAT@MIANTE), R4412-134, R4412-135, R4412-136,
+// R4412-137, R4412-138, R4412-139 et R4412-145. Relu aussi : page DEMAT@MIANTE de la DREETS Hauts-de-France (mise à jour
+// le 4 mars 2025). Durées de chantier reprises de Guide Robien (juin 2026), déjà citées par /flocage-calorifugeage-amiante ; ABC Travaux relu le 16 nov.
+// Points incertains : R4412-137 ne cite pas le donneur d’ordre parmi les destinataires du plan :
+// la page conseille de demander la date de dépôt, sans en faire une obligation. Aucun prix propre au plan trouvé : ABC Travaux
+// le range avec l’installation ; la page renvoie aux frais fixes du devis. Aucune source officielle trouvée sur la raison
+// du délai de 30 jours : la page n’en donne pas. Relecture indépendante (sous-agent) faite le 16 nov., corrections appliquées. Relire les textes au moins une fois par an.
+const sources = [
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2013' },
+  { titre: 'Code du travail, article R4412-133 (établissement et contenu du plan de retrait)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-133', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Code du travail, article R4412-134 (plan tenu à disposition sur le chantier)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-134', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Code du travail, article R4412-135 (plan de démolition)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-135', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-136 (transmission trimestrielle au médecin du travail et au CSE)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-136', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan de retrait)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-137', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Code du travail, article R4412-138 (modifications et avenants)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-138', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Code du travail, article R4412-139 (rapport de fin de travaux)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-139', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-145 (mode opératoire des interventions)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-145', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'DREETS Hauts-de-France, « DEMAT@MIANTE : déclarer vos plans de retrait amiante en ligne »', url: 'https://hauts-de-france.dreets.gouv.fr/Demat-miante-declarer-vos-plans-de-retrait-amiante-en-ligne', date: 'publiée le 15 avril 2024, mise à jour le 4 mars 2025' },
+  { titre: 'ABC Travaux, « Prix du désamiantage au m² »', url: 'https://abctravaux.org/prix-desamiantage-m2/', date: 'publié le 21 octobre 2026, relu le 16 novembre 2026' },
+  { titre: 'Guide Robien, « Flocages amiante : coûts et procédures de désamiantage en 2026 »', url: 'https://www.guide-robien.com/flocages-amiante-couts-et-procedures-de-desamiantage-en-2026/', date: 'publié le 21 juin 2026' },
+]
+
+const faq = [
+  { question: 'Qui rédige le plan de retrait amiante ?', reponse: 'Le pro certifié sous-section 3 qui fera les travaux. Le code du travail confie le plan à l’employeur, qui l’établit à partir de son évaluation des risques, sur la plateforme DEMAT@MIANTE du ministère du Travail (art. R4412-133). Le propriétaire n’a rien à rédiger : il fournit le repérage amiante, que le plan doit reprendre.' },
+  { question: 'Peut-on commencer le désamiantage avant 30 jours ?', reponse: 'Non, sauf urgence liée à un sinistre. Le plan doit être transmis au moins 30 jours avant le démarrage, ou au moins 8 jours en cas de travaux d’urgence après un sinistre. Le délai court à partir de l’horodatage de la transmission sur DEMAT@MIANTE (code du travail, art. R4412-137).' },
+  { question: 'Le plan de retrait doit-il être validé par l’inspection du travail ?', reponse: 'Le code du travail parle d’une transmission, pas d’une autorisation : le pro transmet le plan à l’inspection du travail, aux organismes de sécurité sociale et aux organismes certificateurs (art. R4412-137). Le délai de 30 jours court à partir de cette transmission, horodatée sur DEMAT@MIANTE.' },
+  { question: 'Que se passe-t-il si la date du chantier change ?', reponse: 'Le pro doit informer sans délai les services de contrôle et de prévention, et les organismes certificateurs, de tout changement de la date de démarrage ou du contenu du plan. Si le contrat ou les procédés changent, il saisit un avenant sur DEMAT@MIANTE (code du travail, art. R4412-138).' },
+  { question: 'Faut-il un plan de retrait pour une petite intervention sur de l’amiante ?', reponse: 'Non, si l’intervention ne consiste pas à retirer ou à encapsuler le matériau. Percer, découper ou entretenir un matériau amianté relève de la sous-section 4 : le pro établit alors un mode opératoire (code du travail, art. R4412-145), sans délai de 30 jours. Retirer le matériau relève de la sous-section 3 et impose un plan de retrait.' },
+]
+---
+<Guide
+  titre="Plan de retrait amiante : qui le rédige, délai et contenu"
+  description="Plan de retrait amiante : rédigé par le pro certifié, déposé sur DEMAT@MIANTE 30 jours avant le chantier (8 en urgence). Ses 20 mentions et votre rôle."
+  chemin="/plan-de-retrait-amiante"
+  rubrique="Comprendre"
+  h1="Plan de retrait amiante : qui le rédige, pourquoi 30 jours, ce qu’il contient"
+  chapo="Le plan de retrait est le document qui décrit un chantier de désamiantage avant qu’il commence. C’est le pro certifié sous-section 3 qui le rédige, sur la plateforme DEMAT@MIANTE du ministère du Travail, et il doit le transmettre au moins 30 jours avant les travaux (8 jours en cas d’urgence après un sinistre), un délai qui court dès la transmission. Il décrit le chantier en vingt mentions : zone, quantités, durée, méthode, mesures de l’air, protections, déchets. Vous, propriétaire, n’avez rien à rédiger : vous fournissez le repérage amiante et vous prévoyez ce délai dans votre calendrier."
+  publie="2026-11-16"
+  misAJour="2026-11-16"
+  sources={sources}
+  faq={faq}
+>
+  <h2>À quoi sert le plan de retrait ?</h2>
+  <p>Le code du travail l’appelle « plan de démolition, de retrait ou d’encapsulage ». Le pro l’établit à partir de son évaluation des risques, pour chaque chantier où il retire ou encapsule de l’amiante (art. R4412-133). C’est le programme du chantier : où, combien, comment, avec qui, et comment l’air et les déchets seront contrôlés.</p>
+  <p>Il sert à deux choses. Il oblige le pro à préparer son chantier avant de toucher au matériau. Et il prévient à l’avance ceux qui contrôlent : l’inspection du travail, les organismes de sécurité sociale et les organismes qui certifient les pros (art. R4412-137). Le plan doit ensuite rester disponible sur le chantier, où ces mêmes services, le médecin du travail et les représentants du personnel peuvent le consulter (art. R4412-134).</p>
+
+  <h2>Qui rédige le plan de retrait ?</h2>
+  <p><strong>Le pro qui fait les travaux, pas vous.</strong> Le texte confie le plan à l’employeur, c’est-à-dire au pro certifié qui réalise le retrait. Depuis le 1er février 2023, il le crée directement sur DEMAT@MIANTE, la plateforme en ligne du ministère du Travail, par l’intermédiaire d’un référent ou d’un titulaire de compte de son entreprise (art. R4412-133). La DREETS Hauts-de-France rappelle que la saisie et la transmission sur cette plateforme sont obligatoires sur tout le territoire depuis cette date.</p>
+  <p>Retirer ou encapsuler de l’amiante est réservé à un pro certifié sous-section 3 : le donneur d’ordre, c’est-à-dire vous qui commandez les travaux, doit faire appel à lui (art. R4412-129). Pour vérifier une certification avant de signer, suivez notre méthode : <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>. Tous nos pros sont certifiés.</p>
+  <p>Votre rôle de propriétaire tient en une pièce : <strong>le repérage amiante</strong>. Le plan doit reprendre les dossiers techniques, c’est-à-dire le diagnostic ou le rapport de repérage (art. R4412-133, 14°). Sans repérage, le pro ne peut pas établir un plan complet. Si vous ne l’avez pas encore, voici ce qu’il faut savoir sur le <a href="/diagnostic-amiante-avant-travaux">diagnostic amiante avant travaux</a>.</p>
+
+  <h2>Pourquoi faut-il attendre 30 jours ?</h2>
+  <p>Le plan doit être transmis <strong>au moins 30 jours avant la date de démarrage</strong> des travaux (art. R4412-137). Le délai court à partir de l’horodatage de la transmission sur DEMAT@MIANTE : c’est cette date qui compte, pas celle de la signature du devis.</p>
+  <p>Le code du travail ne détaille pas la raison de ce délai. Il fixe en revanche ce qui se passe pendant ce temps : le plan est entre les mains de l’inspection du travail, des organismes de sécurité sociale et des organismes certificateurs avant le premier jour de chantier. Le texte parle d’une transmission, pas d’une autorisation : vous ne recevrez pas de « validation » à attendre en plus.</p>
+  <p><strong>Une seule exception :</strong> en cas de travaux d’urgence liés à un sinistre (par exemple une tempête), le délai tombe à 8 jours au moins (art. R4412-137). Si votre toiture a été abîmée, lisez aussi <a href="/toiture-amiante-que-faire">que faire d’une toiture en amiante</a>.</p>
+  <p>En pratique, un pro sérieux ne peut donc pas démarrer un retrait « la semaine prochaine » hors sinistre. Un démarrage aussi rapide doit vous alerter : soit le plan a déjà été déposé, et le pro peut vous dire quand, soit le délai n’est pas respecté.</p>
+
+  <h2>Que contient un plan de retrait ?</h2>
+  <p>L’article R4412-133 du code du travail fixe vingt mentions. Les voici regroupées par thème.</p>
+  <div class="tableau">
+    <table>
+      <caption>Contenu du plan de retrait, d’après l’article R4412-133 du code du travail (version en vigueur depuis le 1er février 2023).</caption>
+      <thead><tr><th scope="col">Thème</th><th scope="col">Ce que le plan doit indiquer</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Le chantier</th><td>Localisation de la zone à traiter, quantités d’amiante manipulées, lieu et description de l’environnement du chantier</td></tr>
+        <tr><th scope="row">Le calendrier</th><td>Date de début, durée probable des travaux, durées et temps de travail</td></tr>
+        <tr><th scope="row">Les équipes</th><td>Nombre de travailleurs, liste des personnes, validité de leurs attestations de compétence, visites médicales et formations de secourisme, personnes à contacter</td></tr>
+        <tr><th scope="row">La méthode</th><td>Description des procédés, notices de poste, bilan aéraulique prévisionnel pour un chantier sous confinement</td></tr>
+        <tr><th scope="row">Le contrôle de l’air</th><td>Programme et modalités des mesures d’empoussièrement</td></tr>
+        <tr><th scope="row">Les protections</th><td>Équipements de protection des travailleurs et des personnes à proximité, procédures de décontamination des personnes et du matériel</td></tr>
+        <tr><th scope="row">Les déchets</th><td>Équipements d’évacuation des déchets, gestion des déblais, remblais et déchets</td></tr>
+        <tr><th scope="row">Le repérage</th><td>Dossiers techniques : diagnostic ou rapport de repérage de l’amiante</td></tr>
+        <tr><th scope="row">La sécurité et la fin du chantier</th><td>Mesures de secours, mesures de repli et de restitution du site</td></tr>
+        <tr><th scope="row">En cas de démolition</th><td>Modalités du retrait préalable de l’amiante, ou justification de son absence</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Le plan est donc beaucoup plus qu’une formalité : il fixe la méthode et le calendrier sur lesquels le pro s’engage, sauf avenant. Pour une démolition, le plan prévoit que l’amiante est retiré avant de démolir, sauf si ce retrait exposait les travailleurs à un risque plus grand que de laisser les matériaux en place (art. R4412-135).</p>
+
+  <EncartDevis accroche="Pour lancer le plan de retrait au plus tôt, faites voir votre chantier à l’un de nos pros certifiés sous-section 3." />
+
+  <h2>Combien de temps dure un chantier de désamiantage ?</h2>
+  <p>Comptez deux temps : l’attente avant le chantier, puis le chantier lui-même.</p>
+  <ol>
+    <li><strong>Avant le chantier :</strong> le repérage s’il n’est pas fait, la visite et le devis du pro, puis au moins 30 jours entre la transmission du plan et le démarrage. En pratique, prévoyez <strong>au moins un mois</strong> entre la commande et le premier jour de travaux.</li>
+    <li><strong>Le chantier :</strong> sa durée probable est écrite dans le plan (art. R4412-133). Pour un retrait de flocage, Guide Robien (juin 2026) donne des délais moyens d’une à deux semaines pour un appartement, de deux à quatre semaines pour une maison, et de deux à quatre mois pour un bâtiment industriel ou recevant du public de 500 m² et plus. Pour une toiture ou des dalles de sol, le pro vous donne la durée lors de sa visite.</li>
+  </ol>
+  <p>Le déroulé complet d’un retrait de toiture, du repérage aux déchets, est dans notre guide du <a href="/desamiantage-toiture-amiante">désamiantage de toiture en cinq étapes</a>.</p>
+
+  <h2>Et si le chantier change en cours de route ?</h2>
+  <p>Un chantier bouge : la date glisse, une quantité d’amiante imprévue apparaît, la méthode doit évoluer. Le pro doit alors <strong>informer sans délai</strong> les services de contrôle et de prévention, et les organismes certificateurs, de tout changement du contenu du plan ou de la date de démarrage (art. R4412-138).</p>
+  <p>Si le changement vient d’une modification du contrat ou des procédés, il saisit un <strong>avenant</strong> sur DEMAT@MIANTE. Si ce changement risque d’augmenter nettement l’empoussièrement, l’avenant précise les mesures de prévention prévues. Chaque avenant compte comme une nouvelle version horodatée du plan (art. R4412-138). Le pro transmet aussi, chaque trimestre, la dernière version de ses plans au médecin du travail et aux représentants du personnel (art. R4412-136).</p>
+  <p>Pour vous, la conséquence est simple : si vous ajoutez des travaux au devis, par exemple retirer aussi des dalles de sol ou des conduits, parlez-en tôt. Mieux vaut que tout figure dans le plan d’origine.</p>
+
+  <h2>Plan de retrait ou mode opératoire : lequel pour votre chantier ?</h2>
+  <p>Le plan de retrait ne concerne que la sous-section 3 du code du travail : retrait, encapsulage et démolition. Une intervention ponctuelle sur un matériau amianté, comme percer, découper un passage ou entretenir, relève de la sous-section 4. Le pro n’établit alors pas de plan de retrait mais un <strong>mode opératoire</strong> pour chaque processus de travail (art. R4412-145), sans le délai de 30 jours. Les différences sont détaillées dans notre guide de la <a href="/sous-section-4-amiante">sous-section 4 amiante</a>.</p>
+
+  <h2>Ce que vous pouvez demander au pro</h2>
+  <p>L’article R4412-137 ne cite pas le donneur d’ordre parmi les destinataires du plan : ce sont l’inspection du travail, la sécurité sociale et les organismes certificateurs. Rien ne vous empêche, en revanche, de poser les bonnes questions :</p>
+  <ul>
+    <li><strong>Avant de signer :</strong> son certificat sous-section 3 en cours de validité, et un devis qui mentionne le plan de retrait, le repérage pris en compte et la filière des déchets.</li>
+    <li><strong>Après la signature :</strong> la date de transmission du plan sur DEMAT@MIANTE. La plateforme horodate chaque transmission (art. R4412-137), et la DREETS Hauts-de-France précise qu’elle fournit une preuve de dépôt : le pro peut donc vous donner cette date.</li>
+    <li><strong>À la fin du chantier :</strong> le rapport de fin de travaux, que le pro remet au donneur d’ordre, avec les mesures d’empoussièrement, les certificats d’acceptation préalable des déchets et les plans de localisation à jour (art. R4412-139). Gardez-le avec votre repérage : il servira à la vente ou aux prochains travaux.</li>
+  </ul>
+  <p>Le plan de retrait fait partie des frais fixes du chantier, qui pèsent lourd sur les petites surfaces. Dans l’exemple chiffré d’ABC Travaux (octobre 2026), il apparaît dans une ligne « installation et plan de retrait », avec le balisage et les protections, et non comme un poste à part. Le même guide estime qu’un devis qui ne mentionne pas le plan de retrait doit alerter. Les fourchettes relevées en 2026 sont sur notre page <a href="/prix-desamiantage">prix du désamiantage au m²</a>.</p>
+</Guide>

@@ -20,6 +20,7 @@ export const PAGES_GUIDE = [
   { chemin: '/toiture-amiante-que-faire', titreCourt: 'Toiture en amiante : que faire ?' },
   { chemin: '/vendre-maison-toiture-amiante', titreCourt: 'Vendre une maison avec un toit en amiante' },
   { chemin: '/diagnostic-amiante-avant-travaux', titreCourt: 'Diagnostic amiante avant travaux' },
+  { chemin: '/plan-de-retrait-amiante', titreCourt: 'Plan de retrait amiante' },
   { chemin: '/certification-sous-section-3', titreCourt: 'Certification sous-section 3' },
   { chemin: '/sous-section-4-amiante', titreCourt: 'Sous-section 4 amiante' },
   { chemin: '/dossier-technique-amiante', titreCourt: 'Dossier technique amiante (DTA)' },
