@@ -1,14 +1,21 @@
 # File d'attente des guides SEO
 
-La tâche planifiée « Article SEO du jour » prend le premier sujet **à faire** de la file, en sautant ceux qui ont déjà une
-branche `brouillon/<chemin>` sur GitHub. Elle l'écrit selon `contenu/consigne-redaction.md` et le pousse en brouillon.
-Maxime le valide, puis l'article est publié.
+Processus de publication automatique (décision de Maxime, 16 nov. 2026), tâche planifiée « Article SEO du jour » :
 
-Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026.
+1. Vérifier le mot-clé avec OpenSEO : volume, intention, page 1 de Google, pas de doublon.
+2. Rédiger le guide selon `contenu/consigne-redaction.md`.
+3. Le faire critiquer par un agent indépendant selon `contenu/grille-critique.md`.
+4. Corriger, avec au plus 2 tours de critique.
+5. Publier si le verdict est PUBLIER.
+
+Sinon, le guide reste en brouillon sur une branche `brouillon/<chemin>` et Maxime est prévenu. Chaque critique est
+notée dans `contenu/journal-critiques.md`.
+
+Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026 et revérifiées avant chaque rédaction.
 
 **Statuts :**
 - `à faire` ;
-- `brouillon` : branche poussée, en attente de Maxime ;
+- `brouillon` : bloqué par la critique, en attente de Maxime ;
 - `publié` ;
 - `écarté` : avec la raison.
 

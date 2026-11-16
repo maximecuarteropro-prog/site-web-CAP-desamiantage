@@ -94,8 +94,10 @@ retirée exprès : ne la réintroduis pas.
       `/flocage-calorifugeage-amiante`. Deux points à relire chaque trimestre : la validité d'un état amiante avec amiante
       (service-public.fr dit illimitée, l'ANIL 3 ans) et l'obligation de repérage pour un particulier qui travaille seul ;
     - nouveaux guides (Maxime, 11 nov. 2026) : méthode dans `contenu/consigne-redaction.md`, file des sujets dans
-      `contenu/file-articles.md`. La tâche planifiée « Article SEO du jour » (application Claude, jours ouvrés à 7 h) écrit le
-      sujet suivant sur une branche `brouillon/<chemin>` ; rien ne passe sur `main` sans le « publie » de Maxime ;
+      `contenu/file-articles.md`. Depuis le 16 nov. 2026 (Maxime), la tâche planifiée « Article SEO du jour » (application Claude,
+      jours ouvrés à 7 h) publie seule : mot-clé vérifié par OpenSEO, rédaction, critique par un agent indépendant
+      (`contenu/grille-critique.md`), corrections, puis mise en ligne si le verdict est PUBLIER ; sinon brouillon
+      `brouillon/<chemin>` et alerte à Maxime. Critiques notées dans `contenu/journal-critiques.md` ;
     - `mentions-legales.astro`, `confidentialite.astro`, `src/pages/api/demande.ts` ;
     - refait le 6 nov. 2026 à la demande de Maxime : `src/sections/Process.astro` (une seule vue : étapes courtes, photo, bouton ;
       le texte reste toujours lisible) ;

@@ -10,7 +10,22 @@ Les règles du site sont dans `AGENTS.md` : elles priment sur ce fichier.
 - Deux guides modèles : `src/pages/toiture-amiante-que-faire.astro` et `src/pages/diagnostic-amiante-avant-travaux.astro`.
 - `PAGES_GUIDE` dans `src/lib/site.ts` : la liste des guides déjà en ligne. Un sujet déjà traité ne se réécrit pas : on renvoie vers lui.
 
-## 1. Trouver la question du lecteur
+## 1. Vérifier le mot-clé, puis trouver la question du lecteur
+
+Avant d'écrire une ligne, la donnée doit justifier le sujet (OpenSEO, projet « Cap Désamiantage ») :
+
+- `get_keyword_metrics` sur la requête principale et ses secondaires : **volume** (au moins 50 recherches par mois pour
+  la principale, ou 100 pour l'ensemble du groupe) et **intention** (informationnelle ou commerciale ; une intention
+  d'achat de produit ne convient pas).
+- `get_serp_results` sur mobile : la page 1 doit montrer des guides ou des pages de conseil, pas des boutiques ni des
+  fiches produit (exemple écarté : « toiture fibrociment », des acheteurs de plaques neuves).
+- **Pas de doublon** : aucun guide de `PAGES_GUIDE` ne vise déjà cette requête.
+
+Si un critère manque, le sujet passe en « écarté » dans `contenu/file-articles.md` avec la raison, et on prend le suivant.
+Note le volume et l'intention vérifiés dans la file.
+
+Ensuite :
+
 
 1. Lis la page 1 de Google sur mobile pour la requête principale, avec l'outil OpenSEO `get_serp_results`
    (projet « Cap Désamiantage », id `365a0841-3092-419f-b9ef-30a7ae675ac4`, `device: "mobile"`).
@@ -88,3 +103,20 @@ Corrige avant de passer à la suite.
 
 Si plusieurs rédacteurs écrivent en parallèle, chacun ne fait que les étapes 1 à 4 sur sa page, sans toucher aux
 autres fichiers, et l'étape 5 est faite une seule fois à la fin.
+
+## 6. Erreurs déjà relevées par la critique
+
+Tirées de `contenu/journal-critiques.md`. Relis cette liste avant d'écrire, et encore avant la critique. La tâche y ajoute
+une ligne dès qu'une même catégorie de défaut revient sur deux guides.
+
+- **Contradiction interne** : un conseil qui en contredit un autre plus bas (« ne pas mouiller » puis « humidifier »).
+  Relis chaque conseil pratique contre les précautions de la même page.
+- **Incohérence entre guides** : une règle dite autrement dans un guide déjà publié (qui classe le chantier, à qui
+  transmettre le DTA). Lis les guides liés et aligne-toi, ou corrige l'ancien guide dans le même commit.
+- **Date ou chiffre non vérifié à la source** : un chiffre lu chez un tiers, ou une date d'entrée en vigueur supposée.
+  Écris-le seulement si la source primaire le dit.
+- **Sources officielles qui se contredisent** : donne les deux et renvoie au bon interlocuteur (notaire, administration).
+- **Phrase bancale ou ambiguë** : sujet sans verbe, « à cette date » qui peut viser deux dates, répétition dans la même
+  phrase. Relis chaque phrase seule.
+- **Angle peur** : pas de liste de maladies ; « des maladies respiratoires graves » suffit.
+
