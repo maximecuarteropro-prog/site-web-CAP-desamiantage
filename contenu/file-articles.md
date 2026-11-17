@@ -23,7 +23,7 @@ Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026 e
 
 | Ordre | Chemin | Requête principale | Requêtes secondaires | Question du lecteur | Statut |
 |---|---|---|---|---|---|
-| 6 | `/plan-de-retrait-amiante` | plan de retrait amiante (320) | durée chantier désamiantage | Qu'est-ce que le plan de retrait, qui le rédige, pourquoi faut-il attendre 30 jours, et que doit-il contenir ? | brouillon (16 nov. 2026) |
+| 6 | `/plan-de-retrait-amiante` | plan de retrait amiante (320) | durée chantier désamiantage | Qu'est-ce que le plan de retrait, qui le rédige, pourquoi faut-il attendre 30 jours, et que doit-il contenir ? | brouillon (16 nov. 2026, critiqué de nouveau le 17 nov. : CORRIGER aux tours 3 et 4) |
 | 7 | `/amiante-location` | amiante location (110) | dapp amiante (90), locataire amiante, propriétaire bailleur amiante | Que doit faire un propriétaire bailleur, et que peut demander un locataire, quand le logement contient de l'amiante ? | à faire |
 | 8 | `/demolition-amiante` | démolition amiante (40) | diagnostic amiante avant démolition (70), repérage amiante avant démolition (20), démolition maison amiante (10) | Je démolis une maison ou une annexe : quel repérage, quel retrait avant démolition, quels délais ? | à faire |
 | 9 | `/nettoyage-toiture-amiante` | démoussage toiture amiante (50) | nettoyage toiture amiante (40), peinture toiture amiante (30) | Puis-je nettoyer, démousser ou peindre une toiture en amiante, et qui peut le faire ? (sans contredire `/toiture-amiante-que-faire`) | à faire |
