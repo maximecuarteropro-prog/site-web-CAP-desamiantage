@@ -118,5 +118,7 @@ une ligne dès qu'une même catégorie de défaut revient sur deux guides.
 - **Sources officielles qui se contredisent** : donne les deux et renvoie au bon interlocuteur (notaire, administration).
 - **Phrase bancale ou ambiguë** : sujet sans verbe, « à cette date » qui peut viser deux dates, répétition dans la même
   phrase. Relis chaque phrase seule.
+- **Répétition d’une même information dans plusieurs sections** : l’horodatage du plan de retrait redit 5 fois (chapo, H2,
+  deux FAQ, conseils) ; « mouiller » répété dans le guide des tuyaux. Dis-la une fois, à sa place, et renvoie-y.
 - **Angle peur** : pas de liste de maladies ; « des maladies respiratoires graves » suffit.
 
