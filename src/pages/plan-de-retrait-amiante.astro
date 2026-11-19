@@ -16,6 +16,7 @@ import EncartDevis from '@/components/EncartDevis.astro'
 // Critique tour 4 (17 nov.) : CORRIGER, 4 corrections appliquées (chapo coupé, R1334-29-3 du code de la santé publique relu sur Légifrance, lien déchets, date de version R4412-140), non recritiquées. Le chapo compte désormais 4 phrases.
 // Critique tour 5 (18 nov., reprise) : CORRIGER, 5 corrections appliquées (chapo à 3 phrases, raison du délai donnée comme une lecture de la DREETS PACA, répétition FAQ, démolition, « signature du devis »). Correction 6 (ligne bureaux 100 à 500 m² de Guide Robien) écartée : facultative, et la page vise les particuliers.
 // Critique tour 6 (18 nov.) : CORRIGER. Appliquées : retrait ou encapsulage (R1334-29-3), « exposerait », réserve d’urgence, FAQ avec verbe. Écartées : (1) OPPBTP, le point « bloquant » : R4412-137, relu le 18 nov. sur code.travail.gouv.fr, dit bien que l’employeur transmet « aux organismes de sécurité sociale et, le cas échéant, à l’OPPBTP, qui le transmettent à l’agent ou au service compétent » ; la page est juste. (5) raison du délai dans le chapo : le tour 5 l’en a retirée comme surinterprétation de la DREETS PACA, le tour 6 la redemande ; à trancher par Maxime.
+// Critique tour 7 (19 nov., reprise) : CORRIGER. Appliquées : « haute efficacité » (R4412-140, aussi corrigé dans /flocage-calorifugeage-amiante ; « très haute » y reste pour les extracteurs, cité de l’arrêté du 8 avril 2013), phrase R1334-29-3 coupée en deux (contenu inchangé, relu au tour 4 : Légifrance bloqué par un anti-robot au tour 7, non contourné), alerte ABC Travaux complète, espace insécable de la description.
 // Relire les textes au moins une fois par an.
 const sources = [
   { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000025818905', date: 'version en vigueur depuis le 1er juillet 2013' },
@@ -45,13 +46,13 @@ const faq = [
 ---
 <Guide
   titre="Plan de retrait amiante : qui le rédige, délai et contenu"
-  description="Plan de retrait amiante : rédigé par le pro certifié, déposé sur DEMAT@MIANTE 30 jours avant le chantier (8 en urgence). Ses 20 mentions et votre rôle."
+  description="Plan de retrait amiante : rédigé par le pro certifié, déposé sur DEMAT@MIANTE 30 jours avant le chantier (8 en urgence). Ses 20 mentions et votre rôle."
   chemin="/plan-de-retrait-amiante"
   rubrique="Comprendre"
   h1="Plan de retrait amiante : qui le rédige, pourquoi 30 jours, ce qu’il contient"
   chapo="Le plan de retrait décrit un chantier de désamiantage avant qu’il commence. Le pro certifié sous-section 3 le rédige sur la plateforme DEMAT@MIANTE du ministère du Travail et doit le transmettre au moins 30 jours avant le démarrage (8 jours en cas d’urgence après un sinistre). Vous, propriétaire, n’avez rien à rédiger : vous fournissez le repérage amiante, que le plan reprend parmi ses vingt mentions, et vous prévoyez ce délai dans votre calendrier."
-  publie="2026-11-18"
-  misAJour="2026-11-18"
+  publie="2026-11-19"
+  misAJour="2026-11-19"
   sources={sources}
   faq={faq}
 >
@@ -115,8 +116,8 @@ const faq = [
   <ul>
     <li><strong>Avant de signer :</strong> son certificat sous-section 3 en cours de validité, et un devis qui mentionne le plan de retrait, le repérage pris en compte et la filière des déchets, suivie par un bordereau (voir <a href="/dechetterie-amiante">ce que deviennent les déchets d’amiante</a>).</li>
     <li><strong>Après la signature :</strong> la date de transmission du plan sur DEMAT@MIANTE. La plateforme horodate chaque transmission (art. R4412-137), et la DREETS Hauts-de-France indique qu’elle fournit une preuve de dépôt, qui sécurise le respect des délais : le pro peut donc vous donner cette date.</li>
-    <li><strong>Avant de vous rendre les lieux :</strong> le pro examine les zones qui ont pu être contaminées, les nettoie par aspiration avec un appareil à filtration très haute efficacité, fait mesurer l’empoussièrement et fixe les fibres résiduelles éventuelles (code du travail, art. R4412-140). Demandez le résultat de cette mesure. Après le retrait ou l’encapsulage d’un flocage, d’un calorifugeage ou d’un faux plafond, et pour d’autres matériaux dans un bâtiment occupé ou fréquenté, c’est aussi à vous, propriétaire, de faire réaliser avant la restitution des locaux un examen visuel des surfaces traitées par un diagnostiqueur, et une mesure de l’air qui doit donner 5 fibres par litre au plus (code de la santé publique, art. R1334-29-3). Nos pros ne font pas ce contrôle : voir notre guide du <a href="/flocage-calorifugeage-amiante">flocage et du calorifugeage amiantés</a>.</li>
+    <li><strong>Avant de vous rendre les lieux :</strong> le pro examine les zones qui ont pu être contaminées, les nettoie par aspiration avec un appareil à filtration à haute efficacité, fait mesurer l’empoussièrement et fixe les fibres résiduelles éventuelles (code du travail, art. R4412-140). Demandez le résultat de cette mesure. Après le retrait ou l’encapsulage d’un flocage, d’un calorifugeage ou d’un faux plafond, c’est aussi à vous, propriétaire, de faire réaliser deux contrôles avant la restitution des locaux : un examen visuel des surfaces traitées par un diagnostiqueur, et une mesure de l’air qui doit donner 5 fibres par litre au plus (code de la santé publique, art. R1334-29-3). La même règle vaut pour d’autres matériaux dans un bâtiment occupé ou fréquenté. Nos pros ne font pas ce contrôle : voir notre guide du <a href="/flocage-calorifugeage-amiante">flocage et du calorifugeage amiantés</a>.</li>
     <li><strong>À la fin du chantier :</strong> le rapport de fin de travaux, que le pro remet au donneur d’ordre, avec les mesures d’empoussièrement, les certificats d’acceptation préalable des déchets et les plans de localisation à jour (art. R4412-139). Gardez-le avec votre repérage : il servira à la vente ou aux prochains travaux.</li>
   </ul>
-  <p>Le plan de retrait fait partie des frais fixes du chantier, qui pèsent lourd sur les petites surfaces. Dans l’exemple chiffré d’ABC Travaux (octobre 2026), il apparaît dans une ligne « installation et plan de retrait », avec le balisage et les protections, et non comme un poste à part. Le même guide estime qu’un devis qui ne mentionne pas le plan de retrait doit alerter. Les fourchettes relevées en 2026 sont sur notre page <a href="/prix-desamiantage">prix du désamiantage au m²</a>.</p>
+  <p>Le plan de retrait fait partie des frais fixes du chantier, qui pèsent lourd sur les petites surfaces. Dans l’exemple chiffré d’ABC Travaux (octobre 2026), il apparaît dans une ligne « installation et plan de retrait », avec le balisage et les protections, et non comme un poste à part. Le même guide estime qu’un devis qui ne mentionne ni le plan de retrait, ni le bordereau de suivi des déchets, ni le diagnostic préalable doit alerter. Les fourchettes relevées en 2026 sont sur notre page <a href="/prix-desamiantage">prix du désamiantage au m²</a>.</p>
 </Guide>
