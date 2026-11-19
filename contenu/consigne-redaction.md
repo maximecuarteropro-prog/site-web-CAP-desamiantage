@@ -120,5 +120,8 @@ une ligne dès qu'une même catégorie de défaut revient sur deux guides.
   phrase. Relis chaque phrase seule.
 - **Répétition d’une même information dans plusieurs sections** : l’horodatage du plan de retrait redit 5 fois (chapo, H2,
   deux FAQ, conseils) ; « mouiller » répété dans le guide des tuyaux. Dis-la une fois, à sa place, et renvoie-y.
+- **Terme ou portée d’un texte modifiés** : un mot durci (« très haute efficacité » au lieu de « haute efficacité », R4412-140,
+  plan de retrait et flocage) ou une règle élargie (R1334-29-3 réduit à « d’autres matériaux »). Recopie le terme exact et
+  le champ exact du texte (quels matériaux, quels lieux).
 - **Angle peur** : pas de liste de maladies ; « des maladies respiratoires graves » suffit.
 
