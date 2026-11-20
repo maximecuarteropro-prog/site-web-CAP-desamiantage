@@ -28,6 +28,7 @@ export const PAGES_GUIDE = [
   { chemin: '/carrelage-colle-amiante', titreCourt: 'Carrelage, colle et lino amiantés' },
   { chemin: '/flocage-calorifugeage-amiante', titreCourt: 'Flocage et calorifugeage amiante' },
   { chemin: '/tuyau-conduit-amiante', titreCourt: 'Tuyau et conduit en amiante' },
+  { chemin: '/amiante-location', titreCourt: 'Amiante en location' },
   { chemin: '/dechetterie-amiante', titreCourt: 'Déchetterie et amiante' },
 ] as const
 

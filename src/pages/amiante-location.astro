@@ -1,0 +1,107 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Relu le 20 nov. 2026 : service-public.fr (fiche F33463 vérifiée le 20 février 2026, fiche F288 vérifiée le 13 octobre 2026,
+// fiche F35978 sans date de vérification affichée), ANIL (page « Diagnostics obligatoires lors d’une location », sans date affichée).
+// Légifrance est bloqué par une vérification anti-robot ce jour : aucun article du code de la santé publique n’a été relu pour cette
+// page. Les règles sur le DAPP reposent sur service-public.fr et l’ANIL, et sur notre guide /dossier-technique-amiante (articles
+// relus le 11 nov. 2026).
+// Points incertains :
+// - Maison individuelle : service-public.fr (F33463) répète pour une maison la phrase « le diagnostic amiante n’est pas annexé au
+//   bail, il est tenu à disposition », alors que le DAPP vise les immeubles collectifs (ANIL, F288, /dossier-technique-amiante).
+//   La page donne les deux et renvoie vers le bailleur.
+// - Ce que le locataire peut faire si le bailleur refuse de communiquer le DAPP : aucune source officielle lue ne détaille un
+//   recours précis ; la page conseille un écrit et l’ADIL, sans promettre de résultat.
+// - Le diagnostic « amiante » des fiches de location et le DAPP sont traités comme un seul document, comme le fait l’ANIL.
+// - Aucun prix : le coût d’un DAPP n’est pas réglementé et aucune source datée n’a été lue.
+// Relire les textes au moins une fois par an.
+const sources = [
+  { titre: 'Service-public.fr, fiche F33463 « Quels sont les diagnostics immobiliers qu’un bailleur doit fournir au locataire ? »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F33463', date: 'vérifiée le 20 février 2026' },
+  { titre: 'Service-public.fr, fiche F288 « Habitat contenant de l’amiante »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F288', date: 'vérifiée le 13 octobre 2026' },
+  { titre: 'Service-public.fr, fiche F35978 « Bail d’habitation : obligations du propriétaire (bailleur) »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F35978', date: 'consultée le 20 novembre 2026' },
+  { titre: 'ANIL, « Diagnostics obligatoires lors d’une location »', url: 'https://www.anil.org/votre-projet/vous-etes-proprietaire/bailleur/diagnostics/', date: 'consultée le 20 novembre 2026' },
+]
+
+const faq = [
+  { question: 'Le propriétaire peut-il louer un logement qui contient de l’amiante ?', reponse: 'Oui. Aucune des fiches officielles lues n’interdit de louer un logement parce qu’il contient de l’amiante. Le bailleur doit en revanche respecter ses obligations : dans un immeuble collectif construit avec un permis antérieur au 1er juillet 1997, faire réaliser le diagnostic des parties privatives et le tenir à la disposition du locataire, et agir si un matériau est dégradé (service-public.fr, fiches F288 et F35978).' },
+  { question: 'Le diagnostic amiante est-il joint au bail ?', reponse: 'Non. Il fait partie du dossier de diagnostic technique, mais il n’a pas à être annexé au bail : le bailleur le tient à la disposition du locataire, sur demande (service-public.fr, fiche F33463). Le locataire qui veut le lire doit donc le réclamer.' },
+  { question: 'Qu’est-ce que le DAPP ?', reponse: 'C’est le dossier amiante des parties privatives : le rapport de repérage des matériaux de la liste A dans le logement, avec les évaluations, mesures et travaux déjà faits. Il concerne un logement d’un immeuble collectif d’habitation et se distingue du DTA, qui porte sur les parties communes (service-public.fr, fiche F288).' },
+  { question: 'Un locataire peut-il consulter le DTA de l’immeuble ?', reponse: 'Oui. Le DTA, qui porte sur les parties communes, est tenu à la disposition des occupants, qui doivent être informés de la façon de le consulter. Il est tenu par le propriétaire de l’immeuble ou, en copropriété, par le syndic (service-public.fr, fiche F288).' },
+  { question: 'Qui paie le retrait de l’amiante dans un logement loué ?', reponse: 'Les fiches officielles lues donnent l’obligation de faire réaliser les mesures et les travaux au propriétaire, ou au syndicat des copropriétaires pour les parties communes, pas au locataire (service-public.fr, fiche F288). Le partage éventuel du coût dans un cas précis relève du bail et du bailleur : un conseil juridique, par exemple à l’ADIL de votre département, tranchera.' },
+]
+---
+<Guide
+  titre="Amiante en location : obligations du bailleur et du locataire"
+  description="Louer un logement avec de l’amiante est possible : le bailleur tient le DAPP à la disposition du locataire, sans l’annexer au bail. Obligations et travaux."
+  chemin="/amiante-location"
+  rubrique="Location et propriétaire bailleur"
+  h1="Amiante en location : que doit faire le bailleur, que peut demander le locataire ?"
+  chapo="On peut louer un logement qui contient de l’amiante : la présence d’amiante n’interdit pas la location. Dans un immeuble collectif dont le permis de construire date d’avant le 1er juillet 1997, le bailleur fait établir le dossier amiante des parties privatives (DAPP) et le tient à la disposition du locataire, sur demande : il n’est pas annexé au bail. Si un matériau est dégradé, c’est au propriétaire d’agir, par des mesures qui vont du simple suivi au retrait confié à un pro certifié."
+  publie="2026-11-20"
+  misAJour="2026-11-20"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Peut-on louer un logement qui contient de l’amiante ?</h2>
+  <p>Oui. Ce qui compte, c’est l’état des matériaux et ce que le bailleur fait pour le suivre. Le propriétaire doit remettre un logement décent, qui ne porte pas atteinte à la sécurité ou à la santé du locataire (service-public.fr, fiche F35978). Un matériau amianté en bon état, laissé intact, n’empêche donc pas la location ; un matériau dégradé, lui, oblige le bailleur à réagir (voir plus bas).</p>
+  <p>Pour savoir si votre logement est concerné, regardez la date du permis de construire de l’immeuble : le repérage de l’amiante vise les bâtiments dont le permis a été délivré avant le 1er juillet 1997 (service-public.fr, fiche F288). Notre guide pour <a href="/reconnaitre-toiture-amiante">reconnaître une toiture en amiante</a> aide à repérer les matériaux de l’extérieur, sans les toucher.</p>
+
+  <h2>Quelles sont les obligations du bailleur ?</h2>
+  <p>Tout dépend du type de logement.</p>
+  <ul>
+    <li><strong>Appartement dans un immeuble collectif d’habitation :</strong> le bailleur doit faire réaliser le diagnostic amiante des parties privatives, le DAPP, et le tenir à la disposition du locataire qui le demande (ANIL).</li>
+    <li><strong>Maison individuelle :</strong> notre guide sur le <a href="/dossier-technique-amiante">dossier technique amiante</a> explique que ni DTA ni DAPP n’existent pour une maison, dont le repérage n’est exigé qu’à la vente. La fiche service-public.fr sur les diagnostics de location reprend pourtant, pour une maison, la même consigne de tenir le diagnostic amiante à disposition du locataire (fiche F33463). Si vous louez une maison, demandez simplement au bailleur ce qu’il détient.</li>
+  </ul>
+  <p>Le DAPP ne porte que sur les matériaux de la liste A, c’est-à-dire les flocages, les calorifugeages et les faux plafonds. Il comprend le rapport de repérage, puis les évaluations de l’état de conservation, les mesures d’empoussièrement et les travaux faits, s’il y en a (service-public.fr, fiche F288). Il est réalisé par un diagnostiqueur certifié ; nos pros, qui retirent l’amiante, ne font pas ces diagnostics.</p>
+  <p>Le bailleur doit aussi dire au locataire comment consulter le DAPP (service-public.fr, fiche F288). Les autres diagnostics de location (DPE, plomb, électricité, gaz, risques, bruit) sont, eux, annexés au bail : l’amiante fait seul exception (fiche F33463).</p>
+
+  <h2>Que peut demander le locataire ?</h2>
+  <div class="tableau">
+    <table>
+      <caption>Documents sur l’amiante accessibles au locataire, d’après service-public.fr (fiches F33463 et F288, vérifiées le 20 février et le 13 octobre 2026) et l’ANIL.</caption>
+      <thead><tr><th scope="col">Document</th><th scope="col">Il porte sur</th><th scope="col">Qui le détient</th><th scope="col">Le locataire peut</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">DAPP</th><td>Le logement (liste A)</td><td>Le bailleur</td><td>Le consulter, sur demande</td></tr>
+        <tr><th scope="row">DTA</th><td>Les parties communes de l’immeuble</td><td>Le propriétaire de l’immeuble ou le syndic</td><td>Le consulter, le mode de consultation devant lui être indiqué</td></tr>
+        <tr><th scope="row">Fiche récapitulative du DTA</th><td>Résumé du DTA</td><td>Le propriétaire de l’immeuble ou le syndic</td><td>La recevoir dans le mois qui suit la constitution ou la mise à jour du DTA</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Faites la demande par écrit, en précisant le document voulu : vous gardez ainsi une trace de la date. Si le bailleur ne répond pas, l’ADIL de votre département peut vous conseiller sur la suite. Pour comprendre le contenu et la mise à jour du DTA, lisez notre guide <a href="/dossier-technique-amiante">DTA amiante : qui doit l’avoir, que contient-il ?</a></p>
+
+  <h2>Que se passe-t-il si le DAPP signale de l’amiante ?</h2>
+  <p>La présence d’amiante dans un rapport n’impose pas de travaux : les mesures dépendent de l’état de conservation du matériau. Pour la liste A, service-public.fr prévoit trois niveaux (fiche F288) :</p>
+  <ol>
+    <li><strong>Niveau 1 :</strong> le propriétaire fait surveiller l’état du matériau tous les 3 ans.</li>
+    <li><strong>Niveau 2 :</strong> il fait mesurer la concentration de fibres dans l’air par un organisme accrédité par le Cofrac. Si le résultat dépasse 5 fibres par litre, des travaux sont à engager.</li>
+    <li><strong>Niveau 3 :</strong> il fait retirer ou confiner le matériau, travaux à terminer dans les 3 ans après la réception du diagnostic. En attendant, des mesures conservatoires sont mises en place dans un délai de 2 mois pour ramener l’empoussièrement à 5 fibres par litre au plus, par exemple en isolant la zone ou en posant une bâche sur le matériau.</li>
+  </ol>
+  <p>Au niveau 3, le propriétaire transmet aussi au préfet, sous 2 mois, les mesures conservatoires, puis, sous 12 mois, le calendrier des travaux définitifs (service-public.fr, fiche F288). Les détails sur ces matériaux sont dans notre guide sur le <a href="/flocage-calorifugeage-amiante">flocage et le calorifugeage amiantés</a>.</p>
+
+  <h2>Qui paie les travaux, et qui peut les faire ?</h2>
+  <p>Selon service-public.fr, c’est le propriétaire, ou le syndicat des copropriétaires pour les parties communes, qui doit faire réaliser les vérifications, puis les mesures et les travaux (fiche F288). Le locataire n’est pas désigné. Le retrait et le confinement sont assurés par une entreprise certifiée : vérifiez toujours <a href="/certification-sous-section-3">la certification sous-section 3</a> avant de signer un devis.</p>
+  <p>Avant de percer, de poncer ou d’arracher un revêtement dans un logement ancien, demandez d’abord le DAPP au bailleur : c’est le moyen le plus simple de savoir ce que le logement contient. Si des travaux sont prévus par le bailleur, il lui revient de faire repérer l’amiante au préalable, comme l’explique notre guide sur le <a href="/diagnostic-amiante-avant-travaux">diagnostic amiante avant travaux</a>. Pour les ordres de grandeur d’un chantier, reportez-vous à nos repères de <a href="/prix-desamiantage">prix du désamiantage au m²</a> : le coût dépend surtout du matériau et de la quantité.</p>
+
+  <EncartDevis accroche="Votre DAPP préconise un retrait ou un confinement ? Faites chiffrer les travaux par l’un de nos pros certifiés sous-section 3." />
+
+  <h2>Un matériau se dégrade dans votre logement : que faire ?</h2>
+  <p>Ne le touchez pas, ne le percez pas, ne le nettoyez pas à sec. Prévenez le bailleur par écrit, avec une photo et la date, puis demandez-lui le DAPP et la dernière évaluation de l’état du matériau. C’est à lui d’en tirer les conséquences : service-public.fr cite, parmi les mesures conservatoires, l’isolation de la zone concernée ou la pose d’une bâche sur le matériau pour éviter la dispersion de fibres (fiche F288).</p>
+  <p>Si le bailleur tarde, rappelez-lui que le logement loué doit être décent et ne pas porter atteinte à la sécurité ou à la santé du locataire (service-public.fr, fiche F35978), et rapprochez-vous de l’ADIL de votre département avant d’aller plus loin. Ne cessez pas de payer votre loyer de votre propre initiative.</p>
+
+  <h2>Bailleur : par où commencer ?</h2>
+  <ol>
+    <li>Vérifier la date du permis de construire de l’immeuble : le repérage vise les permis délivrés avant le 1er juillet 1997.</li>
+    <li>Pour un appartement en immeuble collectif, faire réaliser le DAPP par un diagnostiqueur certifié, et se procurer auprès du syndic le DTA des parties communes.</li>
+    <li>Indiquer au locataire comment consulter ces documents et les lui remettre sur demande.</li>
+    <li>Lire les conclusions : si le rapport préconise un suivi, une mesure de l’air ou des travaux, programmer la mesure dans les délais ci-dessus.</li>
+    <li>Pour un retrait ou un confinement, demander des devis à des pros certifiés sous-section 3, après avoir fait repérer l’amiante dans la zone des travaux.</li>
+  </ol>
+
+  <h2>Que risque un bailleur qui n’a pas fait le diagnostic ?</h2>
+  <p>Pour un immeuble, service-public.fr indique que le préfet peut mettre le propriétaire en demeure de réaliser les mesures nécessaires dans un délai qu’il fixe, ou imposer une expertise. Le propriétaire peut aussi être sanctionné par une amende qui peut atteindre 1 500 €, et 3 000 € en cas de récidive (fiche F288). La fiche cite cette amende au titre de l’absence de vérification de la présence d’amiante ; pour savoir si elle vise votre situation, un conseil juridique reste le plus sûr.</p>
+  <p>Côté location, le bailleur qui dissimule des informations ou en donne de fausses s’expose à ce que le locataire demande l’annulation du bail ou une baisse de loyer (ANIL).</p>
+
+  <h2>Et si vous êtes propriétaire et voulez vendre plus tard ?</h2>
+  <p>Le diagnostic réalisé pour la location ne dispense pas du reste : à la vente, un état d’amiante est remis à l’acheteur, et notre guide pour <a href="/vendre-maison-toiture-amiante">vendre une maison avec une toiture en amiante</a> détaille ce qu’il faut fournir.</p>
+</Guide>
