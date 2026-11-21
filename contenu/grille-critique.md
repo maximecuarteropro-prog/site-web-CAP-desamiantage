@@ -1,7 +1,7 @@
 # Grille de critique d'un guide avant publication
 
 Utilisée par l'agent critique de la tâche « Article SEO du jour » (décision de Maxime, 16 nov. 2026 : publication
-automatique, mais seulement après une critique objective). La critique décide de la publication : elle doit être sévère.
+automatique, mais seulement après une critique objective). La critique décide de la publication : sévère sur le fond (sens, exactitude, réponse à la recherche), pas sur les détails. Réglage du 21 nov. 2026 (Maxime) : le guide du plan de retrait a demandé 8 tours, car chaque tour trouvait de nouveaux détails ; seul le fond bloque désormais.
 
 ## Ton rôle
 
@@ -63,12 +63,39 @@ Pour chacun : **OK**, **À corriger** ou **Bloquant**.
    - apostrophe ’ ;
    - pas d'entités HTML.
 
+## Deux sortes de défauts
+
+- **Défaut de fond**, qui peut bloquer :
+  - la page ne répond pas à la recherche ;
+  - une affirmation est fausse ou contredite par sa source ;
+  - une contradiction interne ou avec un guide publié ;
+  - une phrase sans sens ou qui dit le contraire de ce qu'elle veut dire ;
+  - une règle de marque enfreinte ;
+  - un doublon d'un guide existant.
+- **Détail**, qui ne bloque jamais :
+  - une tournure améliorable, une phrase un peu longue, une répétition ;
+  - un `chapo` de 4 phrases au lieu de 3 ;
+  - une espace insécable, un titre à 61 caractères ;
+  - une source sans date de version ;
+  - un point secondaire de la page 1 de Google non traité.
+
+  Le rédacteur corrige ce qu'il peut, sans nouveau tour de critique.
+
 ## Verdict
 
-- **PUBLIER** : aucun point bloquant, au plus 2 points « à corriger » mineurs (typographie, tournure).
-- **CORRIGER** : la liste numérotée des corrections à faire, chacune avec le passage exact et la correction proposée.
-- **BLOQUER** : le sujet ou la page ne peut pas être sauvé en une passe (hors intention de recherche, doublon d'un
-  guide, sources insuffisantes). Dis pourquoi.
+- **PUBLIER** : aucun défaut de fond. Les détails sont listés à part, pour que le rédacteur les corrige avant publication.
+- **CORRIGER** : au moins un défaut de fond, chacun avec le passage exact et la correction proposée.
+- **BLOQUER** : le sujet ou la page ne peut pas être sauvé (hors intention de recherche, doublon d'un guide, sources
+  insuffisantes). Dis pourquoi.
+
+## Tour 2 : on ne déplace pas la cible
+
+Au tour 2, tu reçois la liste des corrections demandées au tour 1. Tu vérifies **seulement** deux choses :
+1. chaque défaut de fond du tour 1 est-il corrigé ?
+2. les corrections ont-elles créé une erreur de fond nouvelle (affirmation fausse, contradiction) ?
+
+Tu ne cherches pas de nouveaux détails, et tu ne rouvres pas les points jugés OK au tour 1. Si les défauts de fond du
+tour 1 sont réglés et que rien de faux n'a été introduit : **PUBLIER**.
 
 ## Format de ta réponse
 
@@ -81,8 +108,11 @@ VERDICT : PUBLIER | CORRIGER | BLOQUER
 5. Règles de marque : …
 6. SEO de la page : …
 7. Typographie : …
-CORRECTIONS :
+CORRECTIONS DE FOND :
 1. « passage exact » → correction proposée (critère n)
+…
+DÉTAILS (ne bloquent pas) :
+- « passage exact » → correction proposée
 …
 DÉFAUTS À RETENIR : catégories courtes des défauts trouvés, pour le journal (exemple : « contradiction interne », « date non vérifiée »)
 ```
