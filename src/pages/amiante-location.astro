@@ -15,6 +15,8 @@ import EncartDevis from '@/components/EncartDevis.astro'
 //   recours précis ; la page conseille un écrit et l’ADIL, sans promettre de résultat.
 // - Le diagnostic « amiante » des fiches de location et le DAPP sont traités comme un seul document, comme le fait l’ANIL.
 // - Aucun prix : le coût d’un DAPP n’est pas réglementé et aucune source datée n’a été lue.
+// Critique : tour 1 CORRIGER, tour 2 CORRIGER (20 nov.), reprise tour 2 PUBLIER (23 nov. 2026). Détail non repris : le rappel
+// « logement décent » reste dans la section sur le matériau dégradé, car c’est l’argument concret à opposer au bailleur.
 // Relire les textes au moins une fois par an.
 const sources = [
   { titre: 'Service-public.fr, fiche F33463 « Quels sont les diagnostics immobiliers qu’un bailleur doit fournir au locataire ? »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F33463', date: 'vérifiée le 20 février 2026' },
@@ -38,8 +40,8 @@ const faq = [
   rubrique="Location et propriétaire bailleur"
   h1="Amiante en location : que doit faire le bailleur, que peut demander le locataire ?"
   chapo="On peut louer un logement qui contient de l’amiante : la présence d’amiante n’interdit pas la location. Dans un immeuble collectif dont le permis de construire date d’avant le 1er juillet 1997, le bailleur fait établir le dossier amiante des parties privatives (DAPP) et le tient à la disposition du locataire, sur demande : il n’est pas annexé au bail. Selon l’état des matériaux, c’est au propriétaire d’agir, du simple suivi au retrait confié à un pro certifié."
-  publie="2026-11-20"
-  misAJour="2026-11-20"
+  publie="2026-11-23"
+  misAJour="2026-11-23"
   sources={sources}
   faq={faq}
 >
@@ -92,7 +94,7 @@ const faq = [
   <h2>Bailleur : par où commencer ?</h2>
   <ol>
     <li>Vérifier la date du permis de construire de l’immeuble : le repérage vise les permis délivrés avant le 1er juillet 1997.</li>
-    <li>Pour un appartement en immeuble collectif, faire réaliser le DAPP par un diagnostiqueur certifié, et se procurer auprès du syndic le DTA des parties communes.</li>
+    <li>Pour un appartement en immeuble collectif, faire réaliser le DAPP par un diagnostiqueur certifié (service-public.fr, fiche F288), et se procurer auprès du syndic le DTA des parties communes.</li>
     <li>Indiquer au locataire comment consulter ces documents et les tenir à sa disposition sur demande.</li>
     <li>Lire les conclusions : si le rapport préconise un suivi, une mesure de l’air ou des travaux, faire réaliser la mesure, l’évaluation ou les travaux dans les délais de chaque niveau, détaillés dans notre guide sur le <a href="/flocage-calorifugeage-amiante">flocage et le calorifugeage amiantés</a>.</li>
     <li>Pour un retrait ou un confinement, demander des devis à des pros certifiés sous-section 3, après avoir fait repérer l’amiante dans la zone des travaux.</li>

@@ -123,5 +123,8 @@ une ligne dès qu'une même catégorie de défaut revient sur deux guides.
 - **Terme ou portée d’un texte modifiés** : un mot durci (« très haute efficacité » au lieu de « haute efficacité », R4412-140,
   plan de retrait et flocage) ou une règle élargie (R1334-29-3 réduit à « d’autres matériaux »). Recopie le terme exact et
   le champ exact du texte (quels matériaux, quels lieux).
+- **Affirmation rattachée à une source qui ne la dit pas** : une déduction prêtée à la DREETS (raison du délai de 30 jours, plan
+  de retrait), une sanction propre au DPE ou un article de loi attribués à une fiche service-public.fr (location). Avant
+  chaque « (source) », vérifie que la phrase y figure ; sinon cite la bonne source ou retire l’affirmation.
 - **Angle peur** : pas de liste de maladies ; « des maladies respiratoires graves » suffit.
 
