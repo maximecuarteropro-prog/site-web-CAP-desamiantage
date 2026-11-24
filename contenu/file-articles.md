@@ -23,7 +23,6 @@ Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026 e
 
 | Ordre | Chemin | Requête principale | Requêtes secondaires | Question du lecteur | Statut |
 |---|---|---|---|---|---|
-| 8 | `/demolition-amiante` | démolition amiante (40) | diagnostic amiante avant démolition (70), repérage amiante avant démolition (20), démolition maison amiante (10) | Je démolis une maison ou une annexe : quel repérage, quel retrait avant démolition, quels délais ? | à faire |
 | 9 | `/nettoyage-toiture-amiante` | démoussage toiture amiante (50) | nettoyage toiture amiante (40), peinture toiture amiante (30) | Puis-je nettoyer, démousser ou peindre une toiture en amiante, et qui peut le faire ? (sans contredire `/toiture-amiante-que-faire`) | à faire |
 | 10 | `/toiture-amiante-voisin` | toiture amiante voisin (70) | | La toiture en amiante du voisin se dégrade : quels sont mes recours, à qui m'adresser ? | à faire |
 | 11 | `/mesure-empoussierement-amiante` | mesure empoussièrement amiante (70) | | Qu'est-ce qu'une mesure d'empoussièrement, quand est-elle obligatoire, qui la fait, combien coûte-t-elle ? | à faire |
@@ -53,6 +52,7 @@ Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026 e
 | `/carrelage-colle-amiante` | colle carrelage amiante (210) | 13 nov. 2026 |
 | `/plan-de-retrait-amiante` | plan de retrait amiante (320) | 19 nov. 2026 (après 8 tours de critique) |
 | `/amiante-location` | amiante location (110) | 23 nov. 2026 (brouillon repris, PUBLIER au tour 2) |
+| `/demolition-amiante` | démolition amiante (40), groupe de 130 avec diagnostic amiante avant démolition (70), vérifiés le 24 nov. 2026 | 24 nov. 2026 (PUBLIER au tour 2) |
 
 ## Écartés
 

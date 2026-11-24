@@ -126,5 +126,7 @@ une ligne dès qu'une même catégorie de défaut revient sur deux guides.
 - **Affirmation rattachée à une source qui ne la dit pas** : une déduction prêtée à la DREETS (raison du délai de 30 jours, plan
   de retrait), une sanction propre au DPE ou un article de loi attribués à une fiche service-public.fr (location). Avant
   chaque « (source) », vérifie que la phrase y figure ; sinon cite la bonne source ou retire l’affirmation.
+- **Vocabulaire de marque** : « entreprise certifiée » pour celui qui fait les travaux (location, démolition, en citant R4412-129).
+  Même en paraphrasant un article, écris « un pro certifié » ou « nos pros ».
 - **Angle peur** : pas de liste de maladies ; « des maladies respiratoires graves » suffit.
 

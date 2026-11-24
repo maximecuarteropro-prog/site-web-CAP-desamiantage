@@ -1,0 +1,115 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Requête principale « démolition amiante » (40/mois, commerciale), secondaires « diagnostic amiante avant démolition » (70,
+// informationnelle), « repérage amiante avant démolition » (10), « démolition maison amiante » (10) : OpenSEO, 24 nov. 2026.
+// Relu le 24 nov. 2026 : code du travail R4412-94, R4412-97, R4412-129, R4412-133, R4412-135, R4412-137 (code.travail.gouv.fr) ;
+// code de la santé publique R1334-19 (fiche OPPBTP, Légifrance bloqué par un anti-robot, non contourné) ; annexe 13-9 du décret
+// n° 2011-629 (JO du 5 juin 2011, PDF de la DREAL Bretagne) ; ecologie.gouv.fr « Amiante dans le bâtiment » (15 oct. 2024) et
+// « Diagnostic PEMD » (9 janv. 2024) ; ARS Auvergne-Rhône-Alpes (14 janv. 2026) ; service-public.fr F17669 (20 mars 2026).
+// Points incertains : aucune source officielle lue ne donne de prix pour un repérage avant démolition, d’où le renvoi vers les
+// pages de prix ; le cas d’une annexe rasée seule (garage, grange) n’est tranché par aucun texte lu : la page renvoie vers la DDT.
+// Critique tour 1 (24 nov.) : CORRIGER. Appliqués : « pro certifié » (2 fois), justification du repérage destructif, portée de l’ARS
+// limitée à la liste C, installations industrielles, secteurs protégés (F17669), liens vers les guides du diagnostic et du plan,
+// « qui paie », graphie des délais. Écartés : délai global (aucune source pour une démolition), plomb (hors sujet amiante),
+// lien depuis la FAQ de /diagnostic-amiante-avant-travaux (la FAQ est en texte sans HTML).
+// Critique tour 2 (24 nov.) : PUBLIER, aucune correction restante.
+const sources = [
+  { titre: 'Code de la santé publique, article R1334-19 (repérage de la liste C avant démolition), texte publié par l’OPPBTP', url: 'https://content.preventionbtp.fr/pdf/droit_de_la_prevention/article-r1334-19-du-code-de-la-sante-publique-reperage-amiante-batiments.pdf', date: 'mis à jour le 1er juin 2022, relu le 24 novembre 2026' },
+  { titre: 'Décret n° 2011-629 du 3 juin 2011, annexe 13-9 (listes A, B et C), Journal officiel du 5 juin 2011', url: 'https://www.bretagne.developpement-durable.gouv.fr/IMG/pdf/decret_2011-629_du_3_juin_2011_cle74c888.pdf', date: 'relu le 24 novembre 2026' },
+  { titre: 'Ministère de la Transition écologique, « Amiante dans le bâtiment »', url: 'https://www.ecologie.gouv.fr/politiques-publiques/amiante-batiment', date: 'mis à jour le 15 octobre 2024' },
+  { titre: 'ARS Auvergne-Rhône-Alpes, « Amiante : propriétaires, quelles sont vos obligations ? »', url: 'https://auvergne-rhone-alpes.ars.sante.fr/amiante-proprietaires-quelles-sont-vos-obligations', date: '14 janvier 2026' },
+  { titre: 'Code du travail, article R4412-97 (repérage avant toute opération)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-97', date: 'version en vigueur depuis le 31 mars 2019' },
+  { titre: 'Code du travail, article R4412-94 (retrait, y compris en cas de démolition)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-94', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-129 (recours à une entreprise certifiée)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-129', date: 'version en vigueur depuis le 1er juillet 2013' },
+  { titre: 'Code du travail, article R4412-133 (plan de démolition, de retrait ou d’encapsulage)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-133', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Code du travail, article R4412-135 (retrait préalable à la démolition)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-135', date: 'version en vigueur depuis le 1er juillet 2012' },
+  { titre: 'Code du travail, article R4412-137 (transmission du plan 30 jours avant)', url: 'https://code.travail.gouv.fr/code-du-travail/r4412-137', date: 'version en vigueur depuis le 1er février 2023' },
+  { titre: 'Service-public.fr, fiche F17669 « Permis de démolir »', url: 'https://www.service-public.gouv.fr/particuliers/vosdroits/F17669', date: 'vérifiée le 20 mars 2026' },
+  { titre: 'Ministère de la Transition écologique, « Le diagnostic produits, équipements, matériaux et déchets (PEMD) »', url: 'https://www.ecologie.gouv.fr/diagnostic-produits-equipements-materiaux-et-dechets-pemd', date: 'publié le 9 janvier 2024' },
+]
+
+const faq = [
+  { question: 'Le diagnostic amiante fait pour la vente suffit-il avant une démolition ?', reponse: 'Non. Le diagnostic de vente porte sur les matériaux des listes A et B accessibles sans travaux destructifs. Avant une démolition, le propriétaire doit faire réaliser un repérage de la liste C, exhaustif, après démontages et investigations destructives (ARS Auvergne-Rhône-Alpes ; code de la santé publique, art. R1334-19).' },
+  { question: 'Qui doit faire réaliser le repérage avant démolition ?', reponse: 'Le propriétaire du bâtiment, maisons individuelles comprises, dès lors que le permis de construire a été délivré avant le 1er juillet 1997 (code de la santé publique, art. R1334-19 ; ministère de la Transition écologique). Il le commande, et donc le règle, à un opérateur de repérage certifié, puis transmet le rapport à ceux qui conçoivent et réalisent les travaux.' },
+  { question: 'Le démolisseur peut-il aussi retirer l’amiante ?', reponse: 'Seulement s’il est certifié sous-section 3. Le retrait d’amiante, y compris lors d’une démolition, relève de la sous-section 3 du code du travail, et le donneur d’ordre doit faire appel à un pro certifié (art. R4412-94 et R4412-129). Sinon, le retrait est confié à un pro certifié avant l’arrivée du démolisseur.' },
+  { question: 'Peut-on démolir sans retirer l’amiante ?', reponse: 'Rarement. Le retrait se fait avant la démolition, sauf impossibilité technique (ministère de la Transition écologique) ou si le retrait exposerait les travailleurs à un risque plus grand que de laisser les matériaux en place (code du travail, art. R4412-135). Le plan du pro doit alors justifier l’absence de retrait (art. R4412-133).' },
+  { question: 'Faut-il un permis de démolir pour une maison avec de l’amiante ?', reponse: 'L’amiante ne change rien à cette question. Le permis de démolir dépend du lieu : il est exigé dans les communes où le conseil municipal l’a instauré, dans les secteurs protégés et dans le périmètre d’une opération de restauration immobilière. Le service de l’urbanisme de votre mairie vous dira si vous êtes concerné (service-public.fr).' },
+]
+---
+<Guide
+  titre="Démolition et amiante : repérage, retrait, délais"
+  description="Démolir un bâtiment d’avant juillet 1997 : repérage de la liste C, retrait de l’amiante par un pro certifié, plan déposé 30 jours avant. Étapes et délais."
+  chemin="/demolition-amiante"
+  rubrique="Avant travaux"
+  h1="Démolition et amiante : que faire avant de démolir ?"
+  chapo="Avant de démolir un bâtiment dont le permis de construire date d’avant le 1er juillet 1997, maison individuelle comprise, le propriétaire doit faire réaliser un repérage amiante de la liste C, plus poussé que le diagnostic de vente. Si de l’amiante est trouvé, un pro certifié sous-section 3 le retire avant la démolition, sauf impossibilité technique. Comptez au moins 30 jours entre le dépôt de son plan de retrait et le début du retrait."
+  publie="2026-11-24"
+  misAJour="2026-11-24"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Faut-il un diagnostic amiante avant de démolir ?</h2>
+  <p>Oui, et même deux obligations qui s’ajoutent :</p>
+  <ul>
+    <li><strong>Le repérage de la liste C</strong> (code de la santé publique). Les propriétaires de tout bâtiment dont le permis de construire a été délivré avant le 1er juillet 1997, maisons individuelles comprises, doivent le faire réaliser avant la démolition (art. R1334-19 ; ministère de la Transition écologique). Son but : protéger ceux qui démolissent et l’environnement du bâtiment.</li>
+    <li><strong>Le repérage avant travaux du code du travail.</strong> Il s’applique aussi aux démolitions, pour les bâtiments achevés avant le 1er janvier 1997 (ministère de la Transition écologique). Celui qui décide d’une opération qui peut exposer des travailleurs à l’amiante doit le faire réaliser (art. R4412-97). Notre guide du <a href="/diagnostic-amiante-avant-travaux">diagnostic amiante avant travaux</a> en détaille les règles et les cas d’exemption.</li>
+  </ul>
+  <p>Le repérage de la liste C est confié à un opérateur de repérage certifié, qui remet son rapport au propriétaire contre accusé de réception (ARS Auvergne-Rhône-Alpes). Nos pros retirent l’amiante : ils ne font pas ce repérage.</p>
+
+  <h2>Qu’appelle-t-on une démolition ?</h2>
+  <p>Pour le ministère de la Transition écologique, une opération de démolition consiste à détruire au moins une partie majoritaire de la structure d’un bâtiment. Raser une maison entière en est une. Abattre une cloison ou ouvrir un mur porteur n’en est pas une : ce sont des travaux, avec leur propre repérage avant travaux.</p>
+  <p>Entre les deux, certains cas ne sont pas tranchés par les textes que nous avons lus, comme une annexe rasée seule (garage, grange, abri). Posez la question à l’opérateur de repérage, ou à la direction départementale des territoires (DDT), que le ministère indique pour les cas particuliers.</p>
+
+  <h2>Que contient le repérage avant démolition ?</h2>
+  <p>Il va beaucoup plus loin que le diagnostic de vente. Celui-ci ne regarde que les matériaux des listes A et B accessibles sans travaux destructifs. Le rapport de démolition, lui, doit donner la liste et la localisation des matériaux de la liste C contenant de l’amiante, identifiés de manière exhaustive, après démontages et investigations destructives (ARS Auvergne-Rhône-Alpes). L’opérateur peut donc percer, déposer ou casser pour voir ce qu’il y a derrière : lors d’une démolition totale, tous les matériaux sont sollicités (ministère de la Transition écologique).</p>
+  <div class="tableau">
+    <table>
+      <caption>Liste C : composants à vérifier ou à sonder avant une démolition, extraits de l’annexe 13-9 du code de la santé publique (décret n° 2011-629 du 3 juin 2011).</caption>
+      <thead><tr><th scope="col">Partie du bâtiment</th><th scope="col">Exemples de matériaux à vérifier</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Toiture et étanchéité</th><td>Plaques et ardoises en fibres-ciment, bardeaux bitumineux, revêtements d’étanchéité, accessoires de toiture</td></tr>
+        <tr><th scope="row">Façades</th><td>Panneaux-sandwichs, bardages, appuis de fenêtres, isolants sous bardage</td></tr>
+        <tr><th scope="row">Murs, cloisons, poteaux</th><td>Flocages, enduits projetés, panneaux de cloisons, portes coupe-feu</td></tr>
+        <tr><th scope="row">Plafonds et faux plafonds</th><td>Flocages, coffrages perdus, panneaux collés ou vissés, calfeutrements</td></tr>
+        <tr><th scope="row">Sols et murs</th><td>Dalles plastiques, colles bitumineuses, colles des carrelages, chapes maigres, revêtement bitumineux des fondations</td></tr>
+        <tr><th scope="row">Conduits et équipements</th><td>Calorifugeages, conduits en fibres-ciment, joints, clapets coupe-feu, vide-ordures</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>La liste compte aussi les ascenseurs, des équipements divers et les installations industrielles. Elle reprend la toiture et les conduits, mais aussi des matériaux cachés, comme la colle sous un carrelage : notre guide du <a href="/carrelage-colle-amiante">carrelage et de la colle amiantés</a> l’explique. Le rapport doit ensuite être transmis à toute personne appelée à concevoir ou à réaliser les travaux (ministère de la Transition écologique) : donnez-le aux pros que vous consultez, avant leur devis.</p>
+
+  <h2>Faut-il retirer l’amiante avant de démolir ?</h2>
+  <p>Oui, en règle générale. Sauf impossibilité technique, les matériaux contenant de l’amiante sont retirés avant la démolition (ministère de la Transition écologique). Le code du travail prévoit une seule autre exception : le retrait n’est pas prévu s’il causerait un plus grand risque pour les travailleurs que de laisser les matériaux en place (art. R4412-135).</p>
+  <ul>
+    <li><strong>Qui retire :</strong> le retrait d’amiante relève de la sous-section 3 du code du travail, y compris en cas de démolition (art. R4412-94). Le donneur d’ordre doit faire appel à un pro certifié (art. R4412-129). Voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>. Tous nos pros sont certifiés.</li>
+    <li><strong>Ce que prévoit le pro :</strong> un plan de démolition, de retrait ou d’encapsulage, établi sur la plateforme DEMAT@MIANTE. Pour une démolition, il indique comment l’amiante sera retiré avant, ou pourquoi il ne l’est pas (art. R4412-133). Son contenu complet est dans notre guide du <a href="/plan-de-retrait-amiante">plan de retrait amiante</a>.</li>
+    <li><strong>Le démolisseur :</strong> s’il n’est pas certifié sous-section 3, il intervient après le retrait. Prévoyez les deux chantiers l’un après l’autre dans votre calendrier.</li>
+  </ul>
+
+  <h2>Combien de temps faut-il prévoir ?</h2>
+  <p>Le délai qui ne se négocie pas, c’est celui du plan : le pro le transmet au moins 30 jours avant le début du retrait, ou 8 jours en cas d’urgence liée à un sinistre (code du travail, art. R4412-137). Les étapes, dans l’ordre :</p>
+  <ol>
+    <li><strong>Le repérage :</strong> visite de l’opérateur, prélèvements, puis analyses en laboratoire.</li>
+    <li><strong>Les devis :</strong> rapport en main, vous consultez des pros certifiés pour le retrait, et un démolisseur pour la suite.</li>
+    <li><strong>Le plan de retrait :</strong> déposé par le pro retenu, au moins 30 jours avant son chantier.</li>
+    <li><strong>Le retrait :</strong> sa durée dépend de la quantité et du type de matériaux. En fin de chantier, le pro contrôle et fait mesurer l’empoussièrement avant de rendre la zone, comme l’explique notre guide du <a href="/plan-de-retrait-amiante">plan de retrait</a>.</li>
+    <li><strong>La démolition,</strong> une fois l’amiante retiré.</li>
+  </ol>
+  <p>Si votre commune exige un permis de démolir, lancez la demande dès le début : son instruction se déroule pendant le repérage et les devis (voir plus bas). Pour le coût du retrait, nos repères sont dans le guide du <a href="/prix-desamiantage">prix du désamiantage</a>, et ceux d’un repérage avant travaux dans le guide du <a href="/diagnostic-amiante-avant-travaux">diagnostic amiante avant travaux</a> ; le repérage avant démolition, plus poussé, n’y est pas chiffré.</p>
+
+  <EncartDevis accroche="Rapport de repérage en main, faites chiffrer le retrait avant démolition par l’un de nos pros certifiés sous-section 3." />
+
+  <h2>Faut-il un permis de démolir ?</h2>
+  <p>Pas partout : l’amiante ne change rien à la règle, qui dépend du lieu. Un permis de démolir est exigé avant la démolition partielle ou totale d’une construction située dans une commune où le conseil municipal l’a instauré, ou dans le périmètre d’une opération de restauration immobilière (service-public.fr, fiche F17669). Il l’est aussi dans les secteurs protégés : site patrimonial remarquable, abords d’un monument historique ou bâtiment inscrit, site inscrit ou classé. Le service de l’urbanisme de votre mairie vous dira si votre projet est concerné.</p>
+  <ul>
+    <li><strong>Démolition suivie d’une reconstruction :</strong> le formulaire du permis de construire ou d’aménager permet de demander aussi l’autorisation de démolir. Vous n’avez qu’un dossier.</li>
+    <li><strong>Délais d’instruction :</strong> 2 mois pour un permis de démolir, 3 mois pour un permis de construire une maison individuelle avec démolition, à partir du dossier complet.</li>
+    <li><strong>Validité :</strong> 3 ans. Le permis doit être affiché sur le terrain pendant toute la durée du chantier.</li>
+  </ul>
+
+  <h2>Que deviennent les déchets d’amiante ?</h2>
+  <p>Ils suivent une filière à part, avec un bordereau de suivi des déchets d’amiante (BSDA) qui circule sur la plateforme de l’État Trackdéchets (ministère de la Transition écologique). Quand un pro fait le retrait chez un particulier, c’est lui qui émet ce bordereau : le détail est dans notre guide du <a href="/diagnostic-amiante-avant-travaux">diagnostic amiante avant travaux</a>. Le propriétaire, lui, reste responsable de la bonne élimination des déchets produits. Demandez une copie du bordereau en fin de chantier.</p>
+  <p>Pour un grand chantier, un second diagnostic s’ajoute : le diagnostic « produits, équipements, matériaux et déchets » (PEMD). Il est obligatoire quand la surface de plancher cumulée des bâtiments démolis dépasse 1 000 m², ou quand l’un d’eux a accueilli une activité agricole, industrielle ou commerciale qui a utilisé ou stocké des substances dangereuses (ministère de la Transition écologique, janvier 2024). Il vise le réemploi et le recyclage des autres matériaux : les déchets d’amiante n’en font pas partie et restent suivis par le BSDA. Pour les petites quantités qu’un particulier apporte lui-même, voyez notre page <a href="/dechetterie-amiante">déposer de l’amiante en déchetterie</a>.</p>
+</Guide>
