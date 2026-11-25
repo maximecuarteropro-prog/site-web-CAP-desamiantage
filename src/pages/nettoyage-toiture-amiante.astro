@@ -1,0 +1,85 @@
+---
+import Guide from '@/layouts/Guide.astro'
+import EncartDevis from '@/components/EncartDevis.astro'
+
+// Écrit le 25 nov. 2026 par la tâche « Article SEO du jour ». Mot-clé vérifié le même jour (OpenSEO) : démoussage toiture amiante (40),
+// nettoyage toiture amiante (40), traitement toiture amiante (30), peinture toiture amiante (20), soit 130 pour le groupe ;
+// intention commerciale et informationnelle ; page 1 mobile : forums, FAQ de prévention, blogs de nettoyeurs, un site belge.
+// Lu le 25 nov. 2026 : OPPBTP (question « démousser une couverture en tôles fibres amiante-ciment », mise à jour du 24 avril 2019),
+// CAPEB (article du 17 novembre 2015), brochure des ministères « Bricolage dans votre logement » (mars 2016, édition de décembre 2018),
+// plaquette de la DREETS Auvergne-Rhône-Alpes (juin 2021), brochure de la DREETS Pays de la Loire (janvier 2023, citation reprise de
+// /amiante-maison).
+// Points incertains : aucun texte lu ne classe le démoussage en sous-section 3 ou 4 (la page code.travail.gouv.fr n’a pas pu être lue,
+// la demande d’accès est restée sans réponse) ; la page ne l’affirme donc pas et renvoie au devis. Aucune source lue ne traite
+// de la peinture : pour la peinture, la page reprend le critère de /sous-section-4-amiante (encapsulage étanche, solide et durable = sous-section 3).
+const sources = [
+  { titre: 'OPPBTP, « Pour démousser une couverture en tôles fibres amiante-ciment, peut-on utiliser un nettoyeur haute pression ? »', url: 'https://www.preventionbtp.fr/ressources/questions/pour-demousser-une-couverture-en-toles-fibres-amiante-ciment-peut-on-utiliser-un-nettoyeur-haute-pression_5KEyKRU3qBwkpYs57YntWd', date: 'mise à jour le 24 avril 2019' },
+  { titre: 'CAPEB, « Nettoyage d’une toiture en fibro-ciment »', url: 'https://www.capeb.fr/actualites/nettoyage-d-039-une-toiture-en-fibro-ciment', date: 'publié le 17 novembre 2015' },
+  { titre: 'Ministères chargés du logement et de la santé, brochure « Bricolage dans votre logement : attention à l’amiante ! »', url: 'https://www.ecologie.gouv.fr/sites/default/files/documents/dgaln_plaquette_bricolage_amiante_decembre_2018_0.pdf', date: 'mars 2016, édition de décembre 2018' },
+  { titre: 'DREETS Pays de la Loire, « Amiante chez les particuliers : une affaire de professionnels ! »', url: 'https://pays-de-la-loire.dreets.gouv.fr/sites/pays-de-la-loire.dreets.gouv.fr/IMG/pdf/document_particuliers_version_janvier__2023-5.pdf', date: 'janvier 2023 (3e édition)' },
+  { titre: 'DREETS Auvergne-Rhône-Alpes, plaquette « Remplacement d’une toiture amiantée »', url: 'https://auvergne-rhone-alpes.dreets.gouv.fr/sites/auvergne-rhone-alpes.dreets.gouv.fr/IMG/pdf/plaquette_couvreur_-_07.07.2021.pdf', date: 'version de juin 2021' },
+]
+
+const faq = [
+  { question: 'Peut-on démousser soi-même une toiture en amiante-ciment ?', reponse: 'Les documents lus ne vont pas dans ce sens. L’OPPBTP et la CAPEB décrivent un démoussage fait par des professionnels, avec un produit anticryptogamique, et déconseillent le nettoyeur haute pression. La brochure des ministères rappelle que le particulier est responsable des conséquences pour lui et son voisinage. Faites d’abord un repérage, puis confiez le travail à un pro.' },
+  { question: 'Le nettoyeur haute pression est-il possible sur une toiture en amiante ?', reponse: 'Non, il est écarté par les sources lues qui en parlent. L’OPPBTP le déconseille car il peut endommager les plaques et disperser des fibres autour du bâtiment. La CAPEB le dit proscrit. Les ministères le déconseillent parce qu’il libère beaucoup de fibres, et la DREETS Pays de la Loire le juge « absolument à proscrire ».' },
+  { question: 'Peut-on peindre une toiture en fibrociment amianté ?', reponse: 'Aucune des sources lues pour ce guide ne traite de la peinture. Selon notre guide sur la sous-section 4, un encapsulage étanche, solide et durable est un travail de sous-section 3, à confier à un pro certifié, alors qu’un recouvrement sans ces qualités ou un entretien reste de la sous-section 4. Demandez au pro d’écrire sur le devis la sous-section retenue et le produit.' },
+  { question: 'Que faire des mousses et de l’eau du démoussage ?', reponse: 'Pour l’OPPBTP, les rejets d’eau doivent être récupérés puis traités. Pour la CAPEB, l’eau doit être recueillie et traitée, et les déchets sont considérés comme amiantés : ils partent vers un centre habilité. Ne laissez ni l’eau ni les mousses s’écouler dans le jardin ou la gouttière.' },
+  { question: 'Vaut-il mieux démousser ou faire retirer la toiture ?', reponse: 'Cela dépend de son état. La CAPEB préconise de désamianter plutôt que de nettoyer, et présente le démoussage chimique comme une option moins coûteuse. Si les plaques sont fissurées ou friables, nettoyer ne règle rien : voyez avec un pro s’il faut encapsuler ou retirer.' },
+]
+---
+<Guide
+  titre="Nettoyage toiture amiante : démoussage, peinture"
+  description="Démousser, nettoyer ou peindre une toiture en amiante-ciment : ce que disent l’OPPBTP, la CAPEB et les ministères, et pourquoi le jet haute pression est écarté."
+  chemin="/nettoyage-toiture-amiante"
+  rubrique="Entretenir"
+  h1="Démoussage, nettoyage, peinture d’une toiture en amiante : ce qu’il faut savoir"
+  chapo="Le nettoyeur haute pression et le grattage à sec sont à écarter sur une toiture en amiante-ciment : ils abîment les plaques et dispersent des fibres. Quand la toiture est saine, les organismes de prévention décrivent un démoussage au produit anticryptogamique, suivi d’un brossage, en limitant et en récupérant l’eau. Pour la peinture, aucune source lue ne la traite : tout dépend de son but, et c’est au pro d’écrire au devis s’il s’agit d’un travail de sous-section 3 ou 4. Mieux vaut confier le tout à un pro."
+  publie="2026-11-25"
+  misAJour="2026-11-25"
+  sources={sources}
+  faq={faq}
+>
+  <h2>Peut-on nettoyer soi-même une toiture en amiante ?</h2>
+  <p>Aucun des documents lus pour ce guide ne l’interdit expressément au particulier, et aucun ne le recommande. La brochure des ministères chargés du logement et de la santé (édition de décembre 2018) précise que celui qui intervient lui-même est responsable des conséquences pour lui et pour son voisinage, et que les travaux importants demandent des professionnels qualifiés. La brochure de la DREETS Pays de la Loire (janvier 2023) s’intitule d’ailleurs « Amiante chez les particuliers : une affaire de professionnels ! ».</p>
+  <p>Deux raisons pratiques s’ajoutent. D’abord, on ne sait pas à l’œil nu si des plaques contiennent de l’amiante : un <a href="/reconnaitre-toiture-amiante">repérage avec analyse</a> en décide. Ensuite, l’OPPBTP rappelle que le risque principal d’une intervention en toiture est la chute à travers les plaques.</p>
+
+  <h2>Pourquoi le jet haute pression et le grattage sont écartés</h2>
+  <p>Les sources lues disent la même chose avec leurs mots :</p>
+  <ul>
+    <li><strong>OPPBTP</strong> (mise à jour du 24 avril 2019) : il faut éviter le nettoyeur haute pression, dont la puissance risque d’endommager les plaques et de disperser les mousses et les fibres autour du bâtiment ;</li>
+    <li><strong>CAPEB</strong> (17 novembre 2015) : le décapage par haute pression d’une toiture en amiante-ciment est proscrit, le grattage à sec l’est tout autant, et ces techniques fragilisent la toiture ;</li>
+    <li><strong>ministères</strong> (brochure, édition de décembre 2018) : les jets sous pression sont à éviter car ils provoquent une forte libération de fibres ;</li>
+    <li><strong>DREETS Pays de la Loire</strong> (janvier 2023) : le démoussage d’une toiture amiantée au jet haute pression est « absolument à proscrire ».</li>
+  </ul>
+  <p>La brochure des ministères ajoute qu’un matériau mouillé produit moins de poussière, et déconseille le balai et l’aspirateur domestique. Elle conseille de nettoyer au chiffon humide.</p>
+
+  <h2>Comment un pro démousse-t-il une toiture en amiante-ciment ?</h2>
+  <p>L’OPPBTP décrit un démoussage avec une solution anticryptogamique, qui facilite le décollement de la mousse, puis un brossage. L’objectif est d’humidifier le support pour éviter la dispersion de fibres, tout en limitant les rejets d’eau, qui doivent être récupérés puis traités. La CAPEB parle d’un agent liquide de démoussage, une solution biocide anticryptogamique appliquée par pulvérisation légère, qu’elle présente comme une option moins coûteuse que le désamiantage.</p>
+  <p>Aucune de ces deux pages ne cite le texte du code du travail qui s’applique, ni la formation exigée. La CAPEB demande une formation à la sous-section 3, mais pour <em>désamianter</em> la toiture. Pour un simple démoussage, nous n’avons pas trouvé de source qui tranche entre <a href="/certification-sous-section-3">sous-section 3</a> et <a href="/sous-section-4-amiante">sous-section 4</a>. Demandez donc au pro d’écrire au devis le régime qu’il applique et la méthode prévue : récupération de l’eau, protection des abords, évacuation des résidus.</p>
+
+  <h2>Peut-on peindre une toiture en amiante ?</h2>
+  <p>Les sources lues pour ce guide ne traitent pas de la peinture d’une toiture amiantée : nous ne pouvons donc pas dire si un revêtement donné est permis. Le code du travail distingue deux cas, d’après notre guide <a href="/sous-section-4-amiante">sous-section 4 amiante</a> : l’encapsulage étanche, solide et durable relève de la sous-section 3, donc d’un pro certifié ; recouvrir sans ces trois qualités, ou entretenir, reste de la sous-section 4. Une peinture peut donc tomber d’un côté ou de l’autre selon son but et sa tenue. Ce classement revient au pro : demandez-lui d’écrire sur le devis la sous-section retenue, le produit et la façon de préparer le support.</p>
+
+  <h2>Démousser, encapsuler ou retirer : comment choisir ?</h2>
+  <p>Le démoussage traite la mousse, pas l’amiante : la toiture reste amiantée, et le sera encore à la vente ou aux prochains travaux. La CAPEB préconise d’ailleurs de désamianter la toiture plutôt que de la nettoyer. En pratique :</p>
+  <ul>
+    <li><strong>Plaques saines, simple mousse :</strong> la CAPEB présente le démoussage chimique comme une option moins coûteuse que le désamiantage, mais la DREETS Pays de la Loire rappelle que démousser une toiture amiantée peut entraîner des expositions très importantes ;</li>
+    <li><strong>Plaques fissurées, cassantes ou friables :</strong> le nettoyage n’arrange rien, et brosser une plaque abîmée est le geste à éviter ; voyez avec un pro s’il faut encapsuler ou retirer ;</li>
+    <li><strong>Travaux prévus ou vente :</strong> mieux vaut regarder le <a href="/desamiantage-toiture-amiante">désamiantage de la toiture</a> et son <a href="/prix-remplacement-toiture-amiante">prix</a> que payer un démoussage qui sera à refaire.</li>
+  </ul>
+
+  <EncartDevis accroche="Pour savoir si votre toiture se démousse ou se retire, faites-la voir à l’un de nos pros." />
+
+  <h2>Que faire de l’eau et des déchets du démoussage ?</h2>
+  <p>Selon l’OPPBTP, les rejets d’eau doivent être récupérés puis traités. Selon la CAPEB, l’eau doit être recueillie et traitée, et les déchets sont considérés comme amiantés : ils sont évacués vers des centres habilités. Laisser couler l’eau dans le jardin ou la gouttière revient donc à disperser le problème. Les règles d’emballage et d’accès des déchets amiantés sont dans notre guide <a href="/dechetterie-amiante">déchetterie et amiante</a>.</p>
+
+  <h2>Les bons réflexes avant de commander</h2>
+  <ul>
+    <li>faire repérer la toiture avant toute intervention (<a href="/diagnostic-amiante-avant-travaux">diagnostic amiante avant travaux</a>) ;</li>
+    <li>ne pas monter sur les plaques vous-même, car on peut passer à travers ;</li>
+    <li>refuser un devis qui prévoit le nettoyeur haute pression ou le grattage à sec ;</li>
+    <li>demander par écrit le régime appliqué, la récupération de l’eau et la destination des déchets.</li>
+  </ul>
+  <p>Vous voulez situer la toiture dans l’ensemble de la maison ? Lisez notre guide <a href="/amiante-maison">amiante dans une maison</a>.</p>
+</Guide>

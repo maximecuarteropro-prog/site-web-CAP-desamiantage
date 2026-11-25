@@ -18,6 +18,7 @@ export const PAGES_GUIDE = [
   { chemin: '/amiante-murs-platre-enduit', titreCourt: 'Amiante dans les murs et enduits' },
   { chemin: '/reconnaitre-toiture-amiante', titreCourt: 'Reconnaître une toiture en amiante' },
   { chemin: '/toiture-amiante-que-faire', titreCourt: 'Toiture en amiante : que faire ?' },
+  { chemin: '/nettoyage-toiture-amiante', titreCourt: 'Nettoyer ou démousser une toiture en amiante' },
   { chemin: '/vendre-maison-toiture-amiante', titreCourt: 'Vendre une maison avec un toit en amiante' },
   { chemin: '/diagnostic-amiante-avant-travaux', titreCourt: 'Diagnostic amiante avant travaux' },
   { chemin: '/plan-de-retrait-amiante', titreCourt: 'Plan de retrait amiante' },
