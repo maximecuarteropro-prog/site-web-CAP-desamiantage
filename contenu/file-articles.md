@@ -23,7 +23,7 @@ Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026 e
 
 | Ordre | Chemin | Requête principale | Requêtes secondaires | Question du lecteur | Statut |
 |---|---|---|---|---|---|
-| 10 | `/toiture-amiante-voisin` | toiture amiante voisin (70) | | La toiture en amiante du voisin se dégrade : quels sont mes recours, à qui m'adresser ? | à faire |
+| 10 | `/toiture-amiante-voisin` | toiture amiante voisin (70) | | La toiture en amiante du voisin se dégrade : quels sont mes recours, à qui m'adresser ? | brouillon (branche `brouillon/toiture-amiante-voisin`, vérifié le 26 nov. 2026 : 70 recherches, page 1 de forums et de guides) |
 | 11 | `/mesure-empoussierement-amiante` | mesure empoussièrement amiante (70) | | Qu'est-ce qu'une mesure d'empoussièrement, quand est-elle obligatoire, qui la fait, combien coûte-t-elle ? | à faire |
 | 12 | `/desamiantage-hangar-agricole` | toiture hangar amiante (10) | hangar amiante (10), bâtiment agricole amiante | Volume faible mais chantiers de grande valeur : retrait d'une toiture de hangar ou de stabulation, délais, déchets, aides éventuelles. | à faire |
 
