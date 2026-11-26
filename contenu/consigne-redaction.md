@@ -129,4 +129,6 @@ une ligne dès qu'une même catégorie de défaut revient sur deux guides.
 - **Vocabulaire de marque** : « entreprise certifiée » pour celui qui fait les travaux (location, démolition, en citant R4412-129).
   Même en paraphrasant un article, écris « un pro certifié » ou « nos pros ».
 - **Angle peur** : pas de liste de maladies ; « des maladies respiratoires graves » suffit.
-
+- **Auteur d’une source recopié d’un autre guide** : la brochure « Bricolage dans votre logement » prêtée au ministère de la santé
+  dans 4 guides (elle est signée Transition écologique et Cohésion des territoires). Lis la couverture et la dernière page avant de
+  nommer l’auteur d’un document.

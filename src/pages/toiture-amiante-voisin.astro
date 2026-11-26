@@ -4,17 +4,22 @@ import EncartDevis from '@/components/EncartDevis.astro'
 
 // Relu le 26 nov. 2026 : ANIL (analyse juridique à jour au 18 avril 2024), justice.fr (fiche « Conciliation » mise à jour le 28 mai 2026,
 // fiche « Habitat contenant de l’amiante » mise à jour le 5 mars 2025), Que Choisir (publié le 10 juin 2024), ARS Nouvelle-Aquitaine
-// (page affichée le 19 novembre 2026), ARS PACA (25 mai 2023).
+// (page affichée le 19 novembre 2026), ARS PACA (25 mai 2023),
+// brochure « Bricolage dans votre logement » (mars 2016, édition de décembre 2018).
 // Légifrance, service-public.fr (fiche F288) et vie-publique.fr n’ont pas pu être lus ce jour : aucun article n’est cité de première main,
 // les articles du code civil, du code de procédure civile et du code de la santé publique viennent des pages ci-dessus.
 // Points incertains :
 // - Aucune source lue ne dit qu’un toit en amiante dégradé constitue, à lui seul, un trouble anormal de voisinage : la page le présente
 //   comme une appréciation du juge, au cas par cas (ANIL).
-// - Aucune source lue ne décrit un guichet de signalement propre au voisin ; la page renvoie vers l’ARS du département, que l’ARS
-//   Nouvelle-Aquitaine présente comme interlocuteur du particulier, et laisse l’ARS dire si le dossier relève du préfet.
+// - Aucune source lue ne décrit un guichet de signalement propre au voisin ; la page renvoie vers l’ARS du département, dont l’ARS
+//   Nouvelle-Aquitaine dit qu’elle peut être amenée à répondre aux particuliers, et laisse l’ARS dire si le dossier relève du préfet.
 // - Les pouvoirs du préfet (code de la santé publique, L1334-15 et L1334-16) sont cités d’après l’ARS PACA et justice.fr, pas d’après le texte ; justice.fr écrit que les maisons individuelles ne sont pas concernées : la page ne promet pas ce recours pour une maison.
-// Critique : tour 1 CORRIGER, tour 2 CORRIGER (26 nov.) sur ce seul point, corrigé après le tour 2 sans nouvelle critique : brouillon.
+// - La page de l’ARS Nouvelle-Aquitaine ne parle pas d’un voisin : sa phrase « en cas de refus ou d’anomalie » vise le diagnostic de
+//   l’immeuble où l’on réside ou travaille, et la page le dit ainsi.
+// - Reprise du 26 nov. : brochure des ministères relue (signée Transition écologique et Cohésion des territoires, pas la santé),
+//   attribution corrigée aussi dans les guides « que faire », « déchetterie » et « nettoyage ».
 // - Pouvoirs du maire : aucune source lue, donc rien sur la page.
+// Critique : tour 1 CORRIGER, tour 2 CORRIGER, reprise tour 2 PUBLIER (26 nov. 2026).
 // Relire les textes au moins une fois par an.
 const sources = [
   { titre: 'ANIL, « Troubles du voisinage : la responsabilité civile entre dans le code civil » (loi n° 2024-346 du 15 avril 2024)', url: 'https://www.anil.org/aj-troubles-du-voisinage-responsabilite-civile', date: 'à jour au 18 avril 2024' },
@@ -22,16 +27,16 @@ const sources = [
   { titre: 'Que Choisir, « Conflit de voisinage : le recours en justice »', url: 'https://www.quechoisir.org/conseils-conflit-de-voisinage-le-recours-en-justice-n124474/', date: 'publié le 10 juin 2024' },
   { titre: 'Justice.fr, « Habitat contenant de l’amiante »', url: 'https://www.justice.fr/fiche/habitat-contenant-amiante', date: 'mise à jour le 5 mars 2025' },
   { titre: 'ARS Nouvelle-Aquitaine, « Amiante »', url: 'https://www.nouvelle-aquitaine.ars.sante.fr/amiante-10', date: 'page consultée le 26 novembre 2026, affichée au 19 novembre 2026' },
-  { titre: 'Ministères chargés du logement et de la santé, brochure « Bricolage dans votre logement : attention à l’amiante ! »', url: 'https://www.ecologie.gouv.fr/sites/default/files/documents/dgaln_plaquette_bricolage_amiante_decembre_2018_0.pdf', date: 'mars 2016, édition de décembre 2018' },
+  { titre: 'Ministères de la Transition écologique et de la Cohésion des territoires, brochure « Bricolage dans votre logement : attention à l’amiante ! »', url: 'https://www.ecologie.gouv.fr/sites/default/files/documents/dgaln_plaquette_bricolage_amiante_decembre_2018_0.pdf', date: 'mars 2016, édition de décembre 2018' },
   { titre: 'ARS Provence-Alpes-Côte d’Azur, « Amiante »', url: 'https://www.paca.ars.sante.fr/amiante-0', date: 'page affichée au 25 mai 2023' },
 ]
 
 const faq = [
   { question: 'Mon voisin est-il obligé de retirer sa toiture en amiante ?', reponse: 'Non, pas du seul fait qu’elle contient de l’amiante. Pour une maison individuelle, aucun suivi périodique n’est imposé et aucun repérage n’est exigé en dehors de la vente, des travaux confiés à un pro et de la démolition (notre guide « Toiture en amiante : garder, encapsuler ou retirer ? »). Les pouvoirs du préfet visent les propriétaires d’immeubles construits avant juillet 1997 qui ne suivent pas les mesures de leur diagnostic, et justice.fr précise que « les maisons individuelles ne sont pas concernées ». Pour la toiture d’une maison, ne comptez donc pas sur ce levier : signalez le cas à l’ARS de votre département, qui vous orientera.' },
-  { question: 'À qui signaler la toiture en amiante dégradée de mon voisin ?', reponse: 'D’abord à votre voisin, par écrit, avec des photos datées. Ensuite à l’ARS de votre département : l’ARS Nouvelle-Aquitaine indique que le service santé-environnement de la délégation départementale est l’interlocuteur du particulier et qu’elle peut l’orienter vers le bon service. Pour un logement privé, la page cite l’ARS ou la DREAL.' },
+  { question: 'À qui signaler la toiture en amiante dégradée de mon voisin ?', reponse: 'D’abord à votre voisin, par écrit, avec des photos datées. Ensuite à l’ARS de votre département : l’ARS Nouvelle-Aquitaine indique que l’ARS peut être amenée à répondre aux questions de particuliers et, le cas échéant, à les orienter vers le bon interlocuteur. Pour les logements privés, sa page sur l’amiante cite « ARS ou DREAL ».' },
   { question: 'Le voisin est-il responsable si des plaques tombent chez moi ?', reponse: 'Depuis le 17 avril 2024, l’article 1253 du code civil rend le propriétaire, le locataire, l’occupant ou le maître d’ouvrage d’un fonds « responsable de plein droit » du dommage causé par un trouble anormal de voisinage, sans que vous ayez à prouver une faute (ANIL). Le caractère anormal du trouble reste apprécié par le juge, au cas par cas.' },
   { question: 'La conciliation est-elle obligatoire avant d’aller au tribunal ?', reponse: 'Pour un trouble anormal de voisinage, le juge n’examine la demande que si vous prouvez une tentative de conciliation, de médiation ou de procédure participative. Deux exceptions : l’urgence, ou l’absence de conciliateur disponible, c’est-à-dire pas de première réunion dans les 3 mois (justice.fr, fiche « Conciliation »). La conciliation est gratuite et se fait sans avocat.' },
-  { question: 'Puis-je enlever moi-même les débris de plaques tombés dans mon jardin ?', reponse: 'Mieux vaut ne pas y toucher. La brochure des ministères chargés du logement et de la santé (édition de décembre 2018) indique que les jets sous pression sont à éviter, car ils provoquent une forte libération de fibres. Éloignez les personnes, signalez les débris à votre voisin par écrit et faites appel à un pro certifié sous-section 3 pour l’enlèvement.' },
+  { question: 'Puis-je enlever moi-même les débris de plaques tombés dans mon jardin ?', reponse: 'Mieux vaut ne pas y toucher : la brochure des ministères sur le bricolage (édition de décembre 2018) indique que toute intervention directe sur des matériaux contenant de l’amiante est fortement déconseillée. Éloignez les personnes, signalez les débris à votre voisin par écrit et faites appel à un pro certifié sous-section 3 pour l’enlèvement.' },
 ]
 ---
 <Guide
@@ -47,7 +52,7 @@ const faq = [
   faq={faq}
 >
   <h2>Le voisin a-t-il le droit de garder une toiture en amiante ?</h2>
-  <p>Oui. Une toiture en plaques ou en ardoises de fibrociment posée avant 1997 peut contenir de l’amiante, et la garder n’est pas interdit. Pour une maison individuelle, aucun suivi périodique n’est imposé et aucun repérage n’est exigé en dehors de la vente, des travaux confiés à un pro et de la démolition (notre guide <a href="/amiante-maison">amiante dans une maison</a>) : notre guide <a href="/toiture-amiante-que-faire">toiture en amiante : garder, encapsuler ou retirer</a> détaille ce point. Un voisin ne peut donc pas, en général, exiger le retrait d’une toiture parce qu’elle est en amiante.</p>
+  <p>Oui. Une toiture en plaques ou en ardoises de fibrociment posée avant 1997 peut contenir de l’amiante, et la garder n’est pas interdit. Pour une maison individuelle, aucun suivi périodique n’est imposé et aucun repérage n’est exigé en dehors de la vente, des travaux confiés à un pro et de la démolition. Nos guides <a href="/amiante-maison">amiante dans une maison</a> et <a href="/toiture-amiante-que-faire">toiture en amiante : garder, encapsuler ou retirer</a> détaillent ce point. Un voisin ne peut donc pas, en général, exiger le retrait d’une toiture parce qu’elle est en amiante.</p>
   <p>Vous ne savez d’ailleurs pas forcément que la toiture en contient : à l’œil nu, rien ne permet de le dire, seule l’analyse d’un prélèvement tranche (voir <a href="/reconnaitre-toiture-amiante">reconnaître une toiture en amiante</a>). Ce qui change la situation, c’est son état : plaques cassées, tombées, ou toiture que le voisin nettoie ou démonte sans précaution.</p>
 
   <h2>Sur quel fondement peut-on agir contre le voisin ?</h2>
@@ -62,7 +67,7 @@ const faq = [
       <tbody>
         <tr><th scope="row">1. Constater</th><td>Photos datées, éventuellement constat d’un commissaire de justice</td><td>Un constat de commissaire de justice suffit parfois à faire cesser le trouble (Que Choisir)</td></tr>
         <tr><th scope="row">2. Écrire au voisin</th><td>Décrire l’état de la toiture et demander une mise en sécurité</td><td>Conservez vos courriers et ses réponses</td></tr>
-        <tr><th scope="row">3. Alerter l’ARS</th><td>Contacter le service santé-environnement de la délégation de votre département</td><td>Il est l’interlocuteur du particulier en cas d’anomalie (ARS Nouvelle-Aquitaine)</td></tr>
+        <tr><th scope="row">3. Alerter l’ARS</th><td>Contacter le service santé-environnement de la délégation de votre département</td><td>L’ARS peut répondre aux particuliers et les orienter vers le bon interlocuteur (ARS Nouvelle-Aquitaine)</td></tr>
         <tr><th scope="row">4. Concilier</th><td>Saisir un conciliateur de justice</td><td>Gratuit, sans avocat, avec l’accord de toutes les parties (justice.fr)</td></tr>
         <tr><th scope="row">5. Saisir le juge</th><td>Tribunal judiciaire, en référé si c’est urgent</td><td>Requête au greffe jusqu’à 5 000 €, assignation au-delà (Que Choisir)</td></tr>
       </tbody>
@@ -71,7 +76,7 @@ const faq = [
   <p>Les sections suivantes détaillent les étapes 3 à 5.</p>
 
   <h2>Que peut faire l’ARS, et que peut faire le préfet ?</h2>
-  <p>L’ARS répond aux particuliers et les oriente vers le bon service ; pour un logement privé, la page cite l’ARS ou la DREAL (ARS Nouvelle-Aquitaine). Si le propriétaire refuse de communiquer un diagnostic ou si une anomalie existe, son service santé-environnement départemental est votre interlocuteur. Les coordonnées changent selon la région : cherchez celles de l’ARS de votre département.</p>
+  <p>L’ARS Nouvelle-Aquitaine indique que l’ARS peut être amenée à répondre aux questions de particuliers et, le cas échéant, à les orienter vers le bon interlocuteur. Pour les logements privés, son tableau des rôles cite « ARS ou DREAL ». Cette page ne parle pas du cas d’un voisin : exposez la situation à l’ARS, photos à l’appui. Elle vise en revanche l’occupant d’un immeuble : en cas de refus de communiquer le résultat du diagnostic, ou d’anomalie, le service santé-environnement de la délégation départementale de l’ARS est son interlocuteur. Les coordonnées changent selon la région : cherchez celles de l’ARS de votre département.</p>
   <p>Le préfet dispose de pouvoirs sur le propriétaire : il peut le contraindre à faire réaliser toute mesure utile pour réduire l’exposition, ou faire réaliser une expertise aux frais du propriétaire (articles L1334-15 et L1334-16 du code de la santé publique, d’après l’ARS PACA). Selon justice.fr, il peut aussi exiger des travaux de désamiantage dans un délai qu’il fixe, lorsque le propriétaire ne suit pas les mesures recommandées par le diagnostic. Ces pouvoirs visent les propriétaires d’immeubles construits avant juillet 1997 : justice.fr précise que « les maisons individuelles ne sont pas concernées ».</p>
 
   <h2>Pourquoi passer par un conciliateur ?</h2>
@@ -87,7 +92,7 @@ const faq = [
   <p>Le retrait d’une toiture en amiante est confié à un pro certifié sous-section 3. Notre guide <a href="/desamiantage-toiture-amiante">désamiantage de toiture</a> décrit les étapes d’un chantier, et celui sur la <a href="/certification-sous-section-3">certification sous-section 3</a> explique comment vérifier qu’un pro l’a bien. Vous pouvez demander à votre voisin à qui il confie les travaux.</p>
 
   <h2>Que faire en attendant, côté voisin gêné ?</h2>
-  <p>Ne montez pas sur la toiture, ne balayez pas les débris et ne nettoyez rien au jet : la brochure des ministères chargés du logement et de la santé (édition de décembre 2018) indique que les jets sous pression sont à éviter, car ils provoquent une forte libération de fibres ; notre guide sur le <a href="/nettoyage-toiture-amiante">nettoyage d’une toiture en amiante</a> détaille ce qu’il en est. Éloignez les personnes de la zone, photographiez, puis écrivez à votre voisin. L’enlèvement des plaques tombées chez vous se confie à un pro certifié, et les déchets suivent une filière spécifique : voir notre guide sur la <a href="/dechetterie-amiante">déchetterie et l’amiante</a>.</p>
+  <p>Ne montez pas sur la toiture, ne balayez pas les débris et ne nettoyez rien au jet : la brochure des ministères sur le bricolage (édition de décembre 2018) indique que les jets sous pression sont à éviter, car ils provoquent une forte libération de fibres ; notre guide sur le <a href="/nettoyage-toiture-amiante">nettoyage d’une toiture en amiante</a> détaille ce qu’il en est. Éloignez les personnes de la zone, photographiez, puis écrivez à votre voisin. L’enlèvement des plaques tombées chez vous se confie à un pro certifié, et les déchets suivent une filière spécifique : voir notre guide sur la <a href="/dechetterie-amiante">déchetterie et l’amiante</a>.</p>
 
   <h2>Et si c’est vous le propriétaire de la toiture ?</h2>
   <p>Gardez la toiture en bon état, écrivez à votre voisin avant tout chantier et ne la nettoyez pas au jet sous pression. Selon les cas, vous avez quatre options, du simple suivi au retrait, détaillées dans <a href="/toiture-amiante-que-faire">toiture en amiante : que faire ?</a>, et vos repères de coût sont dans <a href="/prix-desamiantage">prix du désamiantage au m²</a>. Un voisin qui prouve un trouble anormal peut engager votre responsabilité sans que vous ayez commis de faute (article 1253, ANIL) : mieux vaut agir avant la plainte.</p>
