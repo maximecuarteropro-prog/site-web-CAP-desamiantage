@@ -23,7 +23,6 @@ Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026 e
 
 | Ordre | Chemin | Requête principale | Requêtes secondaires | Question du lecteur | Statut |
 |---|---|---|---|---|---|
-| 11 | `/mesure-empoussierement-amiante` | mesure empoussièrement amiante (70) | | Qu'est-ce qu'une mesure d'empoussièrement, quand est-elle obligatoire, qui la fait, combien coûte-t-elle ? | à faire |
 | 12 | `/desamiantage-hangar-agricole` | toiture hangar amiante (10) | hangar amiante (10), bâtiment agricole amiante | Volume faible mais chantiers de grande valeur : retrait d'une toiture de hangar ou de stabulation, délais, déchets, aides éventuelles. | à faire |
 | 13 | `/analyse-amiante` | analyse amiante (210, informationnelle) | prélèvement amiante (90, informationnelle) ; groupe de 300, vérifié le 27 nov. 2026 | Comment faire analyser un matériau pour savoir s'il contient de l'amiante : qui prélève, quel laboratoire, quel délai, quel prix ? (page 1 : laboratoires, diagnostiqueurs, service-public, sante.gouv ; ne pas refaire `/diagnostic-amiante-avant-travaux`) | à faire |
 | 14 | `/bardage-amiante` | bardage amiante (50, intention transactionnelle selon OpenSEO), vérifié le 27 nov. 2026 | plaque ondulée amiante (50, non revérifiée en page 1) | J'ai un bardage ou des plaques en fibrociment amianté sur ma façade : le garder, le recouvrir ou le retirer, et à quel prix ? (page 1 : guides et désamianteurs) | à faire |
@@ -55,6 +54,7 @@ Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026 e
 | `/demolition-amiante` | démolition amiante (40), groupe de 130 avec diagnostic amiante avant démolition (70), vérifiés le 24 nov. 2026 | 24 nov. 2026 (PUBLIER au tour 2) |
 | `/nettoyage-toiture-amiante` | démoussage toiture amiante (40), groupe de 130 avec nettoyage toiture amiante (40), traitement toiture amiante (30), peinture toiture amiante (20), vérifiés le 25 nov. 2026 | 25 nov. 2026 (PUBLIER au tour 2) |
 | `/toiture-amiante-voisin` | toiture amiante voisin (70), revérifié le 26 nov. 2026 | 26 nov. 2026 (brouillon repris, PUBLIER au tour 2) |
+| `/mesure-empoussierement-amiante` | mesure empoussièrement amiante (70), groupe de 160 avec mesure d’empoussièrement (70) et empoussièrement amiante (20), vérifiés le 27 nov. 2026 | 27 nov. 2026 (PUBLIER au tour 2) |
 
 ## Écartés
 

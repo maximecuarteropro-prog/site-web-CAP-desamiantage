@@ -17,7 +17,7 @@ import EncartDevis from '@/components/EncartDevis.astro'
 // Critique tour 1 (27 nov.) : CORRIGER, 4 corrections de fond appliquées (arrêté de 2012 limité aux mesures de l’exposition des
 // opérateurs, la mesure de restitution renvoyée au code de la santé publique ; mesures du pro et du propriétaire distinguées ;
 // chapo aligné sur le corps ; « pros » au lieu d’« entreprises » pour R4412-103) et les 4 détails (dont « exemple de devis »,
-// aussi dans /prix-desamiantage).
+// aussi dans /prix-desamiantage). Critique tour 2 (27 nov.) : PUBLIER, détail de la FAQ sur les résultats appliqué.
 // Relire les prix chaque trimestre et les textes au moins une fois par an.
 const sources = [
   { titre: 'Code de la santé publique, article R1334-25 (mesures d’empoussièrement par des organismes accrédités)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000024140921', date: 'version en vigueur depuis le 1er février 2012' },
@@ -40,7 +40,7 @@ const faq = [
   { question: 'Quelle différence entre 5 et 10 fibres par litre ?', reponse: 'Ils ne protègent pas les mêmes personnes. 5 fibres par litre est le seuil du code de la santé publique pour les occupants d’un bâtiment (art. R1334-28 et R1334-29-3). 10 fibres par litre, en moyenne sur huit heures, est la valeur limite d’exposition des travailleurs, mesurée dans l’air qu’ils respirent (code du travail, art. R4412-100).' },
   { question: 'Peut-on mesurer l’amiante dans l’air soi-même ?', reponse: 'Pas pour répondre à une obligation. Le code de la santé publique confie les mesures d’empoussièrement à des organismes accrédités (art. R1334-25), et le code du travail impose l’analyse en microscopie électronique à transmission analytique, ou META (art. R4412-106). Seul le rapport d’un organisme accrédité fait foi.' },
   { question: 'Qui paie la mesure de fin de chantier ?', reponse: 'Le code du travail impose au pro de faire mesurer l’empoussièrement avant de rendre la zone (art. R4412-140) : la mesure fait partie de son chantier, et l’exemple de devis publié par Habitatpresto le 9 octobre 2026 lui consacre une ligne. Après le retrait d’un flocage, d’un calorifugeage ou d’un faux plafond, hors maison individuelle, le propriétaire fait aussi réaliser un examen visuel et une mesure avant de rendre les locaux (art. R1334-29-3).' },
-  { question: 'En combien de temps reçoit-on les résultats ?', reponse: 'Pour les mesures de l’exposition des opérateurs, prévues par le code du travail, l’organisme accrédité transmet son rapport final au plus tard un mois après la fin des prélèvements (arrêté du 14 août 2012, art. 10). Pour les mesures faites dans un bâtiment, y compris celles de fin de travaux, l’organisme remet les résultats au propriétaire contre accusé de réception (code de la santé publique, art. R1334-27).' },
+  { question: 'En combien de temps reçoit-on les résultats ?', reponse: 'Pour les mesures de l’exposition des opérateurs, prévues par le code du travail, l’organisme accrédité transmet son rapport final au plus tard un mois après la fin des prélèvements (arrêté du 14 août 2012, art. 10). Pour les mesures faites dans un bâtiment, y compris celle du propriétaire après les travaux, l’organisme remet les résultats au propriétaire contre accusé de réception (code de la santé publique, art. R1334-27 et R1334-29-3).' },
 ]
 ---
 <Guide
