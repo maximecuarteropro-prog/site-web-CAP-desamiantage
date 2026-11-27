@@ -25,6 +25,8 @@ Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026 e
 |---|---|---|---|---|---|
 | 11 | `/mesure-empoussierement-amiante` | mesure empoussièrement amiante (70) | | Qu'est-ce qu'une mesure d'empoussièrement, quand est-elle obligatoire, qui la fait, combien coûte-t-elle ? | à faire |
 | 12 | `/desamiantage-hangar-agricole` | toiture hangar amiante (10) | hangar amiante (10), bâtiment agricole amiante | Volume faible mais chantiers de grande valeur : retrait d'une toiture de hangar ou de stabulation, délais, déchets, aides éventuelles. | à faire |
+| 13 | `/analyse-amiante` | analyse amiante (210, informationnelle) | prélèvement amiante (90, informationnelle) ; groupe de 300, vérifié le 27 nov. 2026 | Comment faire analyser un matériau pour savoir s'il contient de l'amiante : qui prélève, quel laboratoire, quel délai, quel prix ? (page 1 : laboratoires, diagnostiqueurs, service-public, sante.gouv ; ne pas refaire `/diagnostic-amiante-avant-travaux`) | à faire |
+| 14 | `/bardage-amiante` | bardage amiante (50, intention transactionnelle selon OpenSEO), vérifié le 27 nov. 2026 | plaque ondulée amiante (50, non revérifiée en page 1) | J'ai un bardage ou des plaques en fibrociment amianté sur ma façade : le garder, le recouvrir ou le retirer, et à quel prix ? (page 1 : guides et désamianteurs) | à faire |
 
 ## Publiés
 
@@ -62,4 +64,7 @@ Volumes : recherches mensuelles en France (OpenSEO), relevées le 11 nov. 2026 e
 | encapsulage toiture amiante prix (210) | Requête secondaire de `/toiture-amiante-que-faire` : une seconde page se ferait concurrence |
 | toiture fibrociment (1 600) | Surtout des acheteurs de plaques neuves |
 | santé (« j'ai respiré de l'amiante ») | Sujet médical, aucune demande de chantier au bout, et règle « pas d'angle peur » |
+| faux plafond amiante (320) | Page 1 du 27 nov. 2026 : surtout des fabricants et des prix de faux plafonds neufs ; le faux plafond amianté est déjà traité par `/flocage-calorifugeage-amiante` |
+| conduit cheminée amiante (70) | Page 1 du 27 nov. 2026 : tubage, fabricants et forums ; sujet couvert par `/tuyau-conduit-amiante` |
+| fibre amiante (320) | Page 1 du 27 nov. 2026 : banques d'images, Wikipédia, santé ; aucune demande de chantier au bout |
 | désamiantage soi-même | Attire des personnes qui veulent justement ne pas faire appel à un pro |

@@ -14,6 +14,10 @@ import EncartDevis from '@/components/EncartDevis.astro'
 // Points incertains : aucun guide de prix national ne chiffre la mesure seule ; la page donne deux montants publiés,
 // sans en faire une fourchette. Maison individuelle : hors chantier, les obligations de mesure du code de la santé publique
 // ne s’y appliquent pas (R1334-26, aligné sur /flocage-calorifugeage-amiante).
+// Critique tour 1 (27 nov.) : CORRIGER, 4 corrections de fond appliquées (arrêté de 2012 limité aux mesures de l’exposition des
+// opérateurs, la mesure de restitution renvoyée au code de la santé publique ; mesures du pro et du propriétaire distinguées ;
+// chapo aligné sur le corps ; « pros » au lieu d’« entreprises » pour R4412-103) et les 4 détails (dont « exemple de devis »,
+// aussi dans /prix-desamiantage).
 // Relire les prix chaque trimestre et les textes au moins une fois par an.
 const sources = [
   { titre: 'Code de la santé publique, article R1334-25 (mesures d’empoussièrement par des organismes accrédités)', url: 'https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000024140921', date: 'version en vigueur depuis le 1er février 2012' },
@@ -35,8 +39,8 @@ const faq = [
   { question: 'Une mesure d’empoussièrement est-elle obligatoire dans une maison individuelle ?', reponse: 'Pas en dehors d’un chantier. Les obligations de mesure du code de la santé publique visent les parties privatives des immeubles collectifs, les parties communes et les autres bâtiments (art. R1334-16 à R1334-18 et R1334-26). En revanche, si vous faites retirer de l’amiante chez vous, le pro doit faire mesurer l’air avant de vous rendre la zone de travaux (code du travail, art. R4412-140).' },
   { question: 'Quelle différence entre 5 et 10 fibres par litre ?', reponse: 'Ils ne protègent pas les mêmes personnes. 5 fibres par litre est le seuil du code de la santé publique pour les occupants d’un bâtiment (art. R1334-28 et R1334-29-3). 10 fibres par litre, en moyenne sur huit heures, est la valeur limite d’exposition des travailleurs, mesurée dans l’air qu’ils respirent (code du travail, art. R4412-100).' },
   { question: 'Peut-on mesurer l’amiante dans l’air soi-même ?', reponse: 'Pas pour répondre à une obligation. Le code de la santé publique confie les mesures d’empoussièrement à des organismes accrédités (art. R1334-25), et le code du travail impose l’analyse en microscopie électronique à transmission analytique, ou META (art. R4412-106). Seul le rapport d’un organisme accrédité fait foi.' },
-  { question: 'Qui paie la mesure de fin de chantier ?', reponse: 'Le code du travail impose au pro de faire mesurer l’empoussièrement avant de rendre la zone (art. R4412-140) : la mesure fait partie de son chantier, et le devis type publié par Habitatpresto le 9 octobre 2026 lui consacre une ligne. Après le retrait d’un flocage, d’un calorifugeage ou d’un faux plafond, hors maison individuelle, le propriétaire fait aussi réaliser un examen visuel et une mesure avant de rendre les locaux (art. R1334-29-3).' },
-  { question: 'En combien de temps reçoit-on les résultats ?', reponse: 'Pour les mesures faites sur un chantier, l’organisme accrédité transmet son rapport final au plus tard un mois après la fin des prélèvements (arrêté du 14 août 2012, art. 10). Dans un bâtiment, l’organisme remet les résultats au propriétaire contre accusé de réception (code de la santé publique, art. R1334-27).' },
+  { question: 'Qui paie la mesure de fin de chantier ?', reponse: 'Le code du travail impose au pro de faire mesurer l’empoussièrement avant de rendre la zone (art. R4412-140) : la mesure fait partie de son chantier, et l’exemple de devis publié par Habitatpresto le 9 octobre 2026 lui consacre une ligne. Après le retrait d’un flocage, d’un calorifugeage ou d’un faux plafond, hors maison individuelle, le propriétaire fait aussi réaliser un examen visuel et une mesure avant de rendre les locaux (art. R1334-29-3).' },
+  { question: 'En combien de temps reçoit-on les résultats ?', reponse: 'Pour les mesures de l’exposition des opérateurs, prévues par le code du travail, l’organisme accrédité transmet son rapport final au plus tard un mois après la fin des prélèvements (arrêté du 14 août 2012, art. 10). Pour les mesures faites dans un bâtiment, y compris celles de fin de travaux, l’organisme remet les résultats au propriétaire contre accusé de réception (code de la santé publique, art. R1334-27).' },
 ]
 ---
 <Guide
@@ -45,7 +49,7 @@ const faq = [
   chemin="/mesure-empoussierement-amiante"
   rubrique="Comprendre"
   h1="Mesure d’empoussièrement amiante : quand est-elle obligatoire et qui la fait ?"
-  chapo="Une mesure d’empoussièrement compte les fibres d’amiante dans l’air : un organisme accrédité prélève l’air, puis un laboratoire compte les fibres. Dans un bâtiment, elle est obligatoire quand le diagnostiqueur note 2 sur 3 l’état d’un flocage, d’un calorifugeage ou d’un faux plafond amianté, et avant de rendre les locaux après des travaux : le seuil est de 5 fibres par litre. Si vous faites désamianter, c’est au pro de la faire réaliser avant de vous rendre la zone, et elle figure sur son devis."
+  chapo="Une mesure d’empoussièrement compte les fibres d’amiante dans l’air : un organisme accrédité prélève l’air, puis analyse l’air en laboratoire pour compter les fibres. Dans un bâtiment, elle est obligatoire quand le diagnostiqueur note 2 sur 3 l’état d’un flocage, d’un calorifugeage ou d’un faux plafond amianté, et avant de rendre les locaux après des travaux : le seuil est de 5 fibres par litre. Si vous faites désamianter, le pro fait mesurer l’air avant de vous rendre la zone, et cette mesure doit apparaître sur son devis ; hors maison individuelle, le propriétaire en fait aussi réaliser une après les travaux."
   publie="2026-11-27"
   misAJour="2026-11-27"
   sources={sources}
@@ -59,7 +63,7 @@ const faq = [
   <p>Dans trois situations : dans un bâtiment qui contient certains matériaux amiantés, pendant un chantier, et à la fin d’un retrait.</p>
 
   <h3>Dans un bâtiment, selon l’état d’un matériau</h3>
-  <p>Cette obligation vise les flocages, calorifugeages et faux plafonds, la « liste A ». Le diagnostiqueur note leur état de conservation de 1 à 3. Avec la note 2, le propriétaire fait mesurer l’empoussièrement de l’air dans les trois mois qui suivent la remise du rapport de repérage (code de la santé publique, art. R1334-27). Ensuite :</p>
+  <p>Cette obligation vise les flocages, calorifugeages et faux plafonds, la « liste A ». Le diagnostiqueur note leur état de conservation de 1 à 3. Avec la note 2, le propriétaire fait mesurer l’empoussièrement de l’air dans les trois mois qui suivent la remise du rapport de repérage ou de la dernière évaluation de son état (code de la santé publique, art. R1334-27). Ensuite :</p>
   <ul>
     <li><strong>à 5 fibres par litre ou moins</strong>, il fait évaluer de nouveau l’état du matériau dans les trois ans (art. R1334-28) ;</li>
     <li><strong>au-delà de 5 fibres par litre</strong>, il fait retirer ou confiner le matériau, travaux achevés dans les 36 mois. En attendant, il prend des mesures conservatoires pour que le niveau reste sous 5 fibres par litre (art. R1334-29).</li>
@@ -74,18 +78,18 @@ const faq = [
   <p>Dans un appartement, des parties communes ou un autre bâtiment que la maison individuelle, le propriétaire a aussi sa part. Après le retrait ou le confinement d’un matériau de la liste A, il fait réaliser un examen visuel des surfaces traitées par un diagnostiqueur, puis une mesure d’empoussièrement après le démontage du confinement : le résultat doit être de 5 fibres par litre ou moins avant de rendre les locaux. La même double vérification vaut après des travaux sur des matériaux de la liste B, comme les dalles de sol ou les conduits, dans un bâtiment occupé ou fréquenté (art. R1334-29-3).</p>
 
   <h2>Qui réalise la mesure ?</h2>
-  <p><strong>Un organisme accrédité</strong>, jamais le pro qui fait les travaux. Le code de la santé publique réserve les mesures d’empoussièrement à des organismes accrédités (art. R1334-25). Le code du travail impose au pro de confier la stratégie d’échantillonnage, les prélèvements et les analyses à un même organisme accrédité, indépendant des entreprises qu’il contrôle (art. R4412-103). L’accréditation est délivrée par le Cofrac, ou par un organisme équivalent d’un autre pays européen (arrêté du 14 août 2012, art. 8).</p>
+  <p><strong>Un organisme accrédité</strong>, jamais le pro qui fait les travaux. Le code de la santé publique réserve les mesures d’empoussièrement à des organismes accrédités (art. R1334-25). Le code du travail impose au pro de confier la stratégie d’échantillonnage, les prélèvements et les analyses à un même organisme accrédité, indépendant des pros dont il contrôle le chantier (art. R4412-103). L’accréditation est délivrée par le Cofrac, ou par un organisme équivalent d’un autre pays européen (arrêté du 14 août 2012, art. 8).</p>
   <p>L’examen visuel de fin de travaux, lui, revient à un diagnostiqueur certifié, le même type de professionnel que pour les repérages (code de la santé publique, art. R1334-23). Nos pros retirent l’amiante : ils ne font ni les diagnostics, ni les mesures d’air.</p>
 
   <h2>Comment se déroule une mesure et quand a-t-on les résultats ?</h2>
-  <p>Pour les mesures faites sur un chantier, l’arrêté du 14 août 2012 fixe la méthode :</p>
+  <p>Pour les mesures de l’exposition des opérateurs pendant le chantier, prévues par le code du travail, l’arrêté du 14 août 2012 fixe la méthode :</p>
   <ol>
     <li><strong>La stratégie d’échantillonnage :</strong> l’organisme accrédité la construit et la valide sur place. Elle fixe notamment le nombre de prélèvements (art. 3 et 6).</li>
     <li><strong>Le prélèvement :</strong> une pompe aspire l’air à travers un filtre, selon la norme NF X 43-269 (art. 4).</li>
     <li><strong>L’analyse :</strong> le laboratoire compte les fibres en META, selon la norme NF X 43-050 (art. 5).</li>
     <li><strong>Le rapport :</strong> il est transmis au plus tard un mois après la fin des prélèvements, en français, avec la référence de l’accréditation (art. 10).</li>
   </ol>
-  <p>Dans un bâtiment, l’organisme qui a fait les prélèvements remet les résultats au propriétaire contre accusé de réception (code de la santé publique, art. R1334-27). Gardez ce document : il rejoint le dossier amiante du bâtiment.</p>
+  <p>Les mesures faites dans un bâtiment, et celle que le pro fait réaliser avant de rendre la zone, suivent les modalités du code de la santé publique (art. R1334-25, auquel renvoie l’article R4412-140 du code du travail), fixées par un autre arrêté. Dans un bâtiment, l’organisme qui a fait les prélèvements remet les résultats au propriétaire contre accusé de réception (art. R1334-27). Gardez ce document : il rejoint le dossier amiante du bâtiment.</p>
 
   <h2>Comment lire le résultat ?</h2>
   <p>Trois repères chiffrés reviennent dans les rapports. Ils ne protègent pas les mêmes personnes : ne les comparez pas entre eux.</p>
@@ -100,12 +104,12 @@ const faq = [
       </tbody>
     </table>
   </div>
-  <p>Les repères du code du travail portent sur l’air respiré par les opérateurs pendant le travail (art. R4412-100 et R4412-104), pas sur celui de vos pièces une fois le chantier fini. Le chiffre qui compte pour vous, à la fin, est la mesure faite avant de vous rendre les lieux.</p>
+  <p>Les repères du code du travail portent sur l’air respiré par les opérateurs pendant le travail (art. R4412-100 et R4412-104), pas sur celui de vos pièces une fois le chantier fini. Le chiffre qui compte pour vous, à la fin, est la mesure faite avant de vous rendre les lieux. Les niveaux par méthode de travail, et les protections qu’ils imposent, sont détaillés dans notre guide de la <a href="/sous-section-4-amiante">sous-section 4 amiante</a>.</p>
 
   <h2>Combien coûte une mesure d’empoussièrement ?</h2>
   <p>Aucun guide de prix national ne chiffre la mesure seule : son coût dépend du nombre de prélèvements fixé par la stratégie d’échantillonnage. Deux montants publiés donnent un ordre de grandeur :</p>
   <ul>
-    <li>dans le devis type d’un retrait de couverture amiantée sur un garage de 40 m², Habitatpresto (9 octobre 2026) prévoit une ligne « Mesures d’empoussièrement » de 550 € HT au forfait, présentée comme une enveloppe pour les prélèvements et analyses définis par la stratégie de mesurage ;</li>
+    <li>dans un exemple de devis pour le retrait de couverture amiantée sur un garage de 40 m², Habitatpresto (9 octobre 2026) prévoit une ligne « Mesures d’empoussièrement » de 550 € HT au forfait, présentée comme une enveloppe pour les prélèvements et analyses définis par la stratégie de mesurage ;</li>
     <li>un cabinet de diagnostic, SDI Expertise, affiche des mesures d’empoussièrement « à partir de 450,00 € », sans préciser HT ou TTC (page mise à jour le 8 juillet 2025).</li>
   </ul>
   <p>Sur un chantier de désamiantage, ne cherchez pas à commander la mesure de fin de chantier vous-même : c’est au pro de la faire réaliser (art. R4412-140). Vérifiez plutôt qu’elle apparaît sur le devis, avec le plan de retrait et l’élimination des déchets. Les autres postes et les fourchettes relevées en 2026 sont sur notre page <a href="/prix-desamiantage">prix du désamiantage au m²</a>.</p>
@@ -114,9 +118,9 @@ const faq = [
 
   <h2>Que vérifier sur le rapport de fin de chantier ?</h2>
   <ul>
-    <li><strong>Le nom de l’organisme et son accréditation :</strong> le rapport porte la marque ou la référence de l’accréditation (arrêté du 14 août 2012, art. 10).</li>
-    <li><strong>La date et le lieu des prélèvements :</strong> la mesure de restitution est faite après le nettoyage et avant le démontage du confinement (code du travail, art. R4412-140).</li>
-    <li><strong>Le résultat de la restitution :</strong> dans un appartement, des parties communes ou un autre bâtiment que la maison individuelle, il doit être de 5 fibres par litre ou moins avant que les locaux soient rendus (art. R1334-29-3).</li>
+    <li><strong>Le nom de l’organisme :</strong> les mesures d’empoussièrement sont réservées à des organismes accrédités (code de la santé publique, art. R1334-25). Vérifiez que le rapport vient de l’un d’eux, et non du pro qui a fait les travaux.</li>
+    <li><strong>La mesure du pro :</strong> elle est faite après le nettoyage et avant le démontage du confinement (code du travail, art. R4412-140).</li>
+    <li><strong>La mesure du propriétaire :</strong> dans un appartement, des parties communes ou un autre bâtiment que la maison individuelle, une seconde mesure est faite après le démontage du confinement. Son résultat doit être de 5 fibres par litre ou moins avant que les locaux soient rendus (code de la santé publique, art. R1334-29-3).</li>
     <li><strong>Le rapport de fin de travaux :</strong> il reprend les mesures d’empoussièrement, les certificats d’acceptation préalable des déchets et les plans de localisation de l’amiante mis à jour (code du travail, art. R4412-139). Pour la suite des déchets, voir <a href="/dechetterie-amiante">ce que deviennent les déchets d’amiante</a>.</li>
   </ul>
   <p>Avant de signer, vérifiez aussi que le pro est bien certifié : voici <a href="/certification-sous-section-3">comment vérifier une certification sous-section 3</a>.</p>
